@@ -1,0 +1,35 @@
+<h1>入门指引</h1>
+
+<p>入门指引 将带着你一起创建第一个 Vagrant 项目，并向您展示一下 Vagrant 的基本功能特性。 </p>
+
+<p>如果好奇 Vagrant 能为你带来什么好处, 你可以阅读 <a href="javascript:$('#contentWrap').load('why-vagrant/index.html')" >&quot;为何选择 Vagrant?&quot;</a> 。</p>
+
+<p>在本操作指引中，将使用 <a href="http://www.virtualbox.org/">VirtualBox</a> 作为虚拟机管理器（providers）,因为它是免费的、适用于各大平台，且在 Vagrant 已集成。通过阅读指引，别忘记 Vagrant 还可以使用  <a href="javascript:$('#contentWrap').load('why-vagrant/providers.html')" >其他虚拟机管理器（providers）</a>。</p>
+
+<p>在开始创建你的第一个项目前, 请确保已 <a href="javascript:$('#contentWrap').load('installation/index.html')" >安装最新版 Vagrant</a>。
+此外，因为我们使用 <a href="http://www.virtualbox.org/">VirtualBox</a> 作为虚拟机管理器(provider)，因此也需要安装好它。</p>
+
+<div class="alert alert-block alert-info">
+<p>
+<strong>需要书籍？</strong> 如果你更喜欢阅读纸质的书籍，你可能对这本书感兴趣
+<a href="http://www.amazon.com/gp/product/1449335837/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1449335837&linkCode=as2&tag=vagrant-20">
+Vagrant: Up and Running
+</a>，这本书是由 Vagrant 的作者编写， O'Reilly出版。
+</p>
+</div>
+
+<h2>启动运行</h2>
+
+<pre><code>$ vagrant init hashicorp/precise32
+$ vagrant up
+</code></pre>
+
+<p>在执行以上两条命令后, 你将拥有一台运行在 <a href="https://www.virtualbox.org/">VirtualBox</a> 下的 Ubuntu 12.04 LTS 32位 虚拟机。你可以通过 <code>vagrant ssh</code> 命令来 SSH 登录到这台虚拟机上，当你用完以后，可以通过 <code>vagrant destroy</code> 命令来销毁所有的使用痕迹。 </p>
+
+<p>现在可以想像一下，你曾经的项目都可以像现在这样简单快速地创建并开始工作。</p>
+
+<p>使用 Vagrant, 你只需要执行 <code>vagrant up</code>  命令，Vagrant 会自动安装该项目所有环境依赖，设置好网络及共享目录，因此你可以舒舒服服地在你自己的虚拟机上进行工作。</p>
+
+<p>接下来的操作指引将带着你创建一个完整的项目，包括了 Vagrant 更多的功能使用。 </p>
+
+<p><a href="javascript:$('#contentWrap').load('getting-started/project_setup.html')" class="button inline-button next-button">项目的建立</a></p>

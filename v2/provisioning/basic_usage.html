@@ -1,0 +1,188 @@
+<h1>Basic Usage of Provisioners</h1>
+
+<p>While Vagrant offers multiple options for how you are able to provision
+your machine, there is a standard usage pattern as well as some important
+points common to all provisioners that are important to know.</p>
+
+<h2>Configuration</h2>
+
+<p>First, every provisioner is configured within your
+<a href="../vagrantfile/index.html" tppabs="http://docs.vagrantup.com/v2/vagrantfile/">Vagrantfile</a>
+using the <code>config.vm.provision</code> method call. For example, the Vagrantfile
+below enables shell provisioning:</p>
+
+<pre><code class="ruby">Vagrant.configure(&quot;2&quot;) do |config|
+  # ... other configuration
+
+  config.vm.provision &quot;shell&quot;, inline: &quot;echo hello&quot;
+end
+</code></pre>
+
+<p>Every provisioner has a type, such as <code>&quot;shell&quot;</code>, used as the first
+parameter to the provisioning configuration. Following that is basic key/value
+for configuring that specific provisioner. Instead of basic key/value, you
+can also use a Ruby block for a syntax that is more like variable assignment.
+The following is effectively the same as the prior example:</p>
+
+<pre><code class="ruby">Vagrant.configure(&quot;2&quot;) do |config|
+  # ... other configuration
+
+  config.vm.provision &quot;shell&quot; do |s|
+    s.inline = &quot;echo hello&quot;
+  end
+end
+</code></pre>
+
+<p>The benefit of the block-based syntax is that with more than a couple options
+it can greatly improve readability. Additionally, some provisioners, like
+the Chef provisioner, have special methods that can be called within that
+block to ease configuration that can&#39;t be done with the key/value approach.</p>
+
+<p>Provisioners can also be named (since 1.7.0). These names are used cosmetically for output
+as well as overriding provisioner settings (covered further below). An example
+of naming provisioners is shown below:</p>
+
+<pre><code class="ruby">Vagrant.configure(&quot;2&quot;) do |config|
+  # ... other configuration
+
+  config.vm.provision &quot;bootstrap&quot;, type: &quot;shell&quot; do |s|
+    s.inline = &quot;echo hello&quot;
+  end
+end
+</code></pre>
+
+<p>Naming provisioners is simple. The first argument to <code>config.vm.provision</code>
+becomes the name, and then a <code>type</code> option is used to specify the provisioner
+type, such as <code>type: &quot;shell&quot;</code> above.</p>
+
+<h2>Running Provisioners</h2>
+
+<p>Provisioners are run in three cases: the initial <code>vagrant up</code>, <code>vagrant
+provision</code>, and <code>vagrant reload --provision</code>.</p>
+
+<p>A <code>--no-provision</code> flag can be passed to <code>up</code> and <code>reload</code> if you don&#39;t
+want to run provisioners. Likewise, you can pass <code>--provision</code> to force
+provisioning.</p>
+
+<p>The <code>--provision-with</code> flag can be used if you only want to run a
+specific provisioner if you have multiple provisioners specified. For
+example, if you have a shell and Puppet provisioner and only want to
+run the shell one, you can do <code>vagrant provision --provision-with shell</code>.
+The arguments to <code>--provision-with</code> can be the provisioner type (such as
+&quot;shell&quot;) or the provisioner name (such as &quot;bootstrap&quot; from above).</p>
+
+<h2>Run Once or Always</h2>
+
+<p>By default, provisioners are only run once, during the first <code>vagrant up</code>
+since the last <code>vagrant destroy</code>, unless the <code>--provision</code> flag is set,
+as noted above.</p>
+
+<p>Optionally, you can configure provisioners to run on every <code>up</code> or
+<code>reload</code>. They&#39;ll only be not run if the <code>--no-provision</code> flag is
+explicitly specified. To do this set the <code>run</code> option to &quot;always&quot;,
+as shown below:</p>
+
+<pre><code class="ruby">Vagrant.configure(&quot;2&quot;) do |config|
+  config.vm.provision &quot;shell&quot;, inline: &quot;echo hello&quot;,
+    run: &quot;always&quot;
+end
+</code></pre>
+
+<p>If you&#39;re using the block format, you must specify it outside
+of the block, as shown below:</p>
+
+<pre><code class="ruby">Vagrant.configure(&quot;2&quot;) do |config|
+  config.vm.provision &quot;shell&quot;, run: &quot;always&quot; do |s|
+    s.inline = &quot;echo hello&quot;
+  end
+end
+</code></pre>
+
+<h2>Multiple Provisioners</h2>
+
+<p>Multiple <code>config.vm.provision</code> methods can be used to define multiple
+provisioners. These provisioners will be run in the order they&#39;re defined.
+This is useful for a variety of reasons, but most commonly it is used so
+that a shell script can bootstrap some of the system so that another provisioner
+can take over later.</p>
+
+<p>If you define provisioners at multiple &quot;scope&quot; levels (such as globally
+in the configuration block, then in a
+<a href="../multi-machine/index.html" tppabs="http://docs.vagrantup.com/v2/multi-machine/">multi-machine</a> definition, then maybe
+in a <a href="../providers/configuration.html" tppabs="http://docs.vagrantup.com/v2/providers/configuration.html">provider-specific override</a>),
+then the outer scopes will always run <em>before</em> any inner scopes. For
+example, in the Vagrantfile below:</p>
+
+<pre><code class="ruby">Vagrant.configure(&quot;2&quot;) do |config|
+  config.vm.provision &quot;shell&quot;, inline: &quot;echo foo&quot;
+
+  config.vm.define &quot;web&quot; do |web|
+    web.vm.provision &quot;shell&quot;, inline: &quot;echo bar&quot;
+  end
+
+  config.vm.provision &quot;shell&quot;, inline: &quot;echo baz&quot;
+end
+</code></pre>
+
+<p>The ordering of the provisioners will be to echo &quot;foo&quot;, &quot;baz&quot;, then
+&quot;bar&quot; (note the second one might not be what you expect!). Remember:
+ordering is <em>outside in</em>.</p>
+
+<p>With multiple provisioners, use the <code>--provision-with</code> setting along
+with names to get more fine grainted control over what is run and when.</p>
+
+<h2>Overriding Provisioner Settings</h2>
+
+<div class="alert alert-block alert-warn">
+<p>
+<strong>Warning: Advanced Topic!</strong> Provisioner overriding is
+an advanced topic that really only becomes useful if you're already
+using multi-machine and/or provider overrides. If you're just getting
+started with Vagrant, you can safely skip this.
+</p>
+</div>
+
+<p>When using features such as <a href="../multi-machine/index.html" tppabs="http://docs.vagrantup.com/v2/multi-machine/">multi-machine</a>
+or <a href="../providers/configuration.html" tppabs="http://docs.vagrantup.com/v2/providers/configuration.html">provider-specific overrides</a>,
+you may want to define common provisioners in the global configuration
+scope of a Vagrantfile, but override certain aspects of them internally.
+Vagrant allows you to do this, but has some details to consider.</p>
+
+<p>To override settings, you must assign a name to your provisioner.</p>
+
+<pre><code class="ruby">Vagrant.configure(&quot;2&quot;) do |config|
+  config.vm.provision &quot;foo&quot;, type: &quot;shell&quot;,
+    inline: &quot;echo foo&quot;
+
+  config.vm.define &quot;web&quot; do |web|
+    web.vm.provision &quot;foo&quot;, type: &quot;shell&quot;,
+      inline: &quot;echo bar&quot;
+  end
+end
+</code></pre>
+
+<p>In the above, only &quot;bar&quot; will be echoed, because the inline setting
+overloaded the outer provisioner. This overload is only effective
+within that scope: the &quot;web&quot; VM. If there were another VM defined,
+it would still echo &quot;foo&quot; unless it itself also overloaded the
+provisioner.</p>
+
+<p><strong>Be careful with ordering.</strong> When overriding a provisioner in
+a sub-scope, the provisioner will run at <em>that point</em>. In the example
+below, the output would be &quot;foo&quot; then &quot;bar&quot;:</p>
+
+<pre><code class="ruby">Vagrant.configure(&quot;2&quot;) do |config|
+  config.vm.provision &quot;foo&quot;, type: &quot;shell&quot;,
+    inline: &quot;echo ORIGINAL!&quot;
+
+  config.vm.define &quot;web&quot; do |web|
+    web.vm.provision &quot;shell&quot;,
+      inline: &quot;echo foo&quot;
+    web.vm.provision &quot;foo&quot;, type: &quot;shell&quot;,
+      inline: &quot;echo bar&quot;
+  end
+end
+</code></pre>
+
+<p>If you want to preserve the original ordering, you can specify
+the <code>preserve_order: true</code> flag.</p>

@@ -1,0 +1,86 @@
+<h1>Forwarded Ports</h1>
+
+<p><strong>Network identifier: <code>forwarded_port</code></strong></p>
+
+<p>Forwarded ports allow you to access a port on your host machine and have
+all data forwarded to a port on the guest machine, over either TCP or UDP.</p>
+
+<p>For example: If the guest machine is running a web server listening on port 80,
+you can make a forwarded port mapping to port 8080 (or anything) on your host
+machine. You can then open your browser to <code>localhost:8080</code> and browse the
+website, while all actual network data is being sent to the guest.</p>
+
+<h2>Defining a Forwarded Port</h2>
+
+<p>The forwarded port configuration expects two parameters, the port on the
+guest and the port on the host. Example:</p>
+
+<pre><code class="ruby">Vagrant.configure(&quot;2&quot;) do |config|
+  config.vm.network &quot;forwarded_port&quot;, guest: 80, host: 8080
+end
+</code></pre>
+
+<p>This will allow accessing port 80 on the guest via port 8080 on the host.</p>
+
+<h2>Options Reference</h2>
+
+<p>This is a complete list of the options that are available for forwarded
+ports. Only the <code>guest</code> and <code>host</code> options are required. Below this section,
+there are more detailed examples of using these options.</p>
+
+<ul>
+<li><p><code>guest</code> (int) - The port on the guest that you want to be exposed on
+the host. This can be any port.</p></li>
+<li><p><code>guest_ip</code> (string) - The guest IP to bind the forwarded port to. If
+this is not set, the port will go to the every interface. By default,
+this is empty.</p></li>
+<li><p><code>host</code> (int) - The port on the host that you want to use to access the
+port on the guest. This must be greater than port 1024 unless Vagrant
+is running as root (which is not recommended).</p></li>
+<li><p><code>host_ip</code> (string) - The IP on the host you want to bind the forwarded
+port to. If not specified, it will be bound to every IP. By default,
+this is empty.</p></li>
+<li><p><code>protocol</code> (string) - Either &quot;udp&quot; or &quot;tcp&quot;. This specifies the protocol
+that will be allowed through the forwarded port. By default this is &quot;tcp&quot;.</p></li>
+</ul>
+
+<h2>Forwarded Port Protocols</h2>
+
+<p>By default, any defined port will only forward the TCP protocol. As an optional
+third parameter, you may specify <code>protocol: &#39;udp&#39;</code> in order to pass UDP
+traffic. If a given port needs to be able to listen to the same port on both
+protocols, you must define the port twice with each protocol specified, like
+so:</p>
+
+<pre><code>Vagrant.configure(&quot;2&quot;) do |config|
+  config.vm.network &quot;forwarded_port&quot;, guest: 2003, host: 12003, protocol: &#39;tcp&#39;
+  config.vm.network &quot;forwarded_port&quot;, guest: 2003, host: 12003, protocol: &#39;udp&#39;
+end
+</code></pre>
+
+<h2>Port Collisions and Correction</h2>
+
+<p>It is common when running multiple Vagrant machines to unknowingly create
+forwarded port definitions that collide with each other (two separate
+Vagrant projects forwarded to port 8080, for example). Vagrant includes
+built-in mechanism to detect this and correct it, automatically.</p>
+
+<p>Port collision detection is always done. Vagrant will not allow you to
+define a forwarded port where the port on the host appears to be accepting
+traffic or connections.</p>
+
+<p>Port collision auto-correction must be manually enabled for each forwarded
+port, since it is often surprising when it occurs and can lead the Vagrant
+user to think that the port wasn&#39;t properly forwarded. Enabling auto correct
+is easy:</p>
+
+<pre><code>Vagrant.configure(&quot;2&quot;) do |config|
+  config.vm.network &quot;forwarded_port&quot;, guest: 80, host: 8080,
+    auto_correct: true
+end
+</code></pre>
+
+<p>The final <code>:auto_correct</code> parameter set to true tells Vagrant to auto
+correct any collisions. During a <code>vagrant up</code> or <code>vagrant reload</code>, Vagrant
+will output information about any collisions detections and auto corrections
+made, so you can take notice and act accordingly.</p>

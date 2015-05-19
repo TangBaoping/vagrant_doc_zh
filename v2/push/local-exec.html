@@ -1,0 +1,51 @@
+<h1>Vagrant Push</h1>
+
+<h2>Local Exec Strategy</h2>
+
+<p>The Vagrant Push Local Exec strategy allows the user to invoke an arbitrary
+shell command or script as part of a push.</p>
+
+<div class="alert alert-warn">
+  <p>
+    <strong>Warning:</strong> The Vagrant Push Local Exec strategy does not
+    perform any validation on the correctness of the shell script.
+  </p>
+</div>
+
+<p>The Vagrant Push Local Exec strategy supports the following configuration
+options:</p>
+
+<ul>
+<li><code>script</code> - The path to a script on disk (relative to the <code>Vagrantfile</code>) to
+execute. Vagrant will attempt to convert this script to an executable, but an
+exception will be raised if that fails.</li>
+<li><code>inline</code> - The inline script to execute (as a string).</li>
+</ul>
+
+<p>Please note - only one of the <code>script</code> and <code>inline</code> options may be specified in
+a single push definition.</p>
+
+<h3>Usage</h3>
+
+<p>The Vagrant Push Local Exec strategy is defined in the <code>Vagrantfile</code> using the
+<code>local-exec</code> key:</p>
+
+<pre><code class="ruby">config.push.define &quot;local-exec&quot; do |push|
+  push.inline = &lt;&lt;-SCRIPT
+    scp . /var/www/website
+  SCRIPT
+end
+</code></pre>
+
+<p>For more complicated scripts, you may store them in a separate file and read
+them from the <code>Vagrantfile</code> like so:</p>
+
+<pre><code class="ruby">config.push.define &quot;local-exec&quot; do |push|
+  push.script = &quot;my-script.sh&quot;
+end
+</code></pre>
+
+<p>And then invoke the push with Vagrant:</p>
+
+<pre><code class="shell">$ vagrant push
+</code></pre>

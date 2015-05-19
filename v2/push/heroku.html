@@ -1,0 +1,50 @@
+<h1>Vagrant Push</h1>
+
+<h2>Heroku Strategy</h2>
+
+<p><a title="Heroku" href="javascript:if(confirm(%27https://heroku.com/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed using an unsupported protocol (e.g., gopher).  \n\nDo you want to open it from the server?%27))window.location=%27https://heroku.com/%27" tppabs="https://heroku.com/">Heroku</a> is a public PAAS provider that makes it easy to deploy an
+application. The Vagrant Push Heroku strategy pushes your application&#39;s code to
+Heroku.</p>
+
+<div class="alert alert-warn">
+  <p>
+    <strong>Warning:</strong> The Vagrant Push Heroku strategy requires you
+    have configured your Heroku credentials and created the Heroku application.
+    This documentation will not cover these prerequisites, but you can read more
+    about them in the <a href="javascript:if(confirm(%27https://devcenter.heroku.com/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed using an unsupported protocol (e.g., gopher).  \n\nDo you want to open it from the server?%27))window.location=%27https://devcenter.heroku.com/%27" tppabs="https://devcenter.heroku.com/">Heroku documentation</a>.
+  </p>
+</div>
+
+<p>Only files which are committed to the Git repository will be pushed to Heroku.
+Additionally, the current working branch is always pushed to the Heroku, even if
+it is not the &quot;master&quot; branch.</p>
+
+<p>The Vagrant Push Heroku strategy supports the following configuration options:</p>
+
+<ul>
+<li><p><code>app</code> - The name of the Heroku application. If the Heroku application does not
+exist, an exception will be raised. If this value is not specified, the
+basename of the directory containing the <code>Vagrantfile</code> is assumed to be the
+name of the Heroku application. Since this value can change between users, it
+is highly recommended that you add the <code>app</code> setting to your <code>Vagrantfile</code>.</p></li>
+<li><p><code>dir</code> - The base directory containing the Git repository to upload to Heroku.
+By default this is the same directory as the Vagrantfile, but you can specify
+this if you have a nested Git directory.</p></li>
+<li><p><code>remote</code> - The name of the Git remote where Heroku is configured. The default
+value is &quot;heroku&quot;.</p></li>
+</ul>
+
+<h3>Usage</h3>
+
+<p>The Vagrant Push Heroku strategy is defined in the <code>Vagrantfile</code> using the
+<code>heroku</code> key:</p>
+
+<pre><code class="ruby">config.push.define &quot;heroku&quot; do |push|
+  push.app = &quot;my_application&quot;
+end
+</code></pre>
+
+<p>And then push the application to Heroku:</p>
+
+<pre><code class="shell">$ vagrant push
+</code></pre>

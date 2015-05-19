@@ -1,0 +1,70 @@
+<h1>Provisioning</h1>
+
+<p>目前，我们已经拥有一台运行着 Ubuntu 系统的虚拟机，且我们可以在宿主机上进行开发，文件自动同步到虚拟机中，下面我们将使用web服务器来执行同步目录下的文件。</p>
+
+<p>We could just SSH in and install a webserver and be on our way, but then
+every person who used Vagrant would have to do the same thing. Instead,
+Vagrant has built-in support for <em>automated provisioning</em>. Using this
+feature, Vagrant will automatically install software when you <code>vagrant up</code>
+so that the guest machine can be repeatably created and ready-to-use.</p>
+
+<h2>Installing Apache</h2>
+
+<p>We&#39;ll just setup <a href="javascript:if(confirm(%27http://httpd.apache.org/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://httpd.apache.org/%27" tppabs="http://httpd.apache.org/">Apache</a> for our basic project,
+and we&#39;ll do so using a shell script. Create the following shell script
+and save it as <code>bootstrap.sh</code> in the same directory as your Vagrantfile:</p>
+
+<pre><code class="bash">#!/usr/bin/env bash
+
+apt-get update
+apt-get install -y apache2
+if ! [ -L /var/www ]; then
+  rm -rf /var/www
+  ln -fs /vagrant /var/www
+fi
+</code></pre>
+
+<p>Next, we configure Vagrant to run this shell script when setting up
+our machine. We do this by editing the Vagrantfile, which should now
+look like this:</p>
+
+<pre><code class="ruby">Vagrant.configure(&quot;2&quot;) do |config|
+  config.vm.box = &quot;hashicorp/precise32&quot;
+  config.vm.provision :shell, path: &quot;bootstrap.sh&quot;
+end
+</code></pre>
+
+<p>The &quot;provision&quot; line is new, and tells Vagrant to use the <code>shell</code> provisioner
+to setup the machine, with the <code>bootstrap.sh</code> file. The file path is relative
+to the location of the project root (where the Vagrantfile is).</p>
+
+<h2>Provision!</h2>
+
+<p>After everything is configured, just run <code>vagrant up</code> to create your
+machine and Vagrant will automatically provision it. You should see
+the output from the shell script appear in your terminal. If the guest
+machine is already running from a previous step, run <code>vagrant reload --provision</code>,
+which will quickly restart your virtual machine, skipping the initial
+import step. The provision flag on the reload command instructs Vagrant to
+run the provisioners, since usually Vagrant will only do this on the first
+<code>vagrant up</code>.</p>
+
+<p>After Vagrant completes running, the web server will be up and running.
+You can&#39;t see the website from your own browser (yet), but you can verify
+that the provisioning works by loading a file from SSH within the machine:</p>
+
+<pre><code>$ vagrant ssh
+...
+vagrant@precise32:~$ wget -qO- 127.0.0.1
+</code></pre>
+
+<p>This works because in the shell script above we installed Apache and
+setup the default <code>DocumentRoot</code> of Apache to point to our <code>/vagrant</code>
+directory, which is the default synced folder setup by Vagrant.</p>
+
+<p>You can play around some more by creating some more files and viewing
+them from the terminal, but in the next step we&#39;ll cover networking
+options so that you can use your own browser to access the guest machine.</p>
+
+<p><a href="synced_folders.html" tppabs="http://docs.vagrantup.com/v2/getting-started/synced_folders.html" class="button inline-button prev-button">Synced Folders</a>
+<a href="networking.html" tppabs="http://docs.vagrantup.com/v2/getting-started/networking.html" class="button inline-button next-button">Networking</a></p>

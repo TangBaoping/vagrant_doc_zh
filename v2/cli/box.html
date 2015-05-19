@@ -1,0 +1,175 @@
+<h1>Box</h1>
+
+<p><strong>Command: <code>vagrant box</code></strong></p>
+
+<p>This is the command used to manage (add, remove, etc.) <a href="javascript:$('#contentWrap').load('boxes.html');" >boxes</a>.</p>
+
+<p>The main functionality of this command is exposed via even more subcommands:</p>
+
+<ul>
+<li><code>add</code></li>
+<li><code>list</code></li>
+<li><code>outdated</code></li>
+<li><code>remove</code></li>
+<li><code>repackage</code></li>
+<li><code>update</code></li>
+</ul>
+
+<h1>Box Add</h1>
+
+<p><strong>Command: <code>vagrant box add ADDRESS</code></strong></p>
+
+<p>This adds a box with the given address to Vagrant. The address can be
+one of three things:</p>
+
+<ul>
+<li><p>A shorthand name from the
+<a href="https://atlas.hashicorp.com/boxes/search">public catalog of available Vagrant images</a>,
+such as &quot;hashicorp/precise64&quot;.</p></li>
+<li><p>File path or HTTP URL to a box in a <a href="https://atlas.hashicorp.com/boxes/search">catalog</a>.
+For HTTP, basic authentication is supported and <code>http_proxy</code> environmental
+variables are respected. HTTPS is also supported.</p></li>
+<li><p>URL directly a box file. In this case, you must specify a <code>--name</code> flag
+(see below) and versioning/updates won&#39;t work.</p></li>
+</ul>
+
+<p>If an error occurs during the download or the download is interrupted with
+a Ctrl-C, then Vagrant will attempt to resume the download the next time it
+is requested. Vagrant will only attempt to resume a download for six hours
+after the initial download.</p>
+
+<h2>Options</h2>
+
+<ul>
+<li><p><code>--box-version VALUE</code> - The version of the box you want to add. By default,
+the latest version will be added. The value of this can be an exact version
+number such as &quot;1.2.3&quot; or it can be a set of version constraints. A version
+constraint looks like &quot;&gt;= 1.0, &lt; 2.0&quot;.</p></li>
+<li><p><code>--cacert CERTFILE</code> - The certificate for the CA used to verify the peer.
+This should be used if the remote end doesn&#39;t use a standard root CA.</p></li>
+<li><p><code>--capath CERTDIR</code> - The certificate directory for the CA used to verify the peer.
+This should be used if the remote end doesn&#39;t use a standard root CA.</p></li>
+<li><p><code>--cert CERTFILE</code> - A client certificate to use when downloading the box, if
+necessary.</p></li>
+<li><p><code>--clean</code> - If given, Vagrant will remove any old temporary files from
+prior downloads of the same URL. This is useful if you don&#39;t want Vagrant
+to resume a download from a previous point, perhaps because the contents
+changed.</p></li>
+<li><p><code>--force</code> - When present, the box will be downloaded and overwrite any
+existing box with this name.</p></li>
+<li><p><code>--insecure</code> - When present, SSL certificates won&#39;t be verified if the
+URL is an HTTPS URL.</p></li>
+<li><p><code>--provider PROVIDER</code> - If given, Vagrant will verify the box you&#39;re
+adding is for the given provider. By default, Vagrant automatically
+detects the proper provider to use.</p></li>
+</ul>
+
+<h2>Options for direct box files</h2>
+
+<p>The options below only apply if you&#39;re adding a box file directly (when
+you&#39;re not using a catalog).</p>
+
+<ul>
+<li><p><code>--checksum VALUE</code> - A checksum for the box that is downloaded. If specified,
+Vagrant will compare this checksum to what is actually downloaded and will
+error if the checksums do not match. This is highly recommended since
+box files are so large. If this is specified, <code>--checksum-type</code> must
+also be specified. If you&#39;re downloading from a catalog, the checksum is
+included within the catalog entry.</p></li>
+<li><p><code>--checksum-type TYPE</code> - The type of checksum that <code>--checksum</code> is if it
+is specified. Supported values are currently &quot;md5&quot;, &quot;sha1&quot;, and &quot;sha256&quot;.</p></li>
+<li><p><code>--name VALUE</code> - Logical name for the box. This is the value that you
+would put into <code>config.vm.box</code> in your Vagrantfile. When adding a box from
+a catalog, the name is included in the catalog entry and doesn&#39;t have
+to be specified.</p></li>
+</ul>
+
+<div class="alert alert-block alert-warn">
+<strong>Checksums for versioned boxes or boxes from HashiCorp's Atlas:</strong>
+For boxes from HashiCorp's Atlas, the checksums are embedded in the metadata
+of the box. The metadata itself is served over TLS and its format is validated.
+</div>
+
+<h1>Box List</h1>
+
+<p><strong>Command: <code>vagrant box list</code></strong></p>
+
+<p>This command lists all the boxes that are installed into Vagrant.</p>
+
+<h1>Box Outdated</h1>
+
+<p><strong>Command: <code>vagrant box outdated</code></strong></p>
+
+<p>This command tells you whether or not the box you&#39;re using in
+your current Vagrant environment is outdated. If the <code>--global</code> flag
+is present, every installed box will be checked for updates.</p>
+
+<p>Checking for updates involves refreshing the metadata associated with
+a box. This generally requires an internet connection.</p>
+
+<h2>Options</h2>
+
+<ul>
+<li><code>--global</code> - Check for updates for all installed boxes, not just the
+boxes for the current Vagrant environment.</li>
+</ul>
+
+<h1>Box Remove</h1>
+
+<p><strong>Command: <code>vagrant box remove NAME</code></strong></p>
+
+<p>This command removes a box from Vagrant that matches the given name.</p>
+
+<p>If a box has multiple providers, the exact provider must be specified
+with the <code>--provider</code> flag. If a box has multiple versions, you can select
+what versions to delete with the <code>--box-version</code> flag.</p>
+
+<h2>Options</h2>
+
+<ul>
+<li><p><code>--box-version VALUE</code> - Version of version constraints of the boxes to
+remove. See documentation on this flag for <code>box add</code> for more details.</p></li>
+<li><p><code>--force</code> - Forces removing the box even if an active Vagrant
+environment is using it.</p></li>
+<li><p><code>--provider VALUE</code> - The provider-specific box to remove with the given
+name. This is only required if a box is backed by multiple providers.
+If there is only a single provider, Vagrant will default to removing it.</p></li>
+</ul>
+
+<h1>Box Repackage</h1>
+
+<p><strong>Command: <code>vagrant box repackage NAME PROVIDER VERSION</code></strong></p>
+
+<p>This command repackages the given box and puts it in the current
+directory so you can redistribute it. The name, provider, and version
+of the box can retrieved using <code>vagrant box list</code>.</p>
+
+<p>When you add a box, Vagrant unpacks it and stores it internally. The
+original <code>*.box</code> file is not preserved. This command is useful for
+reclaiming a <code>*.box</code> file from an installed Vagrant box.</p>
+
+<h1>Box Update</h1>
+
+<p><strong>Command: <code>vagrant box update</code></strong></p>
+
+<p>This command updates the box for the current Vagrant environment if there
+are updates available. The command can also update a specific box (outside
+of an active Vagrant environment), by specifying the <code>--box</code> flag.</p>
+
+<p>Note that updating the box will not update an already-running Vagrant
+machine. To reflect the changes in the box, you&#39;ll have to destroy and
+bring back up the Vagrant machine.</p>
+
+<p>If you just want to check if there are updates available, use the
+<code>vagrant box outdated</code> command.</p>
+
+<h2>Options</h2>
+
+<ul>
+<li><p><code>--box VALUE</code> - Name of a specific box to update. If this flag is not
+specified, Vagrant will update the boxes for the active Vagrant
+environment.</p></li>
+<li><p><code>--provider VALUE</code> - When <code>--box</code> is present, this controls what
+provider-specific box to update. This is not required unless the box has
+multiple providers. Without the <code>--box</code> flag, this has no effect.</p></li>
+</ul>

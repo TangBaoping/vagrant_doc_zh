@@ -1,0 +1,34 @@
+<h1>Networking</h1>
+
+<p>In order to access the Vagrant environment created, Vagrant exposes
+some high-level networking options for things such as forwarded ports,
+connecting to a public network, or creating a private network.</p>
+
+<p>The high-level networking options are meant to define an abstraction that
+works across multiple <a href="../providers/index.html" tppabs="http://docs.vagrantup.com/v2/providers/">providers</a>. This means that
+you can take your Vagrantfile you used to spin up a VirtualBox machine and
+you can reasonably expect that Vagrantfile to behave the same with something
+like VMware.</p>
+
+<p>You should first read the <a href="basic_usage.html" tppabs="http://docs.vagrantup.com/v2/networking/basic_usage.html">basic usage</a> page
+and then continue by reading the documentation for a specific networking
+primitive by following the navigation to the left.</p>
+
+<h2>Advanced Configuration</h2>
+
+<p>In some cases,
+these options are <em>too</em> high-level, and you may want to more finely tune
+and configure the network interfaces of the underlying machine. Most
+providers expose <a href="../providers/configuration.html" tppabs="http://docs.vagrantup.com/v2/providers/configuration.html">provider-specific configuration</a>
+to do this, so please read the documentation for your specific provider
+to see what options are available.</p>
+
+<div class="alert alert-info">
+    <p>
+        <strong>For beginners:</strong> It is strongly recommended you use
+        only the high-level networking options until you are comfortable
+        with the Vagrant workflow and have things working at a basic level.
+        Provider-specific network configuration can very quickly lock you out
+        of your guest machine if improperly done.
+    </p>
+</div>

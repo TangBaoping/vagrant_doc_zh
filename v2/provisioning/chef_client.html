@@ -1,0 +1,111 @@
+<h1>Chef Client Provisioner</h1>
+
+<p><strong>Provisioner name: <code>chef_client</code></strong></p>
+
+<p>The Chef Client provisioner allows you to provision the guest using
+<a href="javascript:if(confirm(%27http://www.opscode.com/chef/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://www.opscode.com/chef/%27" tppabs="http://www.opscode.com/chef/">Chef</a>, specifically by connecting
+to an existing Chef Server and registering the Vagrant machine as a
+node within your infrastructure.</p>
+
+<p>If you&#39;re just learning Chef for the first time, you probably want
+to start with the <a href="chef_solo.html" tppabs="http://docs.vagrantup.com/v2/provisioning/chef_solo.html">Chef Solo</a>
+provisioner.</p>
+
+<div class="alert alert-warn">
+    <p>
+        <strong>Warning:</strong> If you're not familiar with Chef and Vagrant already,
+        I recommend starting with the <a href="shell.html" tppabs="http://docs.vagrantup.com/v2/provisioning/shell.html">shell
+        provisioner</a>.
+    </p>
+</div>
+
+<h2>Authenticating</h2>
+
+<p>The minimum required to use provision using Chef Client is to provide
+a URL to the Chef Server as well as the path to the validation key so
+that the node can register with the Chef Server:</p>
+
+<pre><code class="ruby">Vagrant.configure(&quot;2&quot;) do |config|
+  config.vm.provision &quot;chef_client&quot; do |chef|
+    chef.chef_server_url = &quot;http://mychefserver.com&quot;
+    chef.validation_key_path = &quot;validation.pem&quot;
+  end
+end
+</code></pre>
+
+<p>The node will register with the Chef Server specified, download the
+proper run list for that node, and provision.</p>
+
+<h2>Specifying a Run List</h2>
+
+<p>Normally, the Chef Server is responsible for specifying the run list
+for the node. However, you can override what the Chef Server sends
+down by manually specifying a run list:</p>
+
+<pre><code class="ruby">Vagrant.configure(&quot;2&quot;) do |config|
+  config.vm.provision &quot;chef_client&quot; do |chef|
+    # Add a recipe
+    chef.add_recipe &quot;apache&quot;
+
+    # Or maybe a role
+    chef.add_role &quot;web&quot;
+  end
+end
+</code></pre>
+
+<p>Remember, this will <em>override</em> the run list specified on the Chef
+server itself.</p>
+
+<h2>Environments</h2>
+
+<p>You can specify the <a href="javascript:if(confirm(%27http://wiki.opscode.com/display/chef/Environments  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://wiki.opscode.com/display/chef/Environments%27" tppabs="http://wiki.opscode.com/display/chef/Environments">environment</a>
+for the node to come up in using the <code>environment</code> configuration option:</p>
+
+<pre><code class="ruby">Vagrant.configure(&quot;2&quot;) do |config|
+  config.vm.provision &quot;chef_client&quot; do |chef|
+    # ...
+
+    chef.environment = &quot;development&quot;
+  end
+end
+</code></pre>
+
+<h2>Other Configuration Options</h2>
+
+<p>There are a few more configuration options available. These generally don&#39;t
+need to be modified but are available if your Chef Server requires customization
+of these variables.</p>
+
+<ul>
+<li><code>client_key_path</code></li>
+<li><code>node_name</code></li>
+<li><code>validation_client_name</code></li>
+</ul>
+
+<p>In addition to all the options listed above, the Chef Client provisioner supports
+the <a href="chef_common.html" tppabs="http://docs.vagrantup.com/v2/provisioning/chef_common.html">common options for all Chef provisioners</a>.</p>
+
+<h2>Cleanup</h2>
+
+<p>When you provision your Vagrant virtual machine with Chef Server, it creates a
+new Chef &quot;node&quot; entry and Chef &quot;client&quot; entry on the Chef Server, using the
+hostname of the machine. After you tear down your guest machine, Vagrant can be
+configured to do it automatically with the following settings:</p>
+
+<pre><code class="ruby">chef.delete_node = true
+chef.delete_client = true
+</code></pre>
+
+<p>If you don&#39;t specify it or set it to <code>false</code>, you must explicitly delete these
+entries from the Chef Server before you provision a new one with Chef Server.
+For example, using Chef&#39;s built-in <code>knife</code> tool:</p>
+
+<pre><code>$ knife node delete precise64
+$ knife client delete precise64
+</code></pre>
+
+<p>If you fail to do so, you&#39;ll get the following error when Vagrant
+tries to provision the machine with Chef Client:</p>
+
+<pre><code>HTTP Request Returned 409 Conflict: Client already exists.
+</code></pre>

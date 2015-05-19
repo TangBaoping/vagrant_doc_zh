@@ -1,0 +1,54 @@
+<h1>Configuration Version</h1>
+
+<p>Configuration versions are the mechanism by which Vagrant 1.1+ is able
+to remain <a href="../installation/backwards-compatibility.html" tppabs="http://docs.vagrantup.com/v2/installation/backwards-compatibility.html">backwards compatible</a>
+with Vagrant 1.0.x Vagrantfiles, while introducing dramatically new features
+and configuration options.</p>
+
+<p>If you run <code>vagrant init</code> today, the Vagrantfile will be in roughly the
+following format:</p>
+
+<pre><code class="ruby">Vagrant.configure(2) do |config|
+  # ...
+end
+</code></pre>
+
+<p>The <code>&quot;2&quot;</code> in the first line above represents the version of the configuration
+object <code>config</code> that will be used for configuration for that block (the
+section between the <code>do</code> and the <code>end</code>). This object can be very
+different from version to version.</p>
+
+<p>Currently, there are only two supported versions: &quot;1&quot; and &quot;2&quot;. Version 1
+represents the configuration from Vagrant 1.0.x. &quot;2&quot; represents the configuration
+for 1.1+ leading up to 2.0.x.</p>
+
+<p>When loading Vagrantfiles, Vagrant uses the proper configuration object
+for each version, and properly merges them, just like any other configuration.</p>
+
+<p>The important thing to understand as a general user of Vagrant is that
+<em>within a single configuration section</em>, only a single version can be used.
+You can&#39;t use the new <code>config.vm.provider</code> configurations in a version 1
+configuration section. Likewise, <code>config.vm.forward_port</code> won&#39;t work
+in a version 2 configuration section (it was renamed).</p>
+
+<p>If you want, you can mix and match multiple configuration versions in the
+same Vagrantfile. This is useful if you found some useful configuration
+snippet or something that you want to use. Example:</p>
+
+<pre><code class="ruby">Vagrant.configure(&quot;1&quot;) do |config|
+  # v1 configs...
+end
+
+Vagrant.configure(&quot;2&quot;) do |config|
+  # v2 configs...
+end
+</code></pre>
+
+<div class="alert alert-info">
+    <p>
+        <strong>What is <code>Vagrant::Config.run</code>?</strong>
+        You may see this in Vagrantfiles. This was actually how Vagrant 1.0.x
+        did configuration. In Vagrant 1.1+, this is synonymous with
+        <code>Vagrant.configure("1")</code>.
+    </p>
+</div>

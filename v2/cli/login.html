@@ -1,0 +1,50 @@
+<h1>Login</h1>
+
+<p><strong>Command: <code>vagrant login</code></strong></p>
+
+<p>The login command is used to authenticate with the
+<a href="https://atlas.hashicorp.com/">HashiCorp&#39;s Atlas</a> server. Logging is only
+necessary if you&#39;re accessing protected boxes or using
+<a href="javascript:$('#contentWrap').load('share/index.html');" >Vagrant Share</a>.</p>
+
+<p><strong>Logging in is not a requirement to use Vagrant.</strong> The vast majority
+of Vagrant does <em>not</em> require a login. Only certain features such as protected
+boxes or <a href="javascript:$('#contentWrap').load('share/index.html');" >Vagrant Share</a> require a login.</p>
+
+<p>The reference of available command-line flags to this command
+is available below.</p>
+
+<h2>Options</h2>
+
+<ul>
+<li><p><code>--check</code> - This will check if you&#39;re logged in. In addition to outputting
+whether you&#39;re logged in or not, the command will have exit status 0 if you&#39;re
+logged in, and exit status 1 if you&#39;re not.</p></li>
+<li><p><code>--logout</code> - This will log you out if you&#39;re logged in. If you&#39;re already
+logged out, this command will do nothing. It is not an error to call this
+command if you&#39;re already logged out.</p></li>
+<li><p><code>--token</code> - This will set the Atlas login token manually to the provided
+string. It is assumed this token is a valid Atlas access token.</p></li>
+</ul>
+
+<h2>Examples</h2>
+
+<p>Securely authenticate to Atlas using a username and password:</p>
+
+<pre><code class="text">$ vagrant login
+# ...
+Atlas username:
+Atlas password:
+</code></pre>
+
+<p>Check if the current user is authenticated:</p>
+
+<pre><code class="text">$ vagrant login --check
+You are already logged in.
+</code></pre>
+
+<p>Securely authenticate with Atlas using a token:</p>
+
+<pre><code class="text">$ vagrant login --token ABCD1234
+The token was successfully saved.
+</code></pre>

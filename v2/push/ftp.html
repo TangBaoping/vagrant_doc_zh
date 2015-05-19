@@ -1,0 +1,46 @@
+<h1>Vagrant Push</h1>
+
+<h2>FTP &amp; SFTP Strategy</h2>
+
+<p>Vagrant Push FTP and SFTP strategy pushes the code in your Vagrant development
+environment to a remote FTP or SFTP server.</p>
+
+<p>The Vagrant Push FTP And SFTP strategy supports the following configuration
+options:</p>
+
+<ul>
+<li><p><code>host</code> - The address of the remote (S)FTP server. If the (S)FTP server is
+running on a non-standard port, you can specify the port after the address
+(<code>host:port</code>).</p></li>
+<li><p><code>username</code> - The username to use for authentication with the (S)FTP server.</p></li>
+<li><p><code>password</code> - The password to use for authentication with the (S)FTP server.</p></li>
+<li><p><code>passive</code> - Use passive FTP (default is true).</p></li>
+<li><p><code>secure</code> - Use secure (SFTP) (default is false).</p></li>
+<li><p><code>destination</code> - The root destination on the target system to sync the files
+(default is <code>/</code>).</p></li>
+<li><p><code>exclude</code> - Add a file or file pattern to exclude from the upload, relative to
+the <code>dir</code>. This value may be specified multiple times and is additive.
+<code>exclude</code> take precedence over <code>include</code> values.</p></li>
+<li><p><code>include</code> - Add a file or file pattern to include in the upload, relative to
+the <code>dir</code>. This value may be specified multiple times and is additive.</p></li>
+<li><p><code>dir</code> - The base directory containing the files to upload. By default this is
+the same directory as the Vagrantfile, but you can specify this if you have
+a <code>src</code> folder or <code>bin</code> folder or some other folder you want to upload.</p></li>
+</ul>
+
+<h3>Usage</h3>
+
+<p>The Vagrant Push FTP and SFTP strategy is defined in the <code>Vagrantfile</code> using the
+<code>ftp</code> key:</p>
+
+<pre><code class="ruby">config.push.define &quot;ftp&quot; do |push|
+  push.host = &quot;ftp.company.com&quot;
+  push.username = &quot;username&quot;
+  push.password = &quot;password&quot;
+end
+</code></pre>
+
+<p>And then push the application to the FTP or SFTP server:</p>
+
+<pre><code class="shell">$ vagrant push
+</code></pre>

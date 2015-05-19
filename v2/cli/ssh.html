@@ -1,0 +1,20 @@
+<h1>SSH</h1>
+
+<p><strong>Command: <code>vagrant ssh</code></strong></p>
+
+<p>This will SSH into a running Vagrant machine and give you access to a shell.</p>
+
+<p>If a <code>--</code> (two hyphens) are found on the command line, any arguments after
+this are passed directly into the <code>ssh</code> executable. This allows you to pass
+any arbitrary commands to do things such as reverse tunneling down into the
+<code>ssh</code> program.</p>
+
+<h2>Options</h2>
+
+<ul>
+<li><p><code>-c COMMAND</code> or <code>--command COMMAND</code> - This executes a single SSH command, prints
+out the stdout and stderr, and exits. stdin will not be functional on this
+executed command.</p></li>
+<li><p><code>-p</code> or <code>--plain</code> - This does an SSH without authentication, leaving
+authentication up to the user.</p></li>
+</ul>

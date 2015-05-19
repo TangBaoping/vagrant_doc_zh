@@ -1,0 +1,63 @@
+<h1>Plugin Usage</h1>
+
+<p>Installing a plugin is easy, and shouldn&#39;t take more than a few seconds.</p>
+
+<p>Please refer to the documentation of any plugin you plan on using for
+more information on how to use it, but there is one common method for
+installation and plugin activation.</p>
+
+<div class="alert alert-warn">
+    <p>
+        <strong>Warning!</strong> 3rd party plugins can introduce instabilities
+        into Vagrant due to the nature of them being written by non-core users.
+    </p>
+</div>
+
+<h2>Installation</h2>
+
+<p>Plugins are installed using <code>vagrant plugin install</code>:</p>
+
+<pre><code>$ vagrant plugin install vagrant-example-plugin
+...
+</code></pre>
+
+<p>Once a plugin is installed, it will automatically be loaded by Vagrant.
+Plugins which cannot be loaded shouldn&#39;t crash Vagrant. Instead,
+Vagrant will show an error message that a plugin failed to load.</p>
+
+<h2>Usage</h2>
+
+<p>Once a plugin is installed, you should refer to the plugin&#39;s documentation
+to see exactly how to use it. Plugins which add commands should be instantly
+available via <code>vagrant</code>, provisioners should be available via
+<code>config.vm.provision</code>, etc.</p>
+
+<p><strong>Note:</strong> In the future, the <code>vagrant plugin</code> command will include a
+subcommand that will document the components that each plugin installs.</p>
+
+<h2>Updating</h2>
+
+<p>Plugins can be updated by running <code>vagrant plugin update</code>. This will
+update every installed plugin to the latest version. You can update a
+specific plugin by calling <code>vagrant plugin update NAME</code>. Vagrant will
+output what plugins were updated and to what version.</p>
+
+<p>To determine the changes in a specific version of a plugin, refer to
+the plugin&#39;s homepage (usually a GitHub page or similar). It is the
+plugin author&#39;s responsibility to provide a change log if he or she
+chooses to.</p>
+
+<h2>Uninstallation</h2>
+
+<p>Uninstalling a plugin is as easy as installing it. Just use the
+<code>vagrant plugin uninstall</code> command and the plugin will be removed. Example:</p>
+
+<pre><code>$ vagrant plugin uninstall vagrant-example-plugin
+...
+</code></pre>
+
+<h2>Listing Plugins</h2>
+
+<p>To view what plugins are installed into your Vagrant environment at
+any time, use the <code>vagrant plugin list</code> command. This will list the plugins
+that are installed along with their version.</p>

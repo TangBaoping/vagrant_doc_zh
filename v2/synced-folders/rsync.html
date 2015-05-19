@@ -1,0 +1,81 @@
+<h1>RSync</h1>
+
+<p><strong>Synced folder type:</strong> <code>rsync</code></p>
+
+<p>Vagrant can use <a href="javascript:if(confirm(%27http://en.wikipedia.org/wiki/Rsync  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://en.wikipedia.org/wiki/Rsync%27" tppabs="http://en.wikipedia.org/wiki/Rsync">rsync</a> as a mechanism
+to sync a folder to the guest machine. This synced folder type is useful
+primarily in situations where other synced folder mechanisms are not available,
+such as when NFS or VirtualBox shared folders aren&#39;t available in the guest
+machine.</p>
+
+<p>The rsync synced folder does a one-time one-way sync from the machine running
+to the machine being started by Vagrant.</p>
+
+<p>The <a href="../cli/rsync.html" tppabs="http://docs.vagrantup.com/v2/cli/rsync.html">rsync</a> and <a href="../cli/rsync-auto.html" tppabs="http://docs.vagrantup.com/v2/cli/rsync-auto.html">rsync-auto</a>
+commands can be used to force a resync and to automatically resync when
+changes occur in the filesystem. Without running these commands, Vagrant
+only syncs the folders on <code>vagrant up</code> or <code>vagrant reload</code>.</p>
+
+<h2>Prerequisites</h2>
+
+<p>To use the rsync synced folder type, the machine running Vagrant must have
+<code>rsync</code> (or <code>rsync.exe</code>) on the path. This executable is expected to behave
+like the standard rsync tool.</p>
+
+<p>On Windows, rsync installed with Cygwin or MinGW will be detected by
+Vagrant and works well.</p>
+
+<p>The destination machine must also have rsync installed, but Vagrant
+can automatically install rsync into many operating systems. If Vagrant
+is unable to automatically install rsync for your operating system,
+it will tell you.</p>
+
+<p>The destination folder will be created as the user initiating the connection,
+this is <code>vagrant</code> by default. This user requires the appropiate permissions on
+the destination folder.</p>
+
+<h2>Options</h2>
+
+<p>The rsync synced folder type accepts the following options:</p>
+
+<ul>
+<li><p><code>rsync__args</code> (array of strings) - A list of arguments to supply
+to <code>rsync</code>. By default this is <code>[&quot;--verbose&quot;, &quot;--archive&quot;, &quot;--delete&quot;, &quot;-z&quot;, &quot;--copy-links&quot;]</code>.</p></li>
+<li><p><code>rsync__auto</code> (boolean) - If false, then <code>rsync-auto</code> will not
+watch and automatically sync this folder. By default, this is true.</p></li>
+<li><p><code>rsync__chown</code> (boolean) - If false, then the
+<a href="basic_usage.html" tppabs="http://docs.vagrantup.com/v2/synced-folders/basic_usage.html"><code>owner</code> and <code>group</code></a>
+options for the synced folder are ignored and Vagrant won&#39;t execute
+a recursive <code>chown</code>. This defaults to true. This option exists because
+the <code>chown</code> causes issues for some development environments. Note that
+any <code>rsync__args</code> options for ownership <strong>will be overridden</strong> by
+<code>rsync__chown</code>.</p></li>
+<li><p><code>rsync__exclude</code> (string or array of strings) - A list of files or directories
+to exclude from the sync. The values can be any acceptable rsync exclude
+pattern. By default, the &quot;.vagrant/&quot; directory is excluded. We recommend
+excluding revision control directories such as &quot;.git/&quot; as well.</p></li>
+</ul>
+
+<h2>Example</h2>
+
+<p>The following is an example of using RSync to sync a folder:</p>
+
+<pre class="prettyprint">
+Vagrant.configure("2") do |config|
+  config.vm.synced_folder ".", "/vagrant", type: "rsync",
+    rsync__exclude: ".git/"
+end
+</pre>
+
+<h2>Rsync to a restricted folder</h2>
+
+<p>If required to copy to a destination where <code>vagrant</code> user doesn&#39;t have
+permissions, use <code>&quot;--rsync-path=&#39;sudo rsync&#39;&quot;</code> to run rsync with sudo on the guest</p>
+
+<pre class="prettyprint">
+Vagrant.configure("2") do |config|
+  config.vm.synced_folder "bin", "/usr/local/bin", type: "rsync",
+    rsync__exclude: ".git/",
+    rsync__args: ["--verbose", "--rsync-path='sudo rsync'", "--archive", "--delete", "-z"]
+end
+</pre>

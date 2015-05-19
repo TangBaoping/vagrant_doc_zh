@@ -1,0 +1,70 @@
+<h1>SMB</h1>
+
+<p><strong>Synced folder type:</strong> <code>smb</code></p>
+
+<p>Vagrant can use <a href="javascript:if(confirm(%27http://en.wikipedia.org/wiki/Server_Message_Block  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://en.wikipedia.org/wiki/Server_Message_Block%27" tppabs="http://en.wikipedia.org/wiki/Server_Message_Block">SMB</a>
+as a mechanism to create a bi-directional synced folder between the host
+machine and the Vagrant machine.</p>
+
+<p>SMB is built-in to Windows machines and provides a higher performance
+alternative to some other mechanisms such as VirtualBox shared folders.</p>
+
+<div class="alert alert-info">
+    <p>
+        <strong>Windows only!</strong> SMB is currently only supported
+        when the host machine is Windows. The guest machine can be Windows
+        or Linux.
+    </p>
+</div>
+
+<h2>Prerequisites</h2>
+
+<p>To use the SMB synced folder type, the machine running Vagrant must be
+a Windows machine. In addition to this, the command prompt executing Vagrant
+must have administrative privileges. Vagrant requires these privileges in
+order to create new network folder shares.</p>
+
+<p>The destination machine must be able to mount SMB filesystems. On Linux
+the package to do this is usually called <code>smbfs</code> or <code>cifs</code>. Vagrant knows
+how to automatically install this for some operating systems.</p>
+
+<h2>Options</h2>
+
+<p>The SMB synced folder type has a variety of options it accepts:</p>
+
+<ul>
+<li><p><code>smb_host</code> (string) - The host IP where the SMB mount is located. If this
+isn&#39;t specified, Vagrant will attempt to determine this automatically.</p></li>
+<li><p><code>smb_password</code> (string) - The password used for authentication to mount
+the SMB mount. This is the password for the username specified by
+<code>smb_username</code>. If this is not specified, Vagrant will prompt you for it.
+It is highly recommended that you do not set this, since it would expose
+your password directly in your Vagrantfile.</p></li>
+<li><p><code>smb_username</code> (string) - The username used for authentication to mount
+the SMB mount. This is the username to access the mount, <em>not</em> the username
+of the account where the folder is being mounted to. This is usually your
+Windows username. If this isn&#39;t specified, Vagrant will prompt you for
+it.</p></li>
+</ul>
+
+<h2>Example</h2>
+
+<p>The following is an example of using SMB to sync a folder:</p>
+
+<pre class="prettyprint">
+Vagrant.configure("2") do |config|
+  config.vm.synced_folder ".", "/vagrant", type: "smb"
+end
+</pre>
+
+<h2>Limitations</h2>
+
+<p>Because SMB is a relatively new synced folder type in Vagrant, it still
+has some rough edges. Hopefully, future versions of Vagrant will address
+these.</p>
+
+<p>The primary limitation of SMB synced folders at the moment is that they are
+never pruned or cleaned up. Once the folder share is defined, Vagrant never
+removes it. To clean up SMB synced folder shares, periodically run
+<code>net share</code> in a command prompt, find the shares you don&#39;t want, then
+run <code>net share NAME /delete</code> for each, where NAME is the name of the share.</p>

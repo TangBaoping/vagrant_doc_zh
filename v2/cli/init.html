@@ -1,0 +1,25 @@
+<h1>Init</h1>
+
+<p><strong>Command: <code>vagrant init [box-name] [box-url]</code></strong></p>
+
+<p>This initializes the current directory to be a Vagrant environment
+by creating an initial <a href="javascript:$('#contentWrap').load('vagrantfile/index.html');" >Vagrantfile</a> if
+one doesn&#39;t already exist.</p>
+
+<p>If a first argument is given, it will prepopulate the <code>config.vm.box</code>
+setting in the created Vagrantfile.</p>
+
+<p>If a second argument is given, it will prepopulate the <code>config.vm.box_url</code>
+setting in the created Vagrantfile.</p>
+
+<h2>Options</h2>
+
+<ul>
+<li><p><code>--force</code> - If specified, this command will overwite any existing
+<code>Vagrantfile</code>.</p></li>
+<li><p><code>--minimal</code> - If specified, a minimal Vagrantfile will be created. This
+Vagrantfile does not contain the instructional comments that the normal
+Vagrantfile contains.</p></li>
+<li><p><code>--output FILE</code> - This will output the Vagrantfile to the given file.
+If this is &quot;-&quot;, the Vagrantfile will be sent to stdout.</p></li>
+</u

@@ -1,0 +1,162 @@
+<h1>Shell Provisioner</h1>
+
+<p><strong>Provisioner name: <code>&quot;shell&quot;</code></strong></p>
+
+<p>The shell provisioner allows you to upload and execute a script within
+the guest machine.</p>
+
+<p>Shell provisioning is ideal for users new to Vagrant who want to get up
+and running quickly and provides a strong alternative for users who aren&#39;t
+comfortable with a full configuration management system such as Chef or
+Puppet.</p>
+
+<p>For POSIX-like machines, the shell provisioner executes scripts with
+SSH. For Windows guest machines that are configured to use WinRM, the
+shell provisioner executes PowerShell and Batch scripts over WinRM.</p>
+
+<h2>Options</h2>
+
+<p>The shell provisioner takes various options. One of <code>inline</code> or <code>path</code>
+is required:</p>
+
+<ul>
+<li><p><code>inline</code> (string) - Specifies a shell command inline to execute on the
+remote machine. See the <a href="#inline-scripts">inline scripts</a> section below
+for more information.</p></li>
+<li><p><code>path</code> (string) - Path to a shell script to upload and execute. It can be a
+script relative to the project Vagrantfile or a remote script (like a <a href="javascript:if(confirm(%27http://gist.github.com/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://gist.github.com/%27" tppabs="http://gist.github.com/">gist</a>).</p></li>
+</ul>
+
+<p>The remainder of the available options are optional:</p>
+
+<ul>
+<li><p><code>args</code> (string or array) - Arguments to pass to the shell script when executing it
+as a single string. These arguments must be written as if they were typed
+directly on the command line, so be sure to escape characters, quote,
+etc. as needed. You may also pass the arguments in using an array. In this
+case, Vagrant will handle quoting for you.</p></li>
+<li><p><code>binary</code> (boolean) - Vagrant automatically replaces Windows line endings with
+Unix line endings. If this is true, then Vagrant will not do this. By default
+this is &quot;false&quot;. If the shell provisioner is communicating over WinRM, this
+defaults to &quot;true&quot;.</p></li>
+<li><p><code>privileged</code> (boolean) - Specifies whether to execute the shell script
+as a privileged user or not (<code>sudo</code>). By default this is &quot;true&quot;. This has
+no effect for Windows guests.</p></li>
+<li><p><code>upload_path</code> (string) - Is the remote path where the shell script will
+be uploaded to. The script is uploaded as the SSH user over SCP, so this
+location must be writable to that user. By default this is
+&quot;/tmp/vagrant-shell&quot;. On Windows, this will default to
+&quot;C:\tmp\vagrant-shell&quot;.</p></li>
+<li><p><code>keep_color</code> (boolean) - Vagrant automatically colors output in green and
+red depending on whether the output is from stdout or stderr. If this is
+true, Vagrant will not do this, allowing the native colors from the script
+to be outputted.</p></li>
+<li><p><code>powershell_args</code> (string) - Extra arguments to pass to <code>PowerShell</code>
+if you&#39;re provisioning with PowerShell on Windows.</p></li>
+</ul>
+
+<p><a name="inline-scripts"></a></p>
+
+<h2>Inline Scripts</h2>
+
+<p>Perhaps the easiest way to get started is with an inline script. An
+inline script is a script that is given to Vagrant directly within
+the Vagrantfile. An example is best:</p>
+
+<pre><code class="ruby">Vagrant.configure(&quot;2&quot;) do |config|
+  config.vm.provision &quot;shell&quot;,
+    inline: &quot;echo Hello, World&quot;
+end
+</code></pre>
+
+<p>This causes <code>echo Hello, World</code> to be run within the guest machine when
+provisioners are run.</p>
+
+<p>Combined with a little bit more Ruby, this makes it very easy to embed
+your shell scripts directly within your Vagrantfile. Another example below:</p>
+
+<pre><code class="ruby">$script = &lt;&lt;SCRIPT
+echo I am provisioning...
+date &gt; /etc/vagrant_provisioned_at
+SCRIPT
+
+Vagrant.configure(&quot;2&quot;) do |config|
+  config.vm.provision &quot;shell&quot;, inline: $script
+end
+</code></pre>
+
+<p>I understand that if you&#39;re not familiar with Ruby, the above may seem very
+advanced or foreign. But don&#39;t fear, what it is doing is quite simple:
+the script is assigned to a global variable <code>$script</code>. This global variable
+contains a string which is then passed in as the inline script to the
+Vagrant configuration.</p>
+
+<p>Of course, if any Ruby in your Vagrantfile outside of basic variable assignment
+makes you uncomfortable, you can use an actual script file, documented in
+the next section.</p>
+
+<p>For Windows guest machines, the inline script <em>must</em> be PowerShell. Batch
+scripts are not allowed as inline scripts.</p>
+
+<h2>External Script</h2>
+
+<p>The shell provisioner can also take an option specifying a path to
+a shell script on the host machine. Vagrant will then upload this script
+into the guest and execute it. An example:</p>
+
+<pre><code class="ruby">Vagrant.configure(&quot;2&quot;) do |config|
+  config.vm.provision &quot;shell&quot;, path: &quot;script.sh&quot;
+end
+</code></pre>
+
+<p>Relative paths, such as above, are expanded relative to the location
+of the root Vagrantfile for your project. Absolute paths can also be used,
+as well as shortcuts such as <code>~</code> (home directory) and <code>..</code> (parent directory).</p>
+
+<p>If you use a remote script as part of your provisioning process, you can pass in
+its URL as the <code>path</code> argument as well:</p>
+
+<pre><code class="ruby">Vagrant.configure(&quot;2&quot;) do |config|
+  config.vm.provision &quot;shell&quot;, path: &quot;https://example.com/provisioner.sh&quot;
+end
+</code></pre>
+
+<p>If you&#39;re running a Batch of PowerShell script for Windows, make sure
+that the external path has the proper extension (&quot;.bat&quot; or &quot;.ps1&quot;), because
+Windows uses this to determine what kind fo file it is to execute. If you
+exclude this extension, it likely won&#39;t work.</p>
+
+<p>To run a script already available on the guest you can use an inline script to
+invoke the remote script on the guest.</p>
+
+<pre><code class="ruby">Vagrant.configure(&quot;2&quot;) do |config|
+  config.vm.provision &quot;shell&quot;,
+    inline: &quot;/bin/sh /path/to/the/script/already/on/the/guest.sh&quot;
+end
+</code></pre>
+
+<h2>Script Arguments</h2>
+
+<p>You can parameterize your scripts as well like any normal shell script.
+These arguments can be specified to the shell provisioner. They should
+be specified as a string as they&#39;d be typed on the command line, so
+be sure to properly escape anything:</p>
+
+<pre><code class="ruby">Vagrant.configure(&quot;2&quot;) do |config|
+  config.vm.provision &quot;shell&quot; do |s|
+    s.inline = &quot;echo $1&quot;
+    s.args   = &quot;&#39;hello, world!&#39;&quot;
+  end
+end
+</code></pre>
+
+<p>You can also specify arguments an array if you don&#39;t want to worry about
+quoting:</p>
+
+<pre><code class="ruby">Vagrant.configure(&quot;2&quot;) do |config|
+  config.vm.provision &quot;shell&quot; do |s|
+    s.inline = &quot;echo $1&quot;
+    s.args   = [&quot;hello, world!&quot;]
+  end
+end
+</code></pre>

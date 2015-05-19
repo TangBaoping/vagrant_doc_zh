@@ -1,0 +1,105 @@
+<h1>NFS</h1>
+
+<p>In some cases the default shared folder implementations (such as VirtualBox
+shared folders) have high performance penalties. If you&#39;re seeing less
+than ideal performance with synced folders, <a href="javascript:if(confirm(%27http://en.wikipedia.org/wiki/Network_File_System_%28protocol%29  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://en.wikipedia.org/wiki/Network_File_System_%28protocol%29%27" tppabs="http://en.wikipedia.org/wiki/Network_File_System_%28protocol%29">NFS</a>
+can offer a solution. Vagrant has built-in support to orchestrate the
+configuration of the NFS server on the host and guest for you.</p>
+
+<div class="alert alert-info">
+    <p>
+        <strong>Windows users:</strong> NFS folders do not work on Windows
+        hosts. Vagrant will ignore your request for NFS synced folders on
+        Windows.
+    </p>
+</div>
+
+<h2>Prerequisites</h2>
+
+<p>Before using synced folders backed by NFS, the host machine must have
+<code>nfsd</code> installed, the NFS server daemon. This comes pre-installed on Mac
+OS X, and is typically a simple package install on Linux.</p>
+
+<p>Additionally, the guest machine must have NFS support installed. This is
+also usually a simple package installation away.</p>
+
+<p>If you&#39;re using the VirtualBox provider, you&#39;ll also need to make sure you
+have a
+<a href="../networking/private_network.html" tppabs="http://docs.vagrantup.com/v2/networking/private_network.html">private network set up</a>. This is due to a limitation of VirtualBox&#39;s built-in networking. With
+VMware, you do not need this.</p>
+
+<h2>Enabling NFS Synced Folders</h2>
+
+<p>To enable NFS, just add the <code>type: &quot;nfs&quot;</code> flag onto your synced folder:</p>
+
+<pre><code class="ruby">Vagrant.configure(&quot;2&quot;) do |config|
+  # ...
+
+  config.vm.synced_folder &quot;.&quot;, &quot;/vagrant&quot;, type: &quot;nfs&quot;
+end
+</code></pre>
+
+<p>If you add this to an existing Vagrantfile that has a running guest machine,
+be sure to <code>vagrant reload</code> to see your changes.</p>
+
+<h2>NFS Synced Folder Options</h2>
+
+<p>NFS synced folders have a set of options that can be specified that are
+unique to NFS. These are listed below. These options can be specified in
+the final part of the <code>config.vm.synced_folder</code> definition, along with the
+<code>type</code> option.</p>
+
+<ul>
+<li><p><code>nfs_export</code> (boolean) - If this is false, then Vagrant won&#39;t modify
+your <code>/etc/exports</code> automatically and assumes you&#39;ve done so already.</p></li>
+<li><p><code>nfs_udp</code> (boolean) - Whether or not to use UDP as the transport. UDP
+is faster but has some limitations (see the NFS documentation for more
+details). This defaults to true.</p></li>
+<li><p><code>nfs_version</code> (string | integer) - The NFS protocol version to use when
+mounting the folder on the guest. This defaults to 3.</p></li>
+</ul>
+
+<h2>Root Privilege Requirement</h2>
+
+<p>To configure NFS, Vagrant must modify system files on the host. Therefore,
+at some point during the <code>vagrant up</code> sequence, you may be prompted for
+administrative privileges (via the typical <code>sudo</code> program). These
+privileges are used to modify <code>/etc/exports</code> as well as to start and
+stop the NFS server daemon.</p>
+
+<p>If you don&#39;t want to type your password on every <code>vagrant up</code>, Vagrant
+uses thoughtfully crafted commands to make fine-grained sudoers modifications
+possible to avoid entering your password.</p>
+
+<p>Below, we have a couple example sudoers entries. Note that you may
+have to modify them <em>slightly</em> on certain hosts because the way Vagrant
+modifies <code>/etc/exports</code> changes a bit from OS to OS.</p>
+
+<p>For OS X, sudoers should have this entry:</p>
+
+<pre><code>Cmnd_Alias VAGRANT_EXPORTS_ADD = /usr/bin/tee -a /etc/exports
+Cmnd_Alias VAGRANT_NFSD = /sbin/nfsd restart
+Cmnd_Alias VAGRANT_EXPORTS_REMOVE = /usr/bin/sed -E -e /*/ d -ibak /etc/exports
+%admin ALL=(root) NOPASSWD: VAGRANT_EXPORTS_ADD, VAGRANT_NFSD, VAGRANT_EXPORTS_REMOVE
+</code></pre>
+
+<p>For Ubuntu Linux , sudoers should look like this:</p>
+
+<pre><code>Cmnd_Alias VAGRANT_EXPORTS_ADD = /usr/bin/tee -a /etc/exports
+Cmnd_Alias VAGRANT_NFSD_CHECK = /etc/init.d/nfs-kernel-server status
+Cmnd_Alias VAGRANT_NFSD_START = /etc/init.d/nfs-kernel-server start
+Cmnd_Alias VAGRANT_NFSD_APPLY = /usr/sbin/exportfs -ar
+Cmnd_Alias VAGRANT_EXPORTS_REMOVE = /bin/sed -r -e * d -ibak /etc/exports
+%sudo ALL=(root) NOPASSWD: VAGRANT_EXPORTS_ADD, VAGRANT_NFSD_CHECK, VAGRANT_NFSD_START, VAGRANT_NFSD_APPLY, VAGRANT_EXPORTS_REMOVE
+</code></pre>
+
+<p>For Fedora Linux, sudoers might look like this (given your user
+belongs to the vagrant group):</p>
+
+<pre><code>Cmnd_Alias VAGRANT_EXPORTS_ADD = /usr/bin/tee -a /etc/exports
+Cmnd_Alias VAGRANT_NFSD_CHECK = /usr/bin/systemctl status nfs-server.service
+Cmnd_Alias VAGRANT_NFSD_START = /usr/bin/systemctl start nfs-server.service
+Cmnd_Alias VAGRANT_NFSD_APPLY = /usr/sbin/exportfs -ar
+Cmnd_Alias VAGRANT_EXPORTS_REMOVE = /bin/sed -r -e * d -ibak /etc/exports
+%vagrant ALL=(root) NOPASSWD: VAGRANT_EXPORTS_ADD, VAGRANT_NFSD_CHECK, VAGRANT_NFSD_START, VAGRANT_NFSD_APPLY, VAGRANT_EXPORTS_REMOVE
+</code></pre>

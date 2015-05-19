@@ -1,0 +1,58 @@
+<h1>Plugin Development: Provisioners</h1>
+
+<p>This page documents how to add new <a href="../provisioning/index.html" tppabs="http://docs.vagrantup.com/v2/provisioning/">provisioners</a> to Vagrant,
+allowing Vagrant to automatically install software and configure software
+using a custom provisioner. Prior to reading this, you should be familiar
+with the <a href="development-basics.html" tppabs="http://docs.vagrantup.com/v2/plugins/development-basics.html">plugin development basics</a>.</p>
+
+<div class="alert alert-warn">
+    <p>
+        <strong>Warning: Advanced Topic!</strong> Developing plugins is an
+        advanced topic that only experienced Vagrant users who are reasonably
+        comfortable with Ruby should approach.
+    </p>
+</div>
+
+<h2>Definition Component</h2>
+
+<p>Within the context of a plugin definition, new provisioners can be defined
+like so:</p>
+
+<pre><code class="ruby">provisioner &quot;custom&quot; do
+  require_relative &quot;provisioner&quot;
+  Provisioner
+end
+</code></pre>
+
+<p>Provisioners are defined with the <code>provisioner</code> method, which takes a
+single argument specifying the name of the provisioner. This is the
+name that used with <code>config.vm.provision</code> when configuring and enabling
+the provisioner. So in the case above, the provisioner would be enabled
+using <code>config.vm.provision :custom</code>.</p>
+
+<p>The block argument then lazily loads and returns a class that implements
+the <code>Vagrant.plugin(2, :provisioner)</code> interface, which is covered next.</p>
+
+<h2>Provisioner Class</h2>
+
+<p>The provisioner class should subclass and implement
+<code>Vagrant.plugin(2, :provisioner)</code> which is an upgrade-safe way to let
+Vagrant return the proper parent class for provisioners.</p>
+
+<p>This class and the methods that need to be implemented are
+<a href="javascript:if(confirm(%27https://github.com/mitchellh/vagrant/blob/master/lib/vagrant/plugin/v2/provisioner.rb  \n\nThis file was not retrieved by Teleport Pro, because it is addressed using an unsupported protocol (e.g., gopher).  \n\nDo you want to open it from the server?%27))window.location=%27https://github.com/mitchellh/vagrant/blob/master/lib/vagrant/plugin/v2/provisioner.rb%27" tppabs="https://github.com/mitchellh/vagrant/blob/master/lib/vagrant/plugin/v2/provisioner.rb">very well documented</a>.
+The documentation on the class in the comments should be enough
+to understand what needs to be done.</p>
+
+<p>There are two main methods that need to be implemented: the
+<code>configure</code> method and the <code>provision</code> method.</p>
+
+<p>The <code>configure</code> method is called early in the machine booting process
+to allow the provisioner to define new configuration on the machine, such
+as sharing folders, defining networks, etc. As an example, the
+<a href="javascript:if(confirm(%27https://github.com/mitchellh/vagrant/blob/master/plugins/provisioners/chef/provisioner/chef_solo.rb  \n\nThis file was not retrieved by Teleport Pro, because it is addressed using an unsupported protocol (e.g., gopher).  \n\nDo you want to open it from the server?%27))window.location=%27https://github.com/mitchellh/vagrant/blob/master/plugins/provisioners/chef/provisioner/chef_solo.rb#L24%27" tppabs="https://github.com/mitchellh/vagrant/blob/master/plugins/provisioners/chef/provisioner/chef_solo.rb#L24">Chef solo provisioner</a>
+uses this to define shared folders.</p>
+
+<p>The <code>provision</code> method is called when the machine is booted and ready
+for SSH connections. In this method, the provisioner should execute
+any commands that need to be executed.</p>

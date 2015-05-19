@@ -1,0 +1,45 @@
+<h1>Boxes</h1>
+
+<p>从头开始创建一个虚拟机，因为这是一个漫长而乏味的过程，因此 Vagrant 是通过基础镜像包来实现快速克隆创建虚拟机的。这些基础镜像包在 Vagrant 中被称为 <em>boxes</em> ，
+而在创建 Vagrantfile 文件后的第一件事情就是指定 Vagrant 环境使用哪一个 Box。</p>
+
+<h2>安装 Box</h2>
+
+<p>如果你之前按照 <a href="javascript:$('#contentWrap').load('getting-started/index.html')" >入门指引</a>首页执行了命令，那么你现在已经安装好了一个 Box，因此不必再次执行下面的命令了。虽然如此，本章节还是值得一读，这将学会如何管理 boxes。</p>
+
+<p>Boxes 是通过 <code>vagrant box add</code> 命令来添加到 Vagrant 中的， This stores the box
+under a specific name so that multiple Vagrant environments can re-use it.
+If you haven&#39;t added a box yet, you can do so now:</p>
+
+<pre><code>$ vagrant box add hashicorp/precise32
+</code></pre>
+
+<p>这将从 <a href="https://atlas.hashicorp.com/boxes/search">HashiCorp&#39;s Atlas box catalog</a> 这个专门用来存放 boxes 的地方下载一个名叫  &quot;hashicorp/precise32&quot; 的 box。你不但可以从   HashiCorp&#39;s Atlas 下载boxes，其外还可以从本地文件、自定义 URL 等方式添加 boxes。</p>
+
+<p>已经添加了的 boxes 可以被多个项目重复使用。每个项目其实是从 box 克隆并初始化出一个镜像，不会对原有的 box 基础镜像进行任何修改。所以，当你两个项目都使用了 <code>hashicorp/precise32</code> 这个 box，你在其中一个项目虚拟机中添加了文件，不会对另外一个项目中的虚拟机造成任何影响。</p>
+
+<h2>使用 Box</h2>
+
+<p>现在，我们已经将 box 添加到了 Vagrant 中，我们需要对我们的项目进行配置，才能将这个项目作为我们今后的基础环境。打开 <code>Vagrantfile</code> 文件，对其内容依照以下进行编辑：</p>
+
+<pre><code class="ruby">Vagrant.configure(&quot;2&quot;) do |config|
+  config.vm.box = &quot;hashicorp/precise32&quot;
+end
+</code></pre>
+
+<p> &quot;hashicorp/precise32&quot; 这个名字必须和你前面添加进去的 box 名称相同。 Vagrant 是根据这个名字去判断进行哪种操作的。如果你之前没有添加过 box，当你运行 Vagrant 时它会根据这个名字自动下载并添加该 box 进来。</p>
+
+<p>In the next section, we&#39;ll bring up the Vagrant environment and interact
+with it a little bit.</p>
+
+<h2>查找更多的 Boxes</h2>
+
+<p>在 入门指引 中，我们只用到了在前面就已经添加了的 &quot;hashicorp/precise32&quot; 这个 box， 但在完成了入门指引后，你可能首先会想到的问题是 &quot;在哪里可找到更多 Boxes?&quot;？</p>
+
+<p>查找 Boxes 最好的地方就是  <a href="https://atlas.hashicorp.com/boxes/search" target="_blank">HashiCorp&#39;s Atlas box catalog</a>。
+HashiCorp&#39;s Atlas 拥有一个存放大量免费且适用于各种平台的 Boxes 公共目录。HashiCorp&#39;s Atlas 拥有良好的搜索功能，因此你可以快速查找到自己想要的 Boxes。</p>
+
+<p>除了查找下载 Boxes, HashiCorp&#39;s Atlas 还允许你存放自己的 Boxes，此外还支持存放企业内部使用的私有 Boxes。</p>
+
+<p><a href="javascript:$('#contentWrap').load('getting-started/project_setup.html')"  class="button inline-button prev-button">项目的建立</a>
+<a href="javascript:$('#contentWrap').load('getting-started/up.html')" class="button inline-button next-button">启动和SSH登录</a></p>

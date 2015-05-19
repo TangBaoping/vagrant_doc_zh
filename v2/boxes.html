@@ -1,0 +1,42 @@
+<h1>Boxes</h1>
+
+<p>Boxes are the package format for Vagrant environments. A box can be used by
+anyone on any platform that Vagrant supports to bring up an identical
+working environment.</p>
+
+<p>The <code>vagrant box</code> utility provides all the functionality for managing
+boxes. You can read the documentation on the <a href="cli/box.html" tppabs="http://docs.vagrantup.com/v2/cli/box.html">vagrant box</a>
+command for more information.</p>
+
+<p>The easiest way to use a box is to add a box from the
+<a href="javascript:if(confirm(%27https://atlas.hashicorp.com/boxes/search  \n\nThis file was not retrieved by Teleport Pro, because it is addressed using an unsupported protocol (e.g., gopher).  \n\nDo you want to open it from the server?%27))window.location=%27https://atlas.hashicorp.com/boxes/search%27" tppabs="https://atlas.hashicorp.com/boxes/search">publicly available catalog of Vagrant boxes</a>.
+You can also add and share your own customized boxes on this website.</p>
+
+<p>Boxes also support versioning so that members of your team using Vagrant
+can update the underlying box easily, and the people who create boxes
+can push fixes and communicate these fixes efficiently.</p>
+
+<p>You can learn all about boxes by reading this page as well as the
+sub-pages in the navigation to the left.</p>
+
+<h2>Discovering Boxes</h2>
+
+<p>The easiest way to find boxes is to look on the
+<a href="javascript:if(confirm(%27https://atlas.hashicorp.com/boxes/search  \n\nThis file was not retrieved by Teleport Pro, because it is addressed using an unsupported protocol (e.g., gopher).  \n\nDo you want to open it from the server?%27))window.location=%27https://atlas.hashicorp.com/boxes/search%27" tppabs="https://atlas.hashicorp.com/boxes/search">public Vagrant box catalog</a>
+for a box matching your use case. The catalog contains most major operating
+systems as bases, as well as specialized boxes to get you up and running
+quickly with LAMP stacks, Ruby, Python, etc.</p>
+
+<p>The boxes on the public catalog work with many different
+<a href="providers/index.html" tppabs="http://docs.vagrantup.com/v2/providers/">providers</a>. Whether you&#39;re using Vagrant with
+VirtualBox, VMware, AWS, etc. you should be able to find a box you need.</p>
+
+<p>Adding a box from the catalog is very easy. Each box shows you instructions
+with how to add it, but they all follow the same format:</p>
+
+<pre><code>$ vagrant box add USER/BOX
+...
+</code></pre>
+
+<p>For example: <code>vagrant box add hashicorp/precise64</code>. You can also quickly
+initialize a Vagrant environment with <code>vagrant init hashicorp/precise64</code>.</p>

@@ -1,0 +1,103 @@
+<h1>Plugin Development: Packaging &amp; Distribution</h1>
+
+<p>This page documents how to organize the file structure of your plugin
+and distribute it so that it is installable using
+<a href="usage.html" tppabs="http://docs.vagrantup.com/v2/plugins/usage.html">standard installation methods</a>.
+Prior to reading this, you should be familiar
+with the <a href="development-basics.html" tppabs="http://docs.vagrantup.com/v2/plugins/development-basics.html">plugin development basics</a>.</p>
+
+<div class="alert alert-warn">
+    <p>
+        <strong>Warning: Advanced Topic!</strong> Developing plugins is an
+        advanced topic that only experienced Vagrant users who are reasonably
+        comfortable with Ruby should approach.
+    </p>
+</div>
+
+<h2>Example Plugin</h2>
+
+<p>The best way to describe packaging and distribution is to look at
+how another plugin does it. The best example plugin available for this
+is <a href="javascript:if(confirm(%27https://github.com/mitchellh/vagrant-aws  \n\nThis file was not retrieved by Teleport Pro, because it is addressed using an unsupported protocol (e.g., gopher).  \n\nDo you want to open it from the server?%27))window.location=%27https://github.com/mitchellh/vagrant-aws%27" tppabs="https://github.com/mitchellh/vagrant-aws">vagrant-aws</a>.</p>
+
+<p>By using <a href="javascript:if(confirm(%27http://gembundler.com/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://gembundler.com/%27" tppabs="http://gembundler.com/">Bundler</a> and Rake, building a new
+vagrant-aws package is easy. By simply calling <code>rake package</code>, a
+<code>gem</code> file is dropped into the directory. By calling <code>rake release</code>,
+the gem is built and it is uploaded to the central <a href="javascript:if(confirm(%27http://rubygems.org/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://rubygems.org/%27" tppabs="http://rubygems.org/">RubyGems</a>
+repository so that it can be installed using <code>vagrant plugin install</code>.</p>
+
+<p>Your plugin can and should be this easy, too, since you basically
+get this for free by using Bundler.</p>
+
+<h2>Setting Up Your Project</h2>
+
+<p>To setup your project, run <code>bundle gem vagrant-my-plugin</code>. This will create a
+<code>vagrant-my-plugin</code> directory that has the initial layout to be a RubyGem.</p>
+
+<p>You should modify the <code>vagrant-my-plugin.gemspec</code> file to add any
+dependencies and change any metadata. View the <a href="javascript:if(confirm(%27https://github.com/mitchellh/vagrant-aws/blob/master/vagrant-aws.gemspec  \n\nThis file was not retrieved by Teleport Pro, because it is addressed using an unsupported protocol (e.g., gopher).  \n\nDo you want to open it from the server?%27))window.location=%27https://github.com/mitchellh/vagrant-aws/blob/master/vagrant-aws.gemspec%27" tppabs="https://github.com/mitchellh/vagrant-aws/blob/master/vagrant-aws.gemspec">vagrant-aws.gemspec</a>
+for a good example.</p>
+
+<div class="alert alert-warn">
+    <p>
+        <strong>Do not depend on Vagrant</strong> for your gem. Vagrant
+        is no longer distributed as a gem, and you can assume that it will
+        always be available when your plugin is installed.
+    </p>
+</div>
+
+<p>Once the directory structure for a RubyGem is setup, you&#39;ll want
+to modify your Gemfile. Here is the basic structure of a Gemfile for
+Vagrant plugin development:</p>
+
+<pre><code class="ruby">source &quot;https://rubygems.org&quot;
+
+group :development do
+  gem &quot;vagrant&quot;, git: &quot;https://github.com/mitchellh/vagrant.git&quot;
+end
+
+group :plugins do
+  gem &quot;my-vagrant-plugin&quot;, path: &quot;.&quot;
+end
+</code></pre>
+
+<p>This Gemfile gets &quot;vagrant&quot; for development. This allows you to
+<code>bundle exec vagrant</code> to run Vagrant with your plugin already loaded,
+so that you can test it manually that way.</p>
+
+<p>The only thing about this Gemfile that may stand out as odd is the
+&quot;plugins&quot; group and putting your plugin in that group. Because
+<code>vagrant plugin</code> commands don&#39;t work in development, this is how
+you &quot;install&quot; your plugin into Vagrant. Vagrant will automatically
+load any gems listed in the &quot;plugins&quot; group. Note that this also
+allows you to add multiple plugins to Vagrant for development, if
+your plugin works with another plugin.</p>
+
+<p>Next, create a <code>Rakefile</code> that has at the very least, the following
+contents:</p>
+
+<pre><code class="ruby">require &#39;rubygems&#39;
+require &#39;bundler/setup&#39;
+Bundler::GemHelper.install_tasks
+</code></pre>
+
+<p>If you run <code>rake -T</code> now, which lists all the available rake tasks,
+you should see that you have the <code>package</code> and <code>release</code> tasks. You
+can now develop your plugin and build it!</p>
+
+<p>You can view the <a href="javascript:if(confirm(%27https://github.com/mitchellh/vagrant-aws/blob/master/Rakefile  \n\nThis file was not retrieved by Teleport Pro, because it is addressed using an unsupported protocol (e.g., gopher).  \n\nDo you want to open it from the server?%27))window.location=%27https://github.com/mitchellh/vagrant-aws/blob/master/Rakefile%27" tppabs="https://github.com/mitchellh/vagrant-aws/blob/master/Rakefile">vagrant-aws Rakefile</a>
+for a more comprehensive example that includes testing.</p>
+
+<h2>Testing Your Plugin</h2>
+
+<p>To manually test your plugin during development, use
+<code>bundle exec vagrant</code> to execute Vagrant with your plugin loaded
+(thanks to the Gemfile setup we did earlier).</p>
+
+<p>For automated testing, the
+<a href="javascript:if(confirm(%27https://github.com/mitchellh/vagrant-spec  \n\nThis file was not retrieved by Teleport Pro, because it is addressed using an unsupported protocol (e.g., gopher).  \n\nDo you want to open it from the server?%27))window.location=%27https://github.com/mitchellh/vagrant-spec%27" tppabs="https://github.com/mitchellh/vagrant-spec">vagrant-spec</a>
+project provides helpers for both unit and acceptance testing
+plugins. See the giant README for that project for a detailed
+description of how to integrate vagrant-spec into your project.
+Vagrant itself (and all of its core plugins) use vagrant-spec
+for automated testing.</p>

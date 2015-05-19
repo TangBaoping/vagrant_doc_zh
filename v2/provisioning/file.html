@@ -1,0 +1,35 @@
+<h1>File Provisioner</h1>
+
+<p><strong>Provisioner name: <code>&quot;file&quot;</code></strong></p>
+
+<p>The file provisioner allows you to upload a file from the host machine to
+the guest machine.</p>
+
+<p>File provisioning is a simple way to, for example, replicate your local
+~/.gitconfig to the vagrant user&#39;s home directory on the guest machine so
+you won&#39;t have to run <code>git config --global</code> every time you provision a
+new VM.</p>
+
+<pre><code>Vagrant.configure(&quot;2&quot;) do |config|
+  # ... other configuration
+
+  config.vm.provision &quot;file&quot;, source: &quot;~/.gitconfig&quot;, destination: &quot;.gitconfig&quot;
+end
+</code></pre>
+
+<p>Note that, unlike with synced folders, files that are uploaded will not
+be kept in sync. Continuing with the example above, if you make further
+changes to your local ~/.gitconfig, they will not be immediately reflected
+in the copy you uploaded to the guest machine.</p>
+
+<h2>Options</h2>
+
+<p>The file provisioner takes only two options, both of which are required:</p>
+
+<ul>
+<li><p><code>source</code> (string) - Is the local path of the file to be uploaded.</p></li>
+<li><p><code>destination</code> (string) - Is the remote path on the guest machine where
+the file will be uploaded to. The file is uploaded as the SSH user over
+SCP, so this location must be writable to that user. The SSH user can be
+determined by running <code>vagrant ssh-config</code>, and defaults to &quot;vagrant&quot;.</p></li>
+</ul>

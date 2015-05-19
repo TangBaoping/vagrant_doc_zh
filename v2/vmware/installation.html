@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+
+		<title> Installation - VMware Provider - Vagrant Documentation</title>
+
+		<!-- meta -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<!-- lib styles -->
+		<link href="../../stylesheets/bootstrap-2bdef9a2.css" tppabs="http://docs.vagrantup.com/stylesheets/bootstrap-2bdef9a2.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="../../stylesheets/vagrantup-71e7d178.css" tppabs="http://docs.vagrantup.com/stylesheets/vagrantup-71e7d178.css" media="screen" rel="stylesheet" type="text/css" />
+
+		<!-- lib js -->
+		<script src="../../javascripts/jquery-08c11650.js" tppabs="http://docs.vagrantup.com/javascripts/jquery-08c11650.js" type="text/javascript"></script>
+		<script src="../../javascripts/modernizr-84c0465a.js" tppabs="http://docs.vagrantup.com/javascripts/modernizr-84c0465a.js" type="text/javascript"></script>
+		<script src="../../javascripts/bootstrap.min-98cc7a22.js" tppabs="http://docs.vagrantup.com/javascripts/bootstrap.min-98cc7a22.js" type="text/javascript"></script>
+		<script src="../../javascripts/backstretch-3d1212ad.js" tppabs="http://docs.vagrantup.com/javascripts/backstretch-3d1212ad.js" type="text/javascript"></script>
+		<script src="../../javascripts/vagrantup-03aae2a8.js" tppabs="http://docs.vagrantup.com/javascripts/vagrantup-03aae2a8.js" type="text/javascript"></script>
+
+		<!-- fonts -->
+		<link href="../../../fonts.googleapis.com/css-family=Inconsolata.css" tppabs="http://fonts.googleapis.com/css?family=Inconsolata" rel='stylesheet' type='text/css'>
+		<script type="text/javascript" src="../../../use.typekit.net/xfs6zus.js" tppabs="http://use.typekit.net/xfs6zus.js"></script>
+		<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
+		<!-- Google analytics -->
+		<script type="text/javascript">
+
+			var _gaq = _gaq || [];
+			_gaq.push(['_setAccount', 'UA-15091924-1']);
+			_gaq.push(['_trackPageview']);
+
+			(function() {
+			 var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			 ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www/') + '.google-analytics.com/ga.js';
+			 var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			 })();
+
+		 </script>
+	</head>
+	<body>
+		<!-- wrap everything -->
+		<div class="wrapper">
+
+			<!-- nav -->
+
+			<nav class="docs">
+			<!-- vagrant logo -->
+			<a class="vagrant-docs-logo" href="javascript:if(confirm(%27https://docs.vagrantup.com/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed using an unsupported protocol (e.g., gopher).  \n\nDo you want to open it from the server?%27))window.location=%27https://docs.vagrantup.com/%27" tppabs="http://docs.vagrantup.com/">Vagrant Documentation</a>
+			<!-- nav -->
+			<ul class="pull-right unstyled">
+				<li class="pill">
+					<a href="javascript:if(confirm(%27http://www.amazon.com/gp/product/1449335837/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1449335837&linkCode=as2&tag=vagrant-20  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://www.amazon.com/gp/product/1449335837/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1449335837&linkCode=as2&tag=vagrant-20%27" tppabs="http://www.amazon.com/gp/product/1449335837/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1449335837&linkCode=as2&tag=vagrant-20">
+						Vagrant Book
+					</a>
+				</li>
+				<li><a href="javascript:if(confirm(%27http://www.vagrantup.com/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://www.vagrantup.com/%27" tppabs="http://www.vagrantup.com/">Home</a></li>
+			</ul>
+			</nav>
+
+			<div class="page docs docs-home">
+				<div class="container">
+					<div class="row">
+
+						<div class="sidebar span3">
+							<!-- get the sidebar nav -->
+							<!-- side nav docs -->
+							<aside class="sidebar-nav">
+
+							<div class="toggle hidden-desktop">
+								<div class="open-close open"></div>
+								<a href="#">Contents</a>
+							</div>
+
+							<ul class="unstyled">
+								<li><a href="../index.html" tppabs="http://docs.vagrantup.com/v2/">Overview</a></li>
+
+								<li><a href="../why-vagrant/index.html" tppabs="http://docs.vagrantup.com/v2/why-vagrant/index.html">Why Vagrant?</a></li>
+
+								<li><a href="../installation/index.html" tppabs="http://docs.vagrantup.com/v2/installation/index.html">Installation</a></li>
+								
+
+								<li><a href="../getting-started/index.html" tppabs="http://docs.vagrantup.com/v2/getting-started/index.html">Getting Started</a></li>
+								
+
+								<li><a href="../cli/index.html" tppabs="http://docs.vagrantup.com/v2/cli/index.html">Command-Line Interface</a></li>
+								
+
+								<li ><a href="../share/index.html" tppabs="http://docs.vagrantup.com/v2/share/index.html">Vagrant Share</a></li>
+								
+
+								<li ><a href="../vagrantfile/index.html" tppabs="http://docs.vagrantup.com/v2/vagrantfile/index.html">Vagrantfile</a></li>
+								
+
+								<li><a href="../boxes.html" tppabs="http://docs.vagrantup.com/v2/boxes.html">Boxes</a></li>
+								
+
+								<li><a href="../provisioning/index.html" tppabs="http://docs.vagrantup.com/v2/provisioning/index.html">Provisioning</a></li>
+								
+
+								<li><a href="../networking/index.html" tppabs="http://docs.vagrantup.com/v2/networking/index.html">Networking</a></li>
+								
+
+								<li><a href="../synced-folders/index.html" tppabs="http://docs.vagrantup.com/v2/synced-folders/index.html">Synced Folders</a></li>
+								
+
+								<li><a href="../multi-machine/index.html" tppabs="http://docs.vagrantup.com/v2/multi-machine/index.html">Multi-Machine</a></li>
+
+								<li><a href="../providers/index.html" tppabs="http://docs.vagrantup.com/v2/providers/index.html">Providers</a></li>
+								
+
+								
+
+								
+
+								
+								<li class="current"><a href="index.html" tppabs="http://docs.vagrantup.com/v2/vmware/index.html">VMware</a></li>
+								
+								<ul class="sub unstyled">
+									<li class="current"><a href="installation.html" tppabs="http://docs.vagrantup.com/v2/vmware/installation.html">Installation</a></li>
+									<li><a href="usage.html" tppabs="http://docs.vagrantup.com/v2/vmware/usage.html">Usage</a></li>
+									<li><a href="boxes.html" tppabs="http://docs.vagrantup.com/v2/vmware/boxes.html">Boxes</a></li>
+									<li><a href="configuration.html" tppabs="http://docs.vagrantup.com/v2/vmware/configuration.html">Configuration</a></li>
+									<li><a href="known-issues.html" tppabs="http://docs.vagrantup.com/v2/vmware/known-issues.html">Known Issues</a></li>
+									<li><a href="kernel-upgrade.html" tppabs="http://docs.vagrantup.com/v2/vmware/kernel-upgrade.html">Kernel Upgrade</a></li>
+								</ul>
+								
+								
+
+								
+
+								<li><a href="../plugins/index.html" tppabs="http://docs.vagrantup.com/v2/plugins/index.html">Plugins</a></li>
+								
+
+								<li><a href="../push/index.html" tppabs="http://docs.vagrantup.com/v2/push/index.html">Push</a></li>
+
+								
+
+								<li><a href="../other/index.html" tppabs="http://docs.vagrantup.com/v2/other/index.html">Other</a></li>
+
+								
+							</ul>
+							</aside> <!-- /.sidebar -->
+						</div> <!-- /.sidebar -->
+
+						<div class="page-contents span9">
+							<div class="page-background"></div>
+
+							<!-- start page content -->
+							<div class="row">
+								<div class="span8 offset1">
+									<h1>Installation</h1>
+
+<p>The Vagrant VMware provider can be installed using the standard plugin
+installation procedure. VMware Fusion users should run:</p>
+
+<pre><code class="text">$ vagrant plugin install vagrant-vmware-fusion
+</code></pre>
+
+<p>VMware Workstation users should run:</p>
+
+<pre><code class="text">$ vagrant plugin install vagrant-vmware-workstation
+</code></pre>
+
+<p>For more information on plugin installation, please see the
+<a href="../plugins/usage.html" tppabs="http://docs.vagrantup.com/v2/plugins/usage.html">Vagrant plugin usage documentation</a>.</p>
+
+<p>The Vagrant VMware plugins are commercial products provided by
+<a href="javascript:if(confirm(%27https://www.hashicorp.com/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed using an unsupported protocol (e.g., gopher).  \n\nDo you want to open it from the server?%27))window.location=%27https://www.hashicorp.com/%27" tppabs="https://www.hashicorp.com/">HashiCorp</a> and <strong>require the purchase of a license</strong>
+to operate. To purchase a license, please visit the
+<a href="javascript:if(confirm(%27http://www.vagrantup.com/vmware  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://www.vagrantup.com/vmware#buy-now%27" tppabs="http://www.vagrantup.com/vmware#buy-now">Vagrant VMware provider</a> page. Upon
+purchasing a license, you will receive a license file in your inbox. Download
+this file and save it to a temporary location on your computer.</p>
+
+<div class="alert alert-block alert-warn">
+  <strong>Warning!</strong> You cannot use your VMware product license as a
+  Vagrant VMware plugin license. They are separate commercial products, each
+  requiring their own license.
+</div>
+
+<p>After installing the correct Vagrant VMware product plugin for your system, you
+will need to install the license. For VMware Fusion users:</p>
+
+<pre><code class="text">$ vagrant plugin license vagrant-vmware-fusion ~/license.lic
+</code></pre>
+
+<p>For VMware Workstation users:</p>
+
+<pre><code class="text">$ vagrant plugin license vagrant-vmware-workstation ~/license.lic
+</code></pre>
+
+<p>The first parameter is the name of the plugin, and the second parameter is the
+path to the license file on disk. Please be sure to replace <code>~/license.lic</code>
+with the path where you temporarily saved the downloaded license file to disk.
+After you have installed the plugin license, you may remove the temporary file.</p>
+
+<p>To verify the license installation, run:</p>
+
+<pre><code class="text">$ vagrant plugin list
+</code></pre>
+
+<p>If the license is not installed correctly, you will see an error message.</p>
+
+<h2>Frequently Asked Questions</h2>
+
+<p><strong>Q: I purchased a Vagrant VMware plugin license, but I did not receive an email?</strong><br>
+First, please check your JUNK or SPAM folders. Since the license comes from an
+automated system, it might have been flagged as spam by your email provider. If
+you do not see the email there, please <a href="../../cdn-cgi/l/email-protection.htm#88fbfdf8f8e7fafcc8e0e9fbe0e1ebe7faf8a6ebe7e5b7fbfdeae2edebfcb5c4e1ebede6fbeda8c6e7fca8daedebede1feedec" tppabs="http://docs.vagrantup.com/cdn-cgi/l/email-protection#88fbfdf8f8e7fafcc8e0e9fbe0e1ebe7faf8a6ebe7e5b7fbfdeae2edebfcb5c4e1ebede6fbeda8c6e7fca8daedebede1feedec">contact support</a>
+and include the original order number.</p>
+
+<p><strong>Q: Do you offer trial periods for the Vagrant VMware plugins?</strong><br>
+We do not offer a trial mechanism at this time, but we do offer a 30-day, no
+questions asked, 100% money-back guarantee. If you are not satisfied with the
+product, contact us within 30 days and you will receive a full refund.</p>
+
+<p><strong>Q: Do you offer educational discounts on the Vagrant VMware plugins?</strong><br>
+A select number of educational discounts are available for students, staff, and
+faculty. Please <a href="../../cdn-cgi/l/email-protection.htm#a4d7d1d4d4cbd6d0e4ccc5d7cccdc7cbd6d48ac7cbc99bd7d1c6cec1c7d099e1c0d1c7c5d0cdcbcac5c884e0cdd7c7cbd1cad0d782c6cbc0dd99ecc1c8c8cb84d7d1Xpport! I would like to learn more about educational discounts on the Vagrant VMware plugins. Thanks!" tppabs="http://docs.vagrantup.com/cdn-cgi/l/email-protection#a4d7d1d4d4cbd6d0e4ccc5d7cccdc7cbd6d48ac7cbc99bd7d1c6cec1c7d099e1c0d1c7c5d0cdcbcac5c884e0cdd7c7cbd1cad0d782c6cbc0dd99ecc1c8c8cb84d7d1Xpport! I would like to learn more about educational discounts on the Vagrant VMware plugins. Thanks!">contact support</a> for more
+information. You will be asked to verify your status as an employee of active
+student.</p>
+
+<p><strong>Q: Do I need to keep the Vagrant VMware plugin license file on disk?</strong><br>
+After you have installed the Vagrant VMware plugin license, it is safe to remove
+your copy from disk. Vagrant copies the license into its structure for reference
+on boot.</p>
+
+<p><strong>Q: I lost my original email, where can I download my Vagrant VMware plugin license again?</strong><br>
+Please <a href="../../cdn-cgi/l/email-protection.htm#2e5d5b5e5e415c5a6e464f5d46474d415c5e004d4143115d5b4c444b4d5a1362415d5a0e63570e62474d4b405d4b084c414a5713664b4242410e5d5b5e5e415c5a0fX I seem to have misplaced my Vagrant VMware license. Could you please send it to me? Thanks!" tppabs="http://docs.vagrantup.com/cdn-cgi/l/email-protection#2e5d5b5e5e415c5a6e464f5d46474d415c5e004d4143115d5b4c444b4d5a1362415d5a0e63570e62474d4b405d4b084c414a5713664b4242410e5d5b5e5e415c5a0fX I seem to have misplaced my Vagrant VMware license. Could you please send it to me? Thanks!">contact support</a>. <strong>Note:</strong>
+please contact support using the email address with which you made the
+original purchase. If you use an alternate email, you will be asked to verify
+that you are the owner of the requested license.</p>
+
+<p><strong>Q: Where can I find the EULA for the Vagrant VMware plugins?</strong><br>
+The <a href="javascript:if(confirm(%27http://www.vagrantup.com/vmware/eula  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://www.vagrantup.com/vmware/eula%27" tppabs="http://www.vagrantup.com/vmware/eula">EULA for the Vagrant VMware plugins</a>
+is available on the Vagrant website.</p>
+
+<p><strong>Q: Do you offer bulk/volume discounts for the Vagrant VMware plugins?</strong><br>
+We certainly do! <a href="../../cdn-cgi/l/email-protection.htm#daa9afaaaab5a8ae9ab2bba9b2b3b9b5a8aaf4b9b5b7e5a9afb8b0bfb9aee798afb6b1fa9eb3a9b9b5afb4aea9" tppabs="http://docs.vagrantup.com/cdn-cgi/l/email-protection#daa9afaaaab5a8ae9ab2bba9b2b3b9b5a8aaf4b9b5b7e5a9afb8b0bfb9aee798afb6b1fa9eb3a9b9b5afb4aea9">Email support</a>
+with the number of licenses you need and we can give you bulk pricing
+information. Please note that bulk pricing requires the purchase of at least 150
+seats.</p>
+
+<p><strong>Q: I upgraded my VMware product and now my license is invalid?</strong><br>
+The Vagrant VMware plugin licenses are valid for specific VMware product
+versions at the time of purchase. When new versions of VMware products are
+released, significant changes to the plugin code are often required to support
+this new version. For this reason, you may need to upgrade your current license
+to work with the new version of the VMware product. Customers can check their
+license upgrade eligibility by visiting the <a href="javascript:if(confirm(%27http://license.hashicorp.com/upgrade/vmware2014  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://license.hashicorp.com/upgrade/vmware2014%27" tppabs="http://license.hashicorp.com/upgrade/vmware2014">License Upgrade Center</a>
+and entering the email address with which they made the original purchase.</p>
+
+<p>Your existing license will continue to work with all previous versions of the
+VMware products. If you do not wish to update at this time, you can rollback
+your VMware installation to an older version.</p>
+
+<p><strong>Q: Why is the Vagrant VMware plugin not working with my trial version of VMware Fusion/Workstation?</strong><br>
+The Vagrant VMware Fusion and Vagrant VMware Workstation plugins are not
+compatible with trial versions of the VMware products. We apologize for the
+inconvenience.</p>
+
+<p><strong>Q: I accidentally bought the wrong Vagrant VMware plugin, can I switch?</strong><br>
+Sure! Even though the Vagrant VMware Fusion plugin and the Vagrant VMware
+Workstation plugin are different products, they are the same price and fall
+under the same EULA. As such, we can transfer the license for you. Please
+<a href="../../cdn-cgi/l/email-protection.htm#c9babcb9b9a6bbbd89a1a8baa1a0aaa6bbb9e7aaa6a4f6babcaba3acaabdf49dbba8a7baafacbbe985a0aaaca7baac" tppabs="http://docs.vagrantup.com/cdn-cgi/l/email-protection#c9babcb9b9a6bbbd89a1a8baa1a0aaa6bbb9e7aaa6a4f6babcaba3acaabdf49dbba8a7baafacbbe985a0aaaca7baac">contact support</a>.</p>
+
+<p><strong>Q: Since each license comes with two &quot;seats&quot;, can I use one seat for the Vagrant VMware Fusion plugin and one seat for the Vagrant VMware Workstation plugin?</strong><br>
+Unfortunately this is not permitted. The Vagrant VMware Fusion plugin and the
+Vagrant VMware Workstation plugin are separate products and cannot be shared in
+this manner. We apologize for the inconvenience.</p>
+
+<p><strong>Q: How do I upgrade my currently installed Vagrant VMware plugin?</strong><br>
+You can update the Vagrant VMware plugin to the latest version by re-running the
+install command. For VMware Fusion:</p>
+
+<pre><code class="text">$ vagrant plugin install vagrant-vmware-fusion
+</code></pre>
+
+<p>For VMWare Workstation:</p>
+
+<pre><code class="text">$ vagrant plugin install vagrant-vmware-workstation
+</code></pre>
+
+<h2>Support</h2>
+
+<p>If you have any issues purchasing, installing, or using the Vagrant VMware
+plugins, please <a href="javascript:if(confirm(%27http://www.vagrantup.com/support.html  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://www.vagrantup.com/support.html%27" tppabs="http://www.vagrantup.com/support.html">contact support</a>. To
+expedite the support process, please include the
+<a href="../other/debugging.html" tppabs="http://docs.vagrantup.com/v2/other/debugging.html">Vagrant debug output</a> as a Gist or pastebin if
+applicable. This will help us more quickly diagnose your issue.</p>
+
+								</div> <!-- /.span8 -->
+							</div> <!-- /.row -->
+						</div> <!-- /.page-contents -->
+					</div> <!-- /.row -->
+				</div> <!-- /.container -->
+			</div> <!-- /.page -->
+
+			<!-- footer -->
+			<footer>
+			<div class="container">
+				<div class="row">
+					<div class="span12">
+
+						<ul class="unstyled footer-nav">
+							<li><a href="javascript:if(confirm(%27https://docs.vagrantup.com/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed using an unsupported protocol (e.g., gopher).  \n\nDo you want to open it from the server?%27))window.location=%27https://docs.vagrantup.com/%27" tppabs="http://docs.vagrantup.com/">Documentation</a></li>
+							<li><a href="javascript:if(confirm(%27http://www.vagrantup.com/about  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://www.vagrantup.com/about%27" tppabs="http://www.vagrantup.com/about">About</a></li>
+							<li><a href="javascript:if(confirm(%27http://www.vagrantup.com/support  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://www.vagrantup.com/support%27" tppabs="http://www.vagrantup.com/support">Support</a></li>
+							<a href="javascript:if(confirm(%27http://www.vagrantup.com/downloads  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://www.vagrantup.com/downloads%27" tppabs="http://www.vagrantup.com/downloads">
+								<li class="button inline-button">Download</li>
+							</a>
+						</ul>
+
+						<ul class="unstyled logos">
+							<a href="javascript:if(confirm(%27http://www.vagrantup.com/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://www.vagrantup.com/%27" tppabs="http://www.vagrantup.com/">
+								<li class="vagrant-logo-monochrome"></li>
+							</a>
+							<li><span>by</span></li>
+							<a href="javascript:if(confirm(%27http://www.hashicorp.com/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://www.hashicorp.com/%27" tppabs="http://www.hashicorp.com/">
+								<li class="hashi-logo-monochrome "></li>
+							</a>
+						</ul> <!-- /span -->
+
+					</div> <!-- /span -->
+				</div> <!-- /row -->
+
+				<div class="row">
+					<h6 class="legal">
+						Copyright &copy; 2015 HashiCorp
+					</h6>
+				</div> <!-- row -->
+			</div> <!-- container -->
+			</footer>
+
+			<!-- close .wrapper -->
+		</div>
+
+		<!-- load scripts -->
+		<!-- load full-width image into any div with class="big-background -->
+		<script>
+			$(".big-background").backstretch("assets/photos/full_width.jpg"/*tpa=http://docs.vagrantup.com/v2/vmware/assets/photos/full_width.jpg*/);
+		</script>
+	<script type="text/javascript">
+/* <![CDATA[ */
+(function(){try{var s,a,i,j,r,c,l=document.getElementsByTagName("a"),t=document.createElement("textarea");for(i=0;l.length-i;i++){try{a=l[i].getAttribute("href");if(a&&a.indexOf("/cdn-cgi/l/email-protection") > -1  && (a.length > 28)){s='';j=27+ 1 + a.indexOf("/cdn-cgi/l/email-protection");if (a.length > j) {r=parseInt(a.substr(j,2),16);for(j+=2;a.length>j&&a.substr(j,1)!='X';j+=2){c=parseInt(a.substr(j,2),16)^r;s+=String.fromCharCode(c);}j+=1;s+=a.substr(j,a.length-j);}t.innerHTML=s.replace(/</g,"&lt;").replace(/>/g,"&gt;");l[i].setAttribute("href","mailto:"+t.value);}}catch(e){}}}catch(e){}})();
+/* ]]> */
+</script>
+</body>
+</html>

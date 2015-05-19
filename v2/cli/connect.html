@@ -1,0 +1,25 @@
+<h1>Connect</h1>
+
+<p><strong>Command: <code>vagrant connect NAME</code></strong></p>
+
+<p>The connect command compliments the
+<a href="javascript:$('#contentWrap').load('cli/share.html');" >share command</a> by enabling access to shared
+environments. You can learn about all the details of Vagrant Share in the
+<a href="javascript:$('#contentWrap').load('share/index.html');" >Vagrant Share section</a>.</p>
+
+<p>The reference of available command-line flags to this command
+is available below.</p>
+
+<h2>Options</h2>
+
+<ul>
+<li><p><code>--disable-static-ip</code> - The connect command will not spin up a small
+virtual machine to create a static IP you can access. When this flag is
+set, the only way to access the connection is to use the SOCKS proxy
+address outputted.</p></li>
+<li><p><code>--static-ip IP</code> - Tells connect what static IP address to use for the virtual
+machine. By default, Vagrant connect will use an IP address that looks
+available in the 172.16.0.0/16 space.</p></li>
+<li><p><code>--ssh</code> - Connects via SSH to an environment shared with
+<code>vagrant share --ssh</code>.</p></li>
+</ul>

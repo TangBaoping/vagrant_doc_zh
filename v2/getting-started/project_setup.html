@@ -1,0 +1,24 @@
+<h1>项目的建立</h1>
+
+<p>在创建使用 Vagrant 的第一步，就是对 <a href="javascript:$('#contentWrap').load('vagrantfile/index.html')" >Vagrantfile</a> 配置文件进行配置。Vagrantfile 配置文件的作用有两个方面：</p>
+
+<ol>
+<li><p>设置项目的根目录，很多 Vagrant 的配置都是与根目录有紧密关系。</p></li>
+<li><p>指定你在项目中所需的虚拟机类型及资源，例如需要安装哪些软件以及在哪里可以访问到这些资源。</p></li>
+</ol>
+
+<p>Vagrant 有一个内置的命令来初始化一个目录作为 Vagrant 项目的根目录： <code>vagrant init</code> 。在本操作指引中，请根据以下命令在终端进行操作： </p>
+
+<pre><code>$ mkdir vagrant_getting_started
+$ cd vagrant_getting_started
+$ vagrant init
+</code></pre>
+
+<p>上面这些命令会创建一个 <code>Vagrantfile</code> 文件在你当前的目录，你可以打开 Vagrantfile 配置文件查看一下，内容包含了注释说明及实例。不要对配置文件中的内容感到恐惧，稍后我们将对它进行修改。</p>
+
+<p>你也可以在已存在的项目目录中执行 <code>vagrant init</code> 命令，来设置一个已存在的项目。</p>
+
+<p>如果你在项目中使用了版本控制，Vagrantfile 配置文件肯定是需要添加到版本控制中的。这样一来， 每个人都在无需进行前期配置工作即可直接使用该项目。</p>
+
+<p><a href="javascript:$('#contentWrap').load('getting-started/index.html')"  class="button inline-button prev-button">入门指引</a>
+<a href="javascript:$('#contentWrap').load('getting-started/boxes.html')"  class="button inline-button next-button">Boxes</a></p>

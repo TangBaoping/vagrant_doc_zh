@@ -1,0 +1,27 @@
+<h1>Docker Commands</h1>
+
+<p>The Docker provider exposes some additional Vagrant commands that are
+useful for interacting with Docker containers. This helps with your
+workflow on top of Vagrant so that you have full access to Docker
+underneath.</p>
+
+<h3>docker-logs</h3>
+
+<p><code>vagrant docker-logs</code> can be used to see the logs of a running container.
+Because most Docker containers are single-process, this is used to see
+the logs of that one process. Additionally, the logs can be tailed.</p>
+
+<h3>docker-run</h3>
+
+<p><code>vagrant docker-run</code> can be used to run one-off commands against
+a Docker container. The one-off Docker container that is started shares
+all the volumes, links, etc. of the original Docker container. An
+example is shown below:</p>
+
+<pre class="prettyprint">
+$ vagrant docker-run app -- rake db:migrate
+</pre>
+
+<p>The above would run <code>rake db:migrate</code> in the context of an <code>app</code> container.</p>
+
+						

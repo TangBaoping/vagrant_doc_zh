@@ -1,0 +1,773 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"ta",
+				"target	Attr"
+			],
+			[
+				"n",
+				"next"
+			],
+			[
+				"sib",
+				"sidebar-nav"
+			],
+			[
+				"im",
+				"important"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "v2/installation/upgrading.html",
+			"settings":
+			{
+				"buffer_size": 675,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "v2/getting-started/index.html",
+			"settings":
+			{
+				"buffer_size": 2553,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "v2/installation/upgrading-from-1-0.html",
+			"settings":
+			{
+				"buffer_size": 681,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "v2/installation/uninstallation.html",
+			"settings":
+			{
+				"buffer_size": 1033,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 400.0,
+		"last_filter": "inst",
+		"selected_items":
+		[
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"remov",
+				"Package Control: Remove Package"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"removep",
+				"Package Control: Remove Package"
+			]
+		],
+		"width": 520.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = 'eb2297e1a458f27d836c04bb0cbaf282' + 'd0e7a3098092775ccb37ca9d6b2e4b7d'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/getting-started",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/why-vagrant"
+	],
+	"file_history":
+	[
+		"/C/Users/Administrator/Desktop/王兴龙kcp旧版.txt",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/installation/backwards-compatibility.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/installation/index.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/why-vagrant/index.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/cli/package.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/cli/plugin.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/cli/provision.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/cli/share.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/cli/up.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/getting-started/boxes.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/getting-started/index.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/getting-started/project_setup.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/boxes/base.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/boxes/format.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/boxes/versioning.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/cli/connect.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/cli/login.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/virtualbox/networking.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/index.htm",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/cli/init.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/boxes.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/multi-machine.htm",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/getting-started/providers.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/getting-started/share.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/getting-started/synced_folders.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/installation/uninstallation.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/multi-machine/index.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/networking/basic_usage.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/networking/index.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/networking/private_network.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/networking/public_network.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/other/environmental-variables.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/other/index.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/plugins/commands.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/plugins/configuration.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/plugins/development-basics.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/plugins/guest-capabilities.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/plugins/guests.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/plugins/host-capabilities.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/plugins/hosts.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/plugins/index.htm",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/plugins/index.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/plugins/packaging.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/plugins/providers.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/plugins/provisioners.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/plugins/usage.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/providers/basic_usage.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/providers/configuration.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/providers/custom.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/providers/default.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/providers/index.htm",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/providers/index.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/providers/installation.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/provisioning/ansible.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/provisioning/basic_usage.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/provisioning/cfengine.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/provisioning/chef_apply.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/provisioning/chef_client.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/provisioning/chef_common.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/provisioning/chef_solo.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/provisioning/chef_zero.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/provisioning/docker.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/provisioning/file.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/provisioning/index.htm",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/provisioning/index.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/provisioning/puppet_agent.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/provisioning/puppet_apply.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/provisioning/salt.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/provisioning/shell.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/push/atlas.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/push/ftp.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/push/heroku.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/push/index.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/push/local-exec.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/share/connect.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/share/http.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/share/index.htm",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/share/index.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/share/provider.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/share/security.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/share/ssh.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/synced-folders/basic_usage.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/synced-folders/index.htm",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/synced-folders/index.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/synced-folders/nfs.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/synced-folders/rsync.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/synced-folders/smb.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/synced-folders/virtualbox.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/vagrantfile/index.htm",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/vagrantfile/index.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/vagrantfile/machine_settings.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/vagrantfile/ssh_settings.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/vagrantfile/tips.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/vagrantfile/vagrant_settings.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/vagrantfile/vagrant_version.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/vagrantfile/version.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/vagrantfile/winrm_settings.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/virtualbox/boxes.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/virtualbox/common-issues.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/virtualbox/configuration.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/virtualbox/index.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/virtualbox/usage.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/vmware/boxes.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/vmware/configuration.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/vmware/index.htm",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/vmware/index.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/vmware/installation.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/vmware/kernel-upgrade.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/vmware/known-issues.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/vmware/usage.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/cli/box.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/getting-started/networking.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/docker/index.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/docker/basics.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/cli/suspend.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/cli/rsync.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/cli/rsync-auto.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/cli/resume.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/cli/reload.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/cli/non-primary.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/cli/machine-readable.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/cli/index.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/other/debugging.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/networking/forwarded_ports.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/hyperv/usage.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/hyperv/limitations.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/hyperv/index.html",
+		"/C/Users/Administrator/Desktop/123/vagrantup/docs.vagrantup.com/v2/hyperv/configuration.html"
+	],
+	"find":
+	{
+		"height": 38.0
+	},
+	"find_in_files":
+	{
+		"height": 104.0,
+		"where_history":
+		[
+			"<open folders>"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"能",
+			"index.htm'",
+			"htm\"",
+			"href",
+			" href=",
+			".sidebar ul{",
+			"css",
+			"<a href=\"/",
+			"<a href=\"",
+			" >",
+			"  >",
+			"huikuanlist.asp",
+			"HuiKuan",
+			"Hui Kuan",
+			"../../",
+			"jqwidgets",
+			"尊敬",
+			"splitter",
+			"North",
+			"scripts",
+			"ctrl"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"index.html'",
+			"html\"",
+			"href=\"javascript:void(0);\" url=",
+			" href=\"javascript:void(0);\" url=",
+			"href=\"javascript:void(0);\" url=",
+			"<a href=\"../",
+			"<a href=\"/",
+			">",
+			"../"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "v2/installation/upgrading.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 675,
+						"regions":
+						{
+							"TagLint":
+							{
+								"flags": 2356,
+								"icon": "dot",
+								"regions":
+								[
+									[
+										479,
+										482
+									]
+								],
+								"scope": "variable.parameter"
+							}
+						},
+						"selection":
+						[
+							[
+								387,
+								387
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
+							],
+							"is_xml": false,
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/HTML/HTML.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "v2/getting-started/index.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2553,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								50,
+								50
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
+							],
+							"is_xml": false,
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/HTML/HTML.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "v2/installation/upgrading-from-1-0.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 681,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								125,
+								90
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
+							],
+							"is_xml": false,
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/HTML/HTML.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "v2/installation/uninstallation.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1033,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								915,
+								915
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
+							],
+							"is_xml": false,
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/HTML/HTML.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 21.0
+	},
+	"input":
+	{
+		"height": 30.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": false,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "vagrant.sublime-project",
+	"replace":
+	{
+		"height": 72.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"u",
+				"ThinkPHP\\Library\\Think\\Upload.class.php"
+			],
+			[
+				"d",
+				"ThinkPHP\\Tpl\\dispatch_jump.tpl"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 283.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

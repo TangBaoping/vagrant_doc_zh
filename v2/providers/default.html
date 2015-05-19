@@ -1,0 +1,17 @@
+<h1>Default Provider</h1>
+
+<p>By default, VirtualBox is the default provider for Vagrant. VirtualBox is
+still the most accessible platform to use Vagrant: it is free, cross-platform,
+and has been supported by Vagrant for years. With VirtualBox as the default
+provider, it provides the lowest friction for new users to get started with
+Vagrant.</p>
+
+<p>However, you may find after using Vagrant for some time that you prefer
+to use another provider as your default. In fact, this is quite common.
+To make this experience better, Vagrant allows specifying the default
+provider to use by setting the <code>VAGRANT_DEFAULT_PROVIDER</code> environmental
+variable.</p>
+
+<p>Just set <code>VAGRANT_DEFAULT_PROVIDER</code> to the provider you wish to be the
+default. For example, if you use Vagrant with VMware Fusion, you can set
+the environmental variable to <code>vmware_fusion</code> and it will be your default.</p>

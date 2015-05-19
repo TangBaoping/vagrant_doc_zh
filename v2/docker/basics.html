@@ -1,0 +1,107 @@
+<h1>Docker Basic Usage</h1>
+
+<p>The Docker provider in Vagrant behaves just like any other provider.
+If you&#39;re familiar with Vagrant already, then using the Docker provider
+should be intuitive and simple.</p>
+
+<p>The Docker provider <em>does not</em> require a <code>config.vm.box</code> setting. Since
+the &quot;base image&quot; for a Docker container is pulled from the
+Docker Index or
+built from a Dockerfile, the box doesn&#39;t
+add much value, and is optional for this provider.</p>
+
+<h2>Docker Images</h2>
+
+<p>The first method that Vagrant can use to source a Docker container
+is via an image. This image can be from any Docker registry. An
+example is shown below:</p>
+
+<pre class="prettyprint">
+Vagrant.configure("2") do |config|
+  config.vm.provider "docker" do |d|
+    d.image = "foo/bar"
+  end
+end
+</pre>
+
+<p>When <code>vagrant up --provider=docker</code> is run, this will bring up the
+image <code>foo/bar</code>.</p>
+
+<p>This is useful for extra components of your application that it might
+depend on: databases, queues, etc. Typically, the primary application
+you&#39;re working on is built with a Dockerfile, or via a container with
+SSH.</p>
+
+<h2>Dockerfiles</h2>
+
+<p>Vagrant can also automatically build and run images based on a local
+Dockerfile. This is useful for iterating on an application locally
+that is built into an image later. An example is shown below:</p>
+
+<pre class="prettyprint">
+Vagrant.configure("2") do |config|
+  config.vm.provider "docker" do |d|
+    d.build_dir = "."
+  end
+end
+</pre>
+
+<p>The above configuration will look for a <code>Dockerfile</code> in the same
+directory as the Vagrantfile. When <code>vagrant up --provider=docker</code> is run, Vagrant
+automatically builds that Dockerfile and starts a container
+based on that Dockerfile.</p>
+
+<p>The Dockerfile is rebuilt when <code>vagrant reload</code> is called.</p>
+
+<h2>Synced Folders and Networking</h2>
+
+<p>When using Docker, Vagrant automatically converts synced folders
+and networking options into Docker volumes and forwarded ports.
+You don&#39;t have to use the Docker-specific configurations to do this.
+This helps keep your Vagrantfile similar to how it has always looked.</p>
+
+<p>Private and public networks are not currently supported.</p>
+
+<h2>Host VM</h2>
+
+<p>On systems that can&#39;t run Linux containers natively, such as Mac OS X
+or Windows, Vagrant automatically spins up a &quot;host VM&quot; to run Docker.
+This allows your Docker-based Vagrant environments to remain portable,
+without inconsistencies depending on the platform they are running on.</p>
+
+<p>Vagrant will spin up a single instance of a host VM and run multiple
+containers on this one VM. This means that with the Docker provider,
+you only have the overhead of one virtual machine, and only if it is
+absolutely necessary.</p>
+
+<p>By default, the host VM Vagrant spins up is
+<a href="https://github.com/mitchellh/vagrant/blob/master/plugins/providers/docker/hostmachine/Vagrantfile">backed by boot2docker</a>,
+because it launches quickly and uses little resources. But the host VM
+can be customized to point to <em>any</em> Vagrantfile. This allows the host VM
+to more closely match production by running a VM running Ubuntu, RHEL,
+etc. It can run any operating system supported by Vagrant.</p>
+
+<div class="alert alert-info">
+    <strong>Synced folder note:</strong> Vagrant will attempt to use the
+    "best" synced folder implementation it can. For boot2docker, this is
+    often rsync. In this case, make sure you have rsync installed on your
+    host machine. Vagrant will give you a human-friendly error message if
+    it isn't.
+</div>
+
+<p>An example of changing the host VM is shown below. Remember that this
+is optional, and Vagrant will spin up a default host VM if it isn&#39;t
+specified:</p>
+
+<pre class="prettyprint">
+Vagrant.configure("2") do |config|
+  config.vm.provider "docker" do |d|
+    d.vagrant_vagrantfile = "../path/to/Vagrantfile"
+  end
+end
+</pre>
+
+<p>The host VM will be spun up at the first <code>vagrant up</code> where the provider
+is Docker. To control this host VM, use the
+<a href="javascript:$('#contentWrap').load('cli/global-status.html')" >global-status command</a>
+along with global control.</p>

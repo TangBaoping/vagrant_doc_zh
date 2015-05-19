@@ -1,0 +1,164 @@
+<h1>CFEngine Provisioner</h1>
+
+<p><strong>Provisioner name: <code>cfengine</code></strong></p>
+
+<p>The CFEngine provisioner allows you to provision the guest using
+<a href="javascript:if(confirm(%27http://www.cfengine.com/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://www.cfengine.com/%27" tppabs="http://www.cfengine.com/">CFEngine</a>. It can set up both CFEngine
+policy servers and clients. You can configure both the policy server
+and the clients in a single
+<a href="../multi-machine/index.html" tppabs="http://docs.vagrantup.com/v2/multi-machine/">multi-machine <code>Vagrantfile</code></a>.</p>
+
+<div class="alert alert-warn">
+    <p>
+        <strong>Warning:</strong> If you're not familiar with CFEngine and Vagrant already,
+        I recommend starting with the <a href="shell.html" tppabs="http://docs.vagrantup.com/v2/provisioning/shell.html">shell
+        provisioner</a>. However, if you're comfortable with Vagrant
+        already, Vagrant is the best way to learn CFEngine.
+    </p>
+</div>
+
+<p>Let us look at some common examples first. See the bottom of this
+document for a comprehensive list of options.</p>
+
+<h2>Setting up a CFEngine server and client</h2>
+
+<p>The CFEngine provisioner automatically installs the latest
+<a href="javascript:if(confirm(%27http://cfengine.com/cfengine-linux-distros  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://cfengine.com/cfengine-linux-distros%27" tppabs="http://cfengine.com/cfengine-linux-distros">CFEngine Community packages</a>
+on the VM, then configures and starts CFEngine according to your
+specification.</p>
+
+<p>Configuring a VM as a CFEngine policy server is easy:</p>
+
+<pre><code class="ruby">Vagrant.configure(&quot;2&quot;) do |config|
+  config.vm.provision &quot;cfengine&quot; do |cf|
+    cf.am_policy_hub = true
+  end
+end
+</code></pre>
+
+<p>The host will automatically be
+<a href="javascript:if(confirm(%27https://cfengine.com/docs/3.5/manuals-architecture-networking.html  \n\nThis file was not retrieved by Teleport Pro, because it is addressed using an unsupported protocol (e.g., gopher).  \n\nDo you want to open it from the server?%27))window.location=%27https://cfengine.com/docs/3.5/manuals-architecture-networking.html#bootstrapping%27" tppabs="https://cfengine.com/docs/3.5/manuals-architecture-networking.html#bootstrapping">bootstrapped</a>
+to itself to become a policy server.</p>
+
+<p>If you already have a working CFEngine policy server, you can get a
+CFEngine client installed and bootstrapped by specifying its IP
+address:</p>
+
+<pre><code class="ruby">Vagrant.configure(&quot;2&quot;) do |config|
+  config.vm.provision &quot;cfengine&quot; do |cf|
+    cf.policy_server_address = &quot;10.0.2.15&quot;
+  end
+end
+</code></pre>
+
+<h2>Copying files to the VM</h2>
+
+<p>If you have some policy or other files that you want to install by
+default on a VM, you can use the <code>files_path</code> attribute:</p>
+
+<pre><code class="ruby">Vagrant.configure(&quot;2&quot;) do |config|
+   config.vm.provision &quot;cfengine&quot; do |cf|
+      cf.am_policy_hub = true
+      cf.files_path = &quot;cfengine_files&quot;
+    end
+  end
+</code></pre>
+
+<p>Everything under <code>cfengine_files/</code> in the Vagrant project directory
+will be recursively copied under <code>/var/cfengine/</code> in the VM, on top of
+its default contents.</p>
+
+<p>A common use case is to add your own files to
+<code>/var/cfengine/masterfiles/</code> in the policy server. Assuming your extra
+files are stored under <code>cfengine_files/masterfiles/</code>, the line shown
+above will add them to the VM after CFEngine is installed, but before
+it is bootstrapped.</p>
+
+<h2>Modes of operation</h2>
+
+<p>The default mode of operation is <code>:bootstrap</code>, which results in
+CFEngine being bootstrapped according to the information provided in
+the <code>Vagrantfile</code>. You can also set <code>mode</code> to <code>:single_run</code>, which
+will run <code>cf-agent</code> once on the host to execute the file specified in
+the <code>run_file</code> parameter, but will not bootstrap it, so it will not be
+executed periodically.</p>
+
+<p>The recommended mode of operation is <code>:bootstrap</code>, as you get the full
+benefits of CFEngine when you have it running periodically.</p>
+
+<h2>Running a standalone file</h2>
+
+<p>If you want to run a standalone file, you can specify the <code>run_file</code>
+parameter. The file will be copied to the VM and executed on its own
+using <code>cf-agent</code>. Note that the file needs to be a standalone policy,
+including its own
+<a href="javascript:if(confirm(%27http://cfengine.com/docs/3.5/reference-components.html  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://cfengine.com/docs/3.5/reference-components.html#common-control%27" tppabs="http://cfengine.com/docs/3.5/reference-components.html#common-control"><code>body common control</code></a>.</p>
+
+<p>The <code>run_file</code> parameter is mandatory if <code>mode</code> is set to
+<code>:single_run</code>, but can also be specified when <code>mode</code> is set to
+<code>:bootstrap</code> - in this case the file will be executed after the host
+has been bootstrapped.</p>
+
+<h2>Full Alphabetical List of Configuration Options</h2>
+
+<ul>
+<li><code>am_policy_hub</code> (boolean, default <code>false</code>) determines whether the VM will be
+configured as a CFEngine policy hub (automatically bootstrapped to
+its own IP address). You can combine it with <code>policy_server_address</code>
+if the VM has multiple network interfaces and you want to bootstrap
+to a specific one.</li>
+<li><code>extra_agent_args</code> (string, default <code>nil</code>) can be used to pass
+additional arguments to <code>cf-agent</code> when it is executed. For example,
+you could use it to pass the <code>-I</code> or <code>-v</code> options to enable
+additional output from the agent.</li>
+<li><code>classes</code> (array, default <code>nil</code>) can be used to define additional
+classes during <code>cf-agent</code> runs. These classes will be defined using
+the <code>-D</code> option to <code>cf-agent</code>.</li>
+<li><code>deb_repo_file</code> (string, default
+<code>&quot;/etc/apt/sources.list.d/cfengine-community.list&quot;</code>) specifies the
+file in which the CFEngine repository information will be stored in
+Debian systems.</li>
+<li><code>deb_repo_line</code> (string, default <code>&quot;deb http://cfengine.com/pub/apt
+$(lsb_release -cs) main&quot;</code>) specifies the repository to use for
+<code>.deb</code> packages.</li>
+<li><code>files_path</code> (string, default <code>nil</code>) specifies a directory that will
+be copied to the VM on top of the default
+<code>/var/cfengine/</code> (the contents of <code>/var/cfengine/</code> will not
+be replaced, the files will added to it).</li>
+<li><code>force_bootstrap</code> (boolean, default <code>false</code>) specifies whether
+CFEngine will be bootstrapped again even if the host has already
+been bootstrapped.</li>
+<li><code>install</code> (boolean or <code>:force</code>, default <code>true</code>) specifies whether
+CFEngine will be installed on the VM if needed. If you set this
+parameter to <code>:force</code>, then CFEngine will be reinstalled even if
+it&#39;s already present on the machine.</li>
+<li><code>mode</code> (<code>:bootstrap</code> or <code>:single_run</code>, default <code>:bootstrap</code>)
+specifies whether CFEngine will be bootstrapped so that it executes
+periodically, or will be run a single time. If <code>mode</code> is set to
+<code>:single_run</code> you have to set <code>run_file</code>.</li>
+<li><code>policy_server_address</code> (string, no default) specifies the IP
+address of the policy server to which CFEngine will be
+bootstrapped. If <code>am_policy_hub</code> is set to <code>true</code>, this parameter
+defaults to the VM&#39;s IP address, but can still be set (for
+example, if the VM has more than one network interface).</li>
+<li><code>repo_gpg_key_url</code> (string, default
+<code>&quot;http://cfengine.com/pub/gpg.key&quot;</code>) contains the URL to obtain the
+GPG key used to verify the packages obtained from the repository.</li>
+<li><code>run_file</code> (string, default <code>nil</code>) can be used to specify a file
+inside the Vagrant project directory that will be copied to the VM
+and executed once using <code>cf-agent</code>. This parameter is mandatory if
+<code>mode</code> is set to <code>:single_run</code>, but can also be specified when
+<code>mode</code> is set to <code>:bootstrap</code> - in this case the file will be
+executed after the host has been bootstrapped.</li>
+<li><code>upload_path</code> (string, default <code>&quot;/tmp/vagrant-cfengine-file&quot;</code>)
+specifies the file to which <code>run_file</code> (if specified) will be copied
+on the VM before being executed.</li>
+<li><code>yum_repo_file</code> (string, default
+<code>&quot;/etc/yum.repos.d/cfengine-community.repo&quot;</code>) specifies the file in
+which the CFEngine repository information will be stored in RedHat
+systems.</li>
+<li><code>yum_repo_url</code> (string, default <code>&quot;http://cfengine.com/pub/yum/&quot;</code>)
+specifies the URL of the repository to use for <code>.rpm</code> packages.</li>
+<li><code>package_name</code> (string, default <code>&quot;cfengine-community&quot;</code>) specifies
+the name of the package used to install CFEngine.</li>
+</ul>

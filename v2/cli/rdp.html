@@ -1,0 +1,20 @@
+<h1>RDP</h1>
+
+<p><strong>Command: <code>vagrant rdp</code></strong></p>
+
+<p>This will start an RDP client for a remote desktop session with the
+guest. This only works for Vagrant environments that support remote
+desktop, which is typically only Windows.</p>
+
+<h2>Raw Arguments</h2>
+
+<p>You can pass raw arguments through to your RDP client on the
+command-line by appending it after a <code>--</code>. Vagrant just passes
+these through. For example:</p>
+
+<pre><code>$ vagrant rdp -- /span
+...
+</code></pre>
+
+<p>The above command on Windows will execute <code>mstsc.exe /span config.rdp</code>,
+allowing your RDP to span multiple desktops.</p>

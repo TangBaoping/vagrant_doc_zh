@@ -1,0 +1,41 @@
+<h1>Provisioning</h1>
+
+<p>Provisioners in Vagrant allow you to automatically install software, alter configurations,
+and more on the machine as part of the <code>vagrant up</code> process.</p>
+
+<p>This is useful since <a href="../boxes.html" tppabs="http://docs.vagrantup.com/v2/boxes.html">boxes</a> typically aren&#39;t
+built <em>perfectly</em> for your use case. Of course, if you want to just use
+<code>vagrant ssh</code> and install the software by hand, that works. But by using
+the provisioning systems built-in to Vagrant, it automates the process so
+that it is repeatable. Most importantly, it requires no human interaction,
+so you can <code>vagrant destroy</code> and <code>vagrant up</code> and have a fully ready-to-go
+work environment with a single command. Powerful.</p>
+
+<p>Vagrant gives you multiple options for provisioning the machine, from
+simple shell scripts to more complex, industry-standard configuration
+management systems.</p>
+
+<p>If you&#39;ve never used a configuration management system before, it is
+recommended you start with basic <a href="shell.html" tppabs="http://docs.vagrantup.com/v2/provisioning/shell.html">shell scripts</a>
+for provisioning.</p>
+
+<p>You can find the full list of built-in provisioners and usage of these
+provisioners in the navigational area to the left.</p>
+
+<h2>When Provisioning Happens</h2>
+
+<p>Provisioning happens at certain points during the lifetime of your
+Vagrant environment:</p>
+
+<ul>
+<li><p>On the first <code>vagrant up</code> that creates the environment, provisioning is run.
+If the environment was already created and the up is just resuming a machine
+or booting it up, they won&#39;t run unless the <code>--provision</code> flag is explicitly
+provided.</p></li>
+<li><p>When <code>vagrant provision</code> is used on a running environment.</p></li>
+<li><p>When <code>vagrant reload --provision</code> is called. The <code>--provision</code> flag must
+be present to force provisioning.</p></li>
+</ul>
+
+<p>You can also bring up your environment and explicitly <em>not</em> run provisioners
+by specifying <code>--no-provision</code>.</p>

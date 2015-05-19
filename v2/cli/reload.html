@@ -1,0 +1,23 @@
+<h1>Reload</h1>
+
+<p><strong>Command: <code>vagrant reload</code></strong></p>
+
+<p>The equivalent of running a <a href="javascript:$('#contentWrap').load('cli/halt.html')" >halt</a> followed by an
+<a href="javascript:$('#contentWrap').load('cli/up.html')" >up</a>.</p>
+
+<p>This command is usually required for changes made in the Vagrantfile to
+take effect. After making any modifications to the Vagrantfile, a <code>reload</code>
+should be called.</p>
+
+<p>The configured provisioners will not run again, by default. You can force
+the provisioners to re-run by specifying the <code>--provision</code> flag.</p>
+
+<h1>Options</h1>
+
+<ul>
+<li><p><code>--provision</code> - Force the provisioners to run.</p></li>
+<li><p><code>--provision-with x,y,z</code> - This will only run the given provisioners. For
+example, if you have a <code>:shell</code> and <code>:chef_solo</code> provisioner and run
+<code>vagrant provision --provision-with shell</code>, only the shell provisioner will
+be run.</p></li>
+</ul>

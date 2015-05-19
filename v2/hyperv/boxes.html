@@ -1,0 +1,85 @@
+<h1>Creating a Base Box</h1>
+
+<p>As with <a href="../providers/basic_usage.html" tppabs="http://docs.vagrantup.com/v2/providers/basic_usage.html">every provider</a>, the Hyper-V
+provider has a custom box format that affects how base boxes are made.</p>
+
+<p>Prior to reading this, you should read the
+<a href="../boxes/base.html" tppabs="http://docs.vagrantup.com/v2/boxes/base.html">general guide to creating base boxes</a>. Actually,
+it would probably be most useful to keep this open in a separate tab
+as you may be referencing it frequently while creating a base box. That
+page contains important information about common software to install
+on the box.</p>
+
+<p>Additionally, it is helpful to understand the
+<a href="../boxes/format.html" tppabs="http://docs.vagrantup.com/v2/boxes/format.html">basics of the box file format</a>.</p>
+
+<div class="alert alert-block alert-warn">
+    <p>
+        <strong>Advanced topic!</strong> This is a reasonably advanced topic that
+        a beginning user of Vagrant doesn't need to understand. If you're
+        just getting started with Vagrant, skip this and use an available
+        box. If you're an experienced user of Vagrant and want to create
+        your own custom boxes, this is for you.
+    </p>
+</div>
+
+<h2>Additional Software</h2>
+
+<p>In addition to the software that should be installed based on the
+<a href="../boxes/base.html" tppabs="http://docs.vagrantup.com/v2/boxes/base.html">general guide to creating base boxes</a>,
+Hyper-V base boxes require some additional software.</p>
+
+<h3>Hyper-V Kernel Modules</h3>
+
+<p>You&#39;ll need to install Hyper-V kernel modules. While this improves performance,
+it also enables necessary features such as reporting its IP address so that
+Vagrant can access it.</p>
+
+<p>You can verify Hyper-V kernel modules are properly installed by
+running <code>lsmod</code> on Linux machines and looking for modules prefixed with
+<code>hv_</code>. Additionally, you&#39;ll need to verify that the &quot;Network&quot; tab for your
+virtual machine in the Hyper-V manager is reporting an IP address. If it
+is not reporting an IP address, Vagrant will not be able to access it.</p>
+
+<p>For most newer Linux distributions, the Hyper-V modules will be available
+out of the box.</p>
+
+<p>Ubuntu 12.04 requires some special steps to make networking work. These
+are reproduced here in case similar steps are needed with other distributions.
+Without these commands, Ubuntu 12.04 will not report an IP address to
+Hyper-V:</p>
+
+<pre><code>$ sudo apt-get install linux-tools-3.11.0-15-generic
+$ sudo apt-get install hv-kvp-daemon-init
+$ sudo cp /usr/lib/linux-tools/3.11.0-15/hv_* /usr/sbin/
+</code></pre>
+
+<h2>Packaging the Box</h2>
+
+<p>To package a Hyper-V box, export the virtual machine from the
+Hyper-V Manager using the &quot;Export&quot; feature. This will create a directory
+with a structure similar to the following:</p>
+
+<pre><code>.
+|-- Snapshots
+|-- Virtual Hard drives
+|-- Virtual Machines
+</code></pre>
+
+<p>Delete the &quot;Snapshots&quot; folder. It is of no use to the Vagrant Hyper-V
+provider and can only add to the size of the box if there are snapshots
+in that folder.</p>
+
+<p>Then, create the &quot;metadata.json&quot; file necessary for the box, as documented
+in <a href="../boxes/format.html" tppabs="http://docs.vagrantup.com/v2/boxes/format.html">basics of the box file format</a>. The proper
+provider value to use for the metadata is &quot;hyperv&quot;.</p>
+
+<p>Finally, create an archive of those contents (but <em>not</em> the parent folder)
+using a tool such as <code>tar</code>:</p>
+
+<pre><code>$ tar cvzf ~/custom.box ./*
+</code></pre>
+
+<p>A common mistake is to also package the parent folder by accident. Vagrant
+will not work in this case. To verify you&#39;ve packaged it properly, add the
+box to Vagrant and try to bring up the machine.</p>

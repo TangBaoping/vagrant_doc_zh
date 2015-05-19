@@ -1,0 +1,77 @@
+<h1>Vagrantfile</h1>
+
+<p>The primary function of the Vagrantfile is to describe the type
+of machine required for a project, and how to configure and
+provision these machines. Vagrantfiles are called Vagrantfiles because
+the actual literal filename for the file is <code>Vagrantfile</code> (casing doesn&#39;t
+matter unless your file system is running in a strict case sensitive mode).</p>
+
+<p>Vagrant is meant to run with one Vagrantfile per project, and the Vagrantfile
+is supposed to be committed to version control. This allows other developers
+involved in the project to check out the code, run <code>vagrant up</code>, and be on
+their way. Vagrantfiles are portable across every platform Vagrant supports.</p>
+
+<p>The syntax of Vagrantfiles is <a href="javascript:if(confirm(%27http://www.ruby-lang.org/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://www.ruby-lang.org/%27" tppabs="http://www.ruby-lang.org/">Ruby</a>, but knowledge
+of the Ruby programming language is not necessary to make modifications to the
+Vagrantfile, since it is mostly simple variable assignment. In fact, Ruby isn&#39;t
+even the most popular community Vagrant is used within, which should help show
+you that despite not having Ruby knowledge, people are very successful with
+Vagrant.</p>
+
+<h2>Lookup Path</h2>
+
+<p>When you run any <code>vagrant</code> command, Vagrant climbs up the directory tree
+looking for the first Vagrantfile it can find, starting first in the
+current directory. So if you run <code>vagrant</code> in <code>/home/mitchellh/projects/foo</code>,
+it will search the following paths in order for a Vagrantfile, until it
+finds one:</p>
+
+<pre><code>/home/mitchellh/projects/foo/Vagrantfile
+/home/mitchellh/projects/Vagrantfile
+/home/mitchellh/Vagrantfile
+/home/Vagrantfile
+/Vagrantfile
+</code></pre>
+
+<p>This feature lets you run <code>vagrant</code> from any directory in your project.</p>
+
+<p>You can change the starting directory where Vagrant looks for a Vagrantfile
+by setting the <code>VAGRANT_CWD</code> environmental variable to some other path.</p>
+
+<p><a name="load-order"></a></p>
+
+<h2>Load Order and Merging</h2>
+
+<p>An important concept to understand is how Vagrant loads Vagrantfiles. Vagrant
+actually loads a series of Vagrantfiles, merging the settings as it goes. This
+allows Vagrantfiles of varying level of specificity to override prior settings.
+Vagrantfiles are loaded in the order shown below. Note that if a Vagrantfile
+is not found at any step, Vagrant continues with the next step.</p>
+
+<ol>
+<li>Vagrantfile packaged with the <a href="../boxes.html" tppabs="http://docs.vagrantup.com/v2/boxes.html">box</a> that is to be used
+for a given machine.</li>
+<li>Vagrantfile in your Vagrant home directory (defaults to <code>~/.vagrant.d</code>).
+This lets you specify some defaults for your system user.</li>
+<li>Vagrantfile from the project directory. This is the Vagrantfile that you&#39;ll
+be modifying most of the time.</li>
+<li><a href="../multi-machine/index.html" tppabs="http://docs.vagrantup.com/v2/multi-machine/">Multi-machine overrides</a> if any.</li>
+<li><a href="../providers/configuration.html" tppabs="http://docs.vagrantup.com/v2/providers/configuration.html">Provider-specific overrides</a>,
+if any.</li>
+</ol>
+
+<p>At each level, settings set will be merged with previous values. What this
+exactly means depends on the setting. For most settings, this means that
+the newer setting overrides the older one. However, for things such as defining
+networks, the networks are actually appended to each other. By default, you
+should assume that settings will override each other. If the behavior is
+different, it will be noted in the relevant documentation section.</p>
+
+<p>Within each Vagrantfile, you may specify multiple <code>Vagrant.configure</code> blocks.
+All configurations will be merged within a single Vagrantfile in the order
+they&#39;re defined.</p>
+
+<h2>Available Configuration Options</h2>
+
+<p>You can learn more about the available configuration options by clicking
+the relevant section in the left navigational area.</p>

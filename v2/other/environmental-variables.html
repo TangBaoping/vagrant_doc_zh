@@ -1,0 +1,88 @@
+<h1>Environmental Variables</h1>
+
+<p>Vagrant has a set of environmental variables that can be used to
+configure and control it in a global way. This page lists those environmental
+variables.</p>
+
+<h2>VAGRANT_CHECKPOINT_DISABLE</h2>
+
+<p>Vagrant does occasional network calls to check whether the version of Vagrant
+that is running locally is up to date. We understand that software making remote
+calls over the internet for any reason can be undesirable. To surpress these
+calls, set the environment variable <code>VAGRANT_CHECKPOINT_DISABLE</code> to any
+non-empty value.</p>
+
+<h2>VAGRANT_CWD</h2>
+
+<p><code>VAGRANT_CWD</code> can be set to change the working directory of Vagrant. By
+default, Vagrant uses the current directory you&#39;re in. The working directory
+is important because it is where Vagrant looks for the Vagrantfile. It
+also defines how relative paths in the Vagrantfile are expanded, since they&#39;re
+expanded relative to where the Vagrantfile is found.</p>
+
+<p>This environmental variable is most commonly set when running Vagrant from
+a scripting environment in order to set the directory that Vagrant sees.</p>
+
+<h2>VAGRANT_DOTFILE_PATH</h2>
+
+<p><code>VAGRANT_DOTFILE_PATH</code> can be set to change the directory where Vagrant stores VM-specific state, such as the VirtualBox VM UUID. By default, this is set to <code>.vagrant</code>. If you keep your Vagrantfile in a Dropbox folder in order to share the folder between your desktop and laptop (for example), Vagrant will overwrite the files in this directory with the details of the VM on the most recently-used host. To avoid this, you could set <code>VAGRANT_DOTFILE_PATH</code> to <code>.vagrant-laptop</code> and <code>.vagrant-desktop</code> on the respective machines. (Remember to update your <code>.gitignore</code>!)</p>
+
+<h2>VAGRANT_HOME</h2>
+
+<p><code>VAGRANT_HOME</code> can be set to change the directory where Vagrant stores
+global state. By default, this is set to <code>~/.vagrant.d</code>. The Vagrant home
+directory is where things such as boxes are stored, so it can actually become
+quite large on disk.</p>
+
+<h2>VAGRANT_LOG</h2>
+
+<p><code>VAGRANT_LOG</code> specifies the verbosity of log messages from Vagrant.
+By default, Vagrant does not actively show any log messages.</p>
+
+<p>Log messages are very useful when troubleshooting issues, reporting
+bugs, or getting support. At the most verbose level, Vagrant outputs
+basically everything it is doing.</p>
+
+<p>Available log levels are &quot;debug,&quot; &quot;info,&quot; &quot;warn,&quot; and &quot;error.&quot; Both
+&quot;warn&quot; and &quot;error&quot; are practically useless since there are very few
+cases of these, and Vagrant generally reports them within the normal
+output.</p>
+
+<p>&quot;info&quot; is a good level to start with if you&#39;re having problems, because
+while it is much louder than normal output, it is still very human-readable
+and can help identify certain issues.</p>
+
+<p>&quot;debug&quot; output is <em>extremely</em> verbose and can be difficult to read without
+some knowledge of Vagrant internals. It is the best output to attach to
+a support request or bug report, however.</p>
+
+<h2>VAGRANT_NO_COLOR</h2>
+
+<p>If this is set to any value, then Vagrant will not use any colorized
+output. This is useful if you&#39;re logging the output to a file or
+on a system that doesn&#39;t support colors.</p>
+
+<p>The equivalent behavior can be achieved by using the <code>--no-color</code> flag
+on a command-by-command basis. This environmental variable is useful
+for setting this flag globally.</p>
+
+<h2>VAGRANT_NO_PLUGINS</h2>
+
+<p>If this is set to any value, then Vagrant will not load any 3rd party
+plugins. This is useful if you install a plugin and it is introducing
+instability to Vagrant, or if you want a specific Vagrant environment to
+not load plugins.</p>
+
+<p>Note that any <code>vagrant plugin</code> commands automatically don&#39;t load any
+plugins, so if you do install any unstable plugins, you can always use
+the <code>vagrant plugin</code> commands without having to worry.</p>
+
+<h2>VAGRANT_VAGRANTFILE</h2>
+
+<p>This specifies the filename of the Vagrantfile that Vagrant searches for.
+By default, this is &quot;Vagrantfile.&quot; Note that this is <em>not</em> a file path,
+but just a filename.</p>
+
+<p>This environmental variable is commonly used in scripting environments
+where a single folder may contain multiple Vagrantfiles representing
+different configurations.</p>

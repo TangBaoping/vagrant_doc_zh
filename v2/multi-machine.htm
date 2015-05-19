@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title>Vagrant 中文文档</title>
+
+	<!-- meta -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<!-- lib styles -->
+	<link href="../stylesheets/bootstrap-2bdef9a2.css"   media="screen" rel="stylesheet" type="text/css" />
+	<link href="../stylesheets/vagrantup-71e7d178.css"   media="screen" rel="stylesheet" type="text/css" />
+
+	<!-- lib js -->
+	<script src="../javascripts/jquery-08c11650.js"   type="text/javascript"></script>
+	<script src="../javascripts/modernizr-84c0465a.js"   type="text/javascript"></script>
+	<script src="../javascripts/bootstrap.min-98cc7a22.js"   type="text/javascript"></script>
+	<script src="../javascripts/backstretch-3d1212ad.js"   type="text/javascript"></script>
+	<script src="../javascripts/vagrantup-03aae2a8.js"   type="text/javascript"></script>
+
+	<!-- fonts -->
+	<link href="../../fonts.googleapis.com/css-family=Inconsolata.css"  rel='stylesheet' type='text/css'>
+	<script type="text/javascript" src="../../use.typekit.net/xfs6zus.js"></script>
+	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
+	<!-- Google analytics -->
+	<script type="text/javascript">
+
+			// var _gaq = _gaq || [];
+			// _gaq.push(['_setAccount', 'UA-15091924-1']);
+			// _gaq.push(['_trackPageview']);
+
+			// (function() {
+			//  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			//  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www/') + '.google-analytics.com/ga.js';
+			//  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			//  })();
+
+		 </script>
+</head>
+<body>
+	<!-- wrap everything -->
+	<div class="wrapper">
+
+		<!-- nav -->
+
+		<nav class="docs">
+			<!-- vagrant logo -->
+			<a class="vagrant-docs-logo" href="http://docs.vagrantup.com/">Vagrant 中文文档</a>
+			<!-- nav -->
+			<ul class="pull-right unstyled">
+				<li class="pill">
+					<a href="http://www.amazon.com/gp/product/1449335837/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1449335837&linkCode=as2&tag=vagrant-20">Vagrant 书籍</a>
+				</li>
+				<li>
+					<a href="http://www.vagrantup.com/">官方网站(英文)</a>
+				</li>
+			</ul>
+		</nav>
+
+		<div class="page docs docs-home">
+			<div class="container">
+				<div class="row">
+
+					<div class="sidebar span3">
+						<!-- get the sidebar nav -->
+						<!-- side nav docs -->
+						<aside class="sidebar-nav">
+
+							<div class="toggle hidden-desktop">
+								<div class="open-close open"></div>
+								<a href="#">Contents</a>
+							</div>
+
+							<ul class="unstyled">
+								<li class="current">
+									<a href="index.html">概述</a>
+								</li>
+
+								<li>
+									<a href="why-vagrant/index.html">为何选择 Vagrant?</a>
+								</li>
+
+								<li>
+									<a href="installation/index.html">安装</a>
+								</li>
+
+								<li>
+									<a href="getting-started/index.html">入门</a>
+								</li>
+
+								<li>
+									<a href="cli/index.html">命令行界面</a>
+								</li>
+
+								<li>
+									<a href="share/index.html">Vagrant 共享</a>
+								</li>
+
+								<li>
+									<a href="vagrantfile/index.html">Vagrantfile 文件</a>
+								</li>
+
+								<li>
+									<a href="boxes.html">Boxes</a>
+								</li>
+
+								<li>
+									<a href="provisioning/index.html">Provisioning</a>
+								</li>
+
+								<li>
+									<a href="networking/index.html">网络</a>
+								</li>
+
+								<li>
+									<a href="synced-folders/index.html">Synced Folders</a>
+								</li>
+
+								<li>
+									<a href="multi-machine/index.html">Multi-Machine</a>
+								</li>
+
+								<li>
+									<a href="providers/index.html">Providers</a>
+								</li>
+
+								<li>
+									<a href="plugins/index.html">插件</a>
+								</li>
+
+								<li>
+									<a href="push/index.html">Push</a>
+								</li>
+
+								<li>
+									<a href="other/index.html">其他</a>
+								</li>
+
+							</ul>
+						</aside>
+						<!-- /.sidebar -->
+					</div>
+					<!-- /.sidebar -->
+
+					<div class="page-contents span9">
+						<div class="page-background"></div>
+
+						<!-- start page content -->
+						<div class="row">
+							<div class="span8 offset1">
+								<h1>Multi-Machine</h1>
+
+								<p>
+									Vagrant is able to define and control multiple guest machines per
+Vagrantfile. This is known as a &quot;multi-machine&quot; environment.
+								</p>
+
+								<p>
+									These machines are generally able to work together or are somehow associated
+with each other. Here are some use-cases people are using multi-machine
+environments for today:
+								</p>
+
+								<ul>
+									<li>
+										Accurately modeling a multi-server production topology, such as separating
+a web and database server.
+									</li>
+									<li>
+										Modeling a distributed system and how they interact with each other.
+									</li>
+									<li>Testing an interface, such as an API to a service component.</li>
+									<li>
+										Disaster-case testing: machines dying, network partitions, slow networks,
+inconsistent world views, etc.
+									</li>
+								</ul>
+
+								<p>
+									Historically, running complex environments such as these was done by
+flattening them onto a single machine. The problem with that is that it is
+an inaccurate model of the production setup, which can behave far differently.
+								</p>
+
+								<p>
+									Using the multi-machine feature of Vagrant, these environments can be modeled
+in the context of a single Vagrant environment without losing any of the
+benefits of Vagrant.
+								</p>
+
+								<h2>Defining Multiple Machines</h2>
+
+								<p>
+									Multiple machines are defined within the same project
+									<a href="vagrantfile/index.html" tppabs="http://docs.vagrantup.com/v2/vagrantfile/">Vagrantfile</a>
+									using the
+									<code>config.vm.define</code>
+									method call. This configuration directive
+is a little funny, because it creates a Vagrant configuration within a
+configuration. An example shows this best:
+								</p>
+
+								<pre><code class="ruby">Vagrant.configure(&quot;2&quot;) do |config|
+  config.vm.provision &quot;shell&quot;, inline: &quot;echo Hello&quot;
+
+  config.vm.define &quot;web&quot; do |web|
+    web.vm.box = &quot;apache&quot;
+  end
+
+  config.vm.define &quot;db&quot; do |db|
+    db.vm.box = &quot;mysql&quot;
+  end
+end
+</code></pre>
+
+								<p>
+									As you can see,
+									<code>config.vm.define</code>
+									takes a block with another variable. This
+variable, such as
+									<code>web</code>
+									above, is the <em>exact</em>
+									same as the
+									<code>config</code>
+									variable,
+except any configuration of the inner variable applies only to the machine
+being defined. Therefore, any configuration on
+									<code>web</code>
+									will only affect the
+									<code>web</code>
+									machine.
+								</p>
+
+								<p>
+									And importantly, you can continue to use the
+									<code>config</code>
+									object as well. The
+configuration object is loaded and merged before the machine-specific configuration,
+just like other Vagrantfiles within the
+									<a href="vagrantfile/index.htm#load-order" tppabs="http://docs.vagrantup.com/v2/vagrantfile/#load-order">Vagrantfile load order</a>
+									.
+								</p>
+
+								<p>
+									If you&#39;re familiar with programming, this is similar to how languages have
+different variable scopes.
+								</p>
+
+								<p>
+									When using these scopes, order of execution for things such as
+provisioners becomes important. Vagrant enforces ordering outside-in, in
+the order listed in the Vagrantfile. For example, with the Vagrantfile
+below:
+								</p>
+
+								<pre><code class="ruby">Vagrant.configure(&quot;2&quot;) do |config|
+    config.vm.provision :shell, inline: &#39;echo A&#39;
+    config.vm.define :testing do |test|
+        test.vm.provision :shell, inline: &#39;echo B&#39;
+    end
+    config.vm.provision :shell, inline: &#39;echo C&#39;
+end
+</code></pre>
+
+								<p>
+									The provisioners in this case will output &quot;A&quot;, then &quot;C&quot;, then &quot;B&quot;. Notice
+that &quot;B&quot; is last. That is because the ordering is outside-in, in
+the order of the file.
+								</p>
+
+								<h2>Controlling Multiple Machines</h2>
+
+								<p>
+									The moment more than one machine is defined within a Vagrantfile, the
+usage of the various
+									<code>vagrant</code>
+									commands changes slightly. The change should
+be mostly intuitive.
+								</p>
+
+								<p>
+									Commands that only make sense to target a single machine, such as
+									<code>vagrant ssh</code>
+									, now <em>require</em>
+									the name of the machine to control. Using
+the example above, you would say
+									<code>vagrant ssh web</code>
+									or
+									<code>vagrant ssh db</code>
+									.
+								</p>
+
+								<p>
+									Other commands, such as
+									<code>vagrant up</code>
+									, operate on
+									<em>every</em>
+									machine by
+default. So if you ran
+									<code>vagrant up</code>
+									, Vagrant would bring up both the
+web and DB machine. You could also optionally be specific and say
+									<code>vagrant up web</code>
+									or
+									<code>vagrant up db</code>
+									.
+								</p>
+
+								<p>
+									Additionally, you can specify a regular expression for matching only
+certain machines. This is useful in some cases where you specify many similar
+machines, for example if you&#39;re testing a distributed service you may have
+a
+									<code>leader</code>
+									machine as well as a
+									<code>follower0</code>
+									,
+									<code>follower1</code>
+									,
+									<code>follower2</code>
+									, etc. If you
+want to bring up all the followers but not the leader, you can just do
+									<code>vagrant up /follower[0-9]/</code>
+									. If Vagrant sees a machine name within forward
+slashes, it assumes you&#39;re using a regular expression.
+								</p>
+
+								<h2>Communication Between Machines</h2>
+
+								<p>
+									In order to facilitate communication within machines in a multi-machine setup,
+the various
+									<a href="networking/index.html" tppabs="http://docs.vagrantup.com/v2/networking/">networking</a>
+									options should be used.
+In particular, the
+									<a href="networking/private_network.html" tppabs="http://docs.vagrantup.com/v2/networking/private_network.html">private network</a>
+									can
+be used to make a private network between multiple machines and the host.
+								</p>
+
+								<h2>Specifying a Primary Machine</h2>
+
+								<p>
+									You can also specify a
+									<em>primary machine</em>
+									. The primary machine will be the
+default machine used when a specific machine in a multi-machine environment
+is not specified.
+								</p>
+
+								<p>
+									To specify a default machine, just mark it primary when defining it. Only
+one primary machine may be specified.
+								</p>
+
+								<pre><code class="ruby">config.vm.define &quot;web&quot;, primary: true do |web|
+  # ...
+end
+</code></pre>
+
+								<h2>Autostart Machines</h2>
+
+								<p>
+									By default in a multi-machine environment,
+									<code>vagrant up</code>
+									will start
+all of the defined machines. The
+									<code>autostart</code>
+									setting allows you to tell
+Vagrant to
+									<em>not</em>
+									start specific machines. Example:
+								</p>
+
+								<pre><code class="ruby">config.vm.define &quot;web&quot;
+config.vm.define &quot;db&quot;
+config.vm.define &quot;db_follower&quot;, autostart: false
+</code></pre>
+
+								<p>
+									When running
+									<code>vagrant up</code>
+									with the settings above, Vagrant will automatically
+start the &quot;web&quot; and &quot;db&quot; machines, but will not start the &quot;db_follower&quot; machine.
+You can manually force the &quot;db_follower&quot; machine to start by running
+									<code>vagrant up db_follower</code>
+									.
+								</p>
+
+							</div>
+							<!-- /.span8 -->
+						</div>
+						<!-- /.row -->
+					</div>
+					<!-- /.page-contents -->
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- /.container -->
+		</div>
+		<!-- /.page -->
+
+		<!-- footer -->
+		<footer>
+			<div class="container">
+				<div class="row">
+					<div class="span12">
+
+						<ul class="unstyled footer-nav">
+							<li>
+								<a href="javascript:if(confirm(%27https://docs.vagrantup.com/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed using an unsupported protocol (e.g., gopher).  \n\nDo you want to open it from the server?%27))window.location=%27https://docs.vagrantup.com/%27" tppabs="http://docs.vagrantup.com/">Documentation</a>
+							</li>
+							<li>
+								<a href="javascript:if(confirm(%27http://www.vagrantup.com/about  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://www.vagrantup.com/about%27" tppabs="http://www.vagrantup.com/about">About</a>
+							</li>
+							<li>
+								<a href="javascript:if(confirm(%27http://www.vagrantup.com/support  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://www.vagrantup.com/support%27" tppabs="http://www.vagrantup.com/support">Support</a>
+							</li>
+							<a href="javascript:if(confirm(%27http://www.vagrantup.com/downloads  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://www.vagrantup.com/downloads%27" tppabs="http://www.vagrantup.com/downloads">
+								<li class="button inline-button">Download</li>
+							</a>
+						</ul>
+
+						<ul class="unstyled logos">
+							<a href="javascript:if(confirm(%27http://www.vagrantup.com/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://www.vagrantup.com/%27" tppabs="http://www.vagrantup.com/">
+								<li class="vagrant-logo-monochrome"></li>
+							</a>
+							<li>
+								<span>by</span>
+							</li>
+							<a href="javascript:if(confirm(%27http://www.hashicorp.com/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://www.hashicorp.com/%27" tppabs="http://www.hashicorp.com/">
+								<li class="hashi-logo-monochrome "></li>
+							</a>
+						</ul>
+						<!-- /span -->
+
+					</div>
+					<!-- /span -->
+				</div>
+				<!-- /row -->
+
+				<div class="row">
+					<h6 class="legal">Copyright &copy; 2015 HashiCorp</h6>
+				</div>
+				<!-- row -->
+			</div>
+			<!-- container -->
+		</footer>
+
+		<!-- close .wrapper -->
+	</div>
+
+	<!-- load scripts -->
+	<!-- load full-width image into any div with class="big-background -->
+	<script>
+			$(".big-background").backstretch("assets/photos/full_width.jpg"/*tpa=http://docs.vagrantup.com/v2/assets/photos/full_width.jpg*/);
+		</script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<h1>启动并使用SSH登录</h1>
+
+<p>是时候启动你的第一个 Vagrant 虚拟环境了，执行以下命令：</p>
+
+<pre><code>$ vagrant up
+</code></pre>
+
+<p>一分钟之内，这个命令会执行完毕，你将拥有一个运行 Ubuntu 的虚拟机。你是无法真实地<em>看到</em> 到任何变化，因为 Vagrant 在运行时没有提供 UI 界面。为了证实 Vagrant 已经正确地运行，你可以通过 SSH 登录到虚拟机中查看：</p>
+
+<pre><code>$ vagrant ssh
+</code></pre>
+
+<p>这个命令会带你进入一个完整的 SSH 会话，你可以继续与虚拟机进行交互，也可以进行任何你想做的操作。虽然这个环境可能是临时的，但轻易不要执行 <code>rm -rf /</code> 命令，因为 Vagrant 共享了一个 <code>/vagrant</code> 目录，这个目录是存放在宿主机上的（具体在宿主机在哪个路径是由 Vagrantfile 文件中设置的），如果执行了这个命令，也将删除了宿主机上的这个目录。关于这个同步目录，在下一章节中将会讲到。</p>
+
+<p>我们停下来想一想：只需要一行的配置以及一行的终端命令代码，我们就可以拥有一个功能强大，可 SSH 登录的虚拟机，非常Cool！</p>
+
+<p>当你摆弄完了这台虚拟机不想再使用的时候, 在你的宿主机器上执行 <code>vagrant destroy</code>
+命令，Vagrant 就会删除所有数据及痕迹。</p>
+
+<p><a href="javascript:$('#contentWrap').load('getting-started/boxes.html‘')"  class="button inline-button prev-button">Boxes</a>
+<a href="javascript:$('#contentWrap').load('getting-started/synced_folders.html')"  class="button inline-button next-button">同步目录</a></p>

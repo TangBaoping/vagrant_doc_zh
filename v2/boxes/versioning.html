@@ -1,0 +1,92 @@
+<h1>Box Versioning</h1>
+
+<p>Since Vagrant 1.5, boxes support versioning. This allows the people who
+make boxes to push updates to the box, and the people who use the box
+have a simple workflow for checking for updates, updating their boxes,
+and seeing what has changed.</p>
+
+<p>If you&#39;re just getting started with Vagrant, box versioning isn&#39;t too
+important, and we recommend learning about some other topics first. But
+if you&#39;re using Vagrant on a team or plan on creating your own boxes,
+versioning is very important. Luckily, having versioning built right in
+to Vagrant makes it easy to use and fit nicely into the Vagrant workflow.</p>
+
+<p>This page will cover how to use versioned boxes. It does <em>not</em> cover how
+to update your own custom boxes with versions. That is covered in
+<a href="javascript:$('#contentWrap').load('boxes/base.html');" >creating a base box</a>.</p>
+
+<h2>Viewing Versions and Updating</h2>
+
+<p><code>vagrant box list</code> only shows <em>installed</em> versions of boxes. If you want
+to see all available versions of a box, you&#39;ll have to find the box
+on <a href="https://atlas.hashicorp.com/">HashiCorp&#39;s Atlas</a>. An easy way to find a box
+is to use the url <code>https://atlas.hashicorp.com/USER/BOX</code>. For example, for
+the <code>hashicorp/precise64</code> box, you can find information about it at
+<code>https://atlas.hashicorp.com/hashicorp/precise64</code>.</p>
+
+<p>You can check if the box you&#39;re using is outdated with <code>vagrant box outdated</code>.
+This can check if the box in your current Vagrant environment is outdated
+as well as any other box installed on the system.</p>
+
+<p>Finally, you can update boxes with <code>vagrant box update</code>. This will download
+and install the new box. This <em>will not</em> magically update running Vagrant
+environments. If a Vagrant environment is already running, you&#39;ll have to
+destroy and recreate it to acquire the new updates in the box. The update
+command just downloads these updates locally.</p>
+
+<h2>Version Constraints</h2>
+
+<p>You can constrain a Vagrant environment to a specific version or versions
+of a box using the <a href="javascript:$('#contentWrap').load('vagrantfile/index.html');" >Vagrantfile</a> by specifying
+the <code>config.vm.box_version</code> option.</p>
+
+<p>If this option is not specified, the latest version is always used. This is
+equivalent to specifying a constraint of &quot;&gt;= 0&quot;.</p>
+
+<p>The box version configuration can be a specific version or a constraint of
+versions. Constraints can be any combination of the following:
+<code>= X</code>, <code>&gt; X</code>, <code>&lt; X</code>, <code>&gt;= X</code>, <code>&lt;= X</code>, <code>~&gt; X</code>. You can combine multiple
+constraints by separating them with commas. All the constraints should be
+self explanatory except perhaps for <code>~&gt;</code>, known as the &quot;pessimistic constraint&quot;.
+Examples explain it best: <code>~&gt; 1.0</code> is equivalent to <code>&gt;= 1.0, &lt; 2.0</code>. And
+<code>~&gt; 1.1.5</code> is equivalent to <code>&gt;= 1.1.5, &lt; 1.2.0</code>.</p>
+
+<p>You can choose to handle versions however you see fit. However, many boxes
+in the public catalog follow <a href="http://semver.org/">semantic versioning</a>.
+Basically, only the first number (the &quot;major version&quot;) breaks backwards
+compatibility. In terms of Vagrant boxes, this means that any software that
+runs in version &quot;1.1.5&quot; of a box should work in &quot;1.2&quot; and &quot;1.4.5&quot; and so on,
+but &quot;2.0&quot; might introduce big changes that break your software. By following
+this convention, the best constraint is <code>~&gt; 1.0</code> because you know it is safe
+no matter what version is in that range.</p>
+
+<p>Of course, you&#39;re free to use versions however you&#39;d like!</p>
+
+<h2>Automatic Update Checking</h2>
+
+<p>Using the <a href="javascript:$('#contentWrap').load('vagrantfile/index.html');" >Vagrantfile</a>, you can also configure
+Vagrant to automatically check for updates during any <code>vagrant up</code>. This is
+enabled by default, but can easily be disabled with
+<code>config.vm.box_check_update = false</code> in your Vagrantfile.</p>
+
+<p>When this is enabled, Vagrant will check for updates on every <code>vagrant up</code>,
+not just when the machine is being created from scratch, but also when it
+is resuming, starting after being halted, etc.</p>
+
+<p>If an update is found, Vagrant will output a warning to the user letting
+them know an update is available. That user can choose to ignore the warning
+for now, or can update the box by running <code>vagrant box update</code>.</p>
+
+<p>Vagrant can not and does not automatically download the updated box and
+update the machine because boxes can be relatively large and updating the
+machine requires destroying it and recreating it, which can cause important
+data to be lost. Therefore, this process is manual to the extent that the
+user has to manually enter a command to do it.</p>
+
+<h2>Pruning Old Versions</h2>
+
+<p>Vagrant does not automatically prune old versions because it doesn&#39;t know
+if they might be in use by other Vagrant environments. Because boxes can
+be large, you may want to actively prune them once in awhile using
+<code>vagrant box remove</code>. You can see all the boxes that are installed
+using <code>vagrant box list</code>.</p>

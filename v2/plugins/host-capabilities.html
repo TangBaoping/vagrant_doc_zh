@@ -1,0 +1,57 @@
+<h1>Plugin Development: Host Capabilities</h1>
+
+<p>This page documents how to add new capabilities for <a href="hosts.html" tppabs="http://docs.vagrantup.com/v2/plugins/hosts.html">hosts</a>
+to Vagrant, allowing Vagrant to perform new actions on specific host
+operating systems.
+Prior to reading this, you should be familiar
+with the <a href="development-basics.html" tppabs="http://docs.vagrantup.com/v2/plugins/development-basics.html">plugin development basics</a>.</p>
+
+<div class="alert alert-warn">
+    <p>
+        <strong>Warning: Advanced Topic!</strong> Developing plugins is an
+        advanced topic that only experienced Vagrant users who are reasonably
+        comfortable with Ruby should approach.
+    </p>
+</div>
+
+<p>Host capabilities augment <a href="hosts.html" tppabs="http://docs.vagrantup.com/v2/plugins/hosts.html">hosts</a> by attaching
+specific &quot;capabilities&quot; to the host, which are actions that can be performed
+in the context of that host operating system.</p>
+
+<p>The power of capabilities is that plugins can add new capabilities to
+existing host operating systems without modifying the core of Vagrant.
+In earlier versions of Vagrant, all the host logic was contained in the
+core of Vagrant and wasn&#39;t easily augmented.</p>
+
+<h2>Definition and Implementation</h2>
+
+<p>The definition and implementation of host capabilities is identical
+to <a href="guest-capabilities.html" tppabs="http://docs.vagrantup.com/v2/plugins/guest-capabilities.html">guest capabilities</a>.</p>
+
+<p>The main difference from guest capabilities, however, is that instead of
+taking a machine as the first argument, all host capabilities take an
+instance of <code>Vagrant::Environment</code> as their first argument.</p>
+
+<p>Access to the environment allows host capabilities to access global state,
+specific machines, and also allows them to call other host capabilities.</p>
+
+<h2>Calling Capabilities</h2>
+
+<p>Since you have access to the environment in every capability, capabilities can
+also call <em>other</em> host capabilities. This is useful for using the inheritance
+mechanism of capabilities to potentially ask helpers for more information.
+For example, the &quot;linux&quot; guest has a &quot;nfs_check_command&quot; capability that
+returns the command to use to check if NFS is running.</p>
+
+<p>Capabilities on child guests of Linux such as RedHat or Arch use this
+capability to mostly inherit the Linux behavior, except for this minor
+detail.</p>
+
+<p>Capabilities can be called like so:</p>
+
+<pre><code class="ruby">environment.host.capability(:capability_name)
+</code></pre>
+
+<p>Any additional arguments given to the method will be passed on to the
+capability, and the capability will return the value that the actual
+capability returned.</p>

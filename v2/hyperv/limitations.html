@@ -1,0 +1,25 @@
+<h1>Limitations</h1>
+
+<p>The Hyper-V provider works in almost every way like the VirtualBox
+or VMware provider would, but has some limitations that are inherent to
+Hyper-V itself.</p>
+
+<h2>Limited Networking</h2>
+
+<p>Vagrant doesn&#39;t yet know how to create and configure new networks for
+Hyper-V. When launching a machine with Hyper-V, Vagrant will prompt you
+asking what virtual switch you want to connect the virtual machine to.</p>
+
+<p>A result of this is that networking configurations in the Vagrantfile
+are completely ignored with Hyper-V. Vagrant can&#39;t enforce a static IP
+or automatically configure a NAT.</p>
+
+<p>However, the IP address of the machine will be reported as part of
+the <code>vagrant up</code>, and you can use that IP address as if it were
+a host only network.</p>
+
+<h2>Packaging</h2>
+
+<p>Vagrant doesn&#39;t implement the <code>vagrant package</code> command for Hyper-V
+yet, though this should be fairly straightforward to add in a Vagrant
+release in the near future.</p>

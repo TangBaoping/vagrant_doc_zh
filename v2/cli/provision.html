@@ -1,0 +1,21 @@
+<h1>Provision</h1>
+
+<p><strong>Command: <code>vagrant provision</code></strong></p>
+
+<p>Runs any configured <a href="javascript:$('#contentWrap').load('provisioning/index.html')" >provisioners</a>
+against the running Vagrant managed machine.</p>
+
+<p>This command is a great way to quickly test any provisioners, and is especially
+useful for incremental development of shell scripts, Chef cookbooks, or Puppet
+modules. You can just make simple modifications to the provisioning scripts
+on your machine, run a <code>vagrant provision</code>, and check for the desired results.
+Rinse and repeat.</p>
+
+<h1>Options</h1>
+
+<ul>
+<li><code>--provision-with x,y,z</code> - This will only run the given provisioners. For
+example, if you have a <code>:shell</code> and <code>:chef_solo</code> provisioner and run
+<code>vagrant provision --provision-with shell</code>, only the shell provisioner will
+be run.</li>
+</ul>

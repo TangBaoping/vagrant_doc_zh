@@ -1,0 +1,14 @@
+<h1>Vagrant Settings</h1>
+
+<p><strong>Config namespace: <code>config.vagrant</code></strong></p>
+
+<p>The settings within <code>config.vagrant</code> modify the behavior of Vagrant
+itself.</p>
+
+<h2>Available Settings</h2>
+
+<p><code>config.vagrant.host</code> - This sets the type of host machine that is running
+Vagrant. By default this is <code>:detect</code>, which causes Vagrant to auto-detect
+the host. Vagrant needs to know this information in order to perform some
+host-specific things, such as preparing NFS folders if they&#39;re enabled.
+You should only manually set this if auto-detection fails.</p>

@@ -1,0 +1,52 @@
+<h1>Share</h1>
+
+<p>Now that we have a web server up and running and accessible from your machine,
+we have a fairly functional development environment. But in addition to
+providing a development environment, Vagrant also makes it easy to share
+and collaborate on these environments. The primary feature to do this in
+Vagrant is called <a href="../share/index.html" tppabs="http://docs.vagrantup.com/v2/share/">Vagrant Share</a>.</p>
+
+<p>Vagrant Share lets you share your Vagrant environment to anyone around the
+world. It will give you a URL that will route directly to your Vagrant
+environment from any device in the world that is connected to the internet.</p>
+
+<h2>Login to HashiCorp&#39;s Atlas</h2>
+
+<p>Before being able to share your Vagrant environment, you&#39;ll need an account on
+<a href="javascript:if(confirm(%27https://atlas.hashicorp.com/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed using an unsupported protocol (e.g., gopher).  \n\nDo you want to open it from the server?%27))window.location=%27https://atlas.hashicorp.com/%27" tppabs="https://atlas.hashicorp.com/">HashiCorp&#39;s Atlas</a>. Don&#39;t worry, it&#39;s free.</p>
+
+<p>Once you have an account, log in using <code>vagrant login</code>:</p>
+
+<pre><code>$ vagrant login
+Username or Email: mitchellh
+Password (will be hidden):
+You&#39;re now logged in!
+</code></pre>
+
+<h2>Share</h2>
+
+<p>Once you&#39;re logged in, run <code>vagrant share</code>:</p>
+
+<pre><code>$ vagrant share
+...
+==&gt; default: Your Vagrant Share is running!
+==&gt; default: URL: http://frosty-weasel-0857.vagrantshare.com
+...
+</code></pre>
+
+<p>Your URL will be different, so don&#39;t try the URL above. Instead, copy
+the URL that <code>vagrant share</code> outputted for you and visit that in a web
+browser. It should load the index page we setup in the previous pages.</p>
+
+<p>Now, modify your &quot;index.html&quot; file and refresh the URL. It will be updated!
+That URL is routing directly into your Vagrant environment, and works from
+any device in the world that is connected to the internet.</p>
+
+<p>To end the sharing session, hit <code>Ctrl+C</code> in your terminal. You can refresh
+the URL again to verify that your environment is no longer being shared.</p>
+
+<p>Vagrant Share is much more powerful than simply HTTP sharing. For more
+details, see the <a href="../share/index.html" tppabs="http://docs.vagrantup.com/v2/share/">complete Vagrant Share documentation</a>.</p>
+
+<p><a href="networking.html" tppabs="http://docs.vagrantup.com/v2/getting-started/networking.html" class="button inline-button prev-button">Networking</a>
+<a href="teardown.html" tppabs="http://docs.vagrantup.com/v2/getting-started/teardown.html" class="button inline-button next-button">Teardown</a></p>

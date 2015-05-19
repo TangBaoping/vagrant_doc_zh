@@ -1,0 +1,27 @@
+<h1>卸载 Vagrant</h1>
+
+<p>卸载 Vagrant 非常简单. 你可选择卸载 Vagrant 程序，或删除用户数据，或同时清楚程序及用户数据。
+接下来将介绍如何在各种平台下如何卸载 Vagrant。</p>
+
+<h2>删除 Vagrant 程序</h2>
+
+<p>删除 Vagrant 程序将删除<code>vagrant</code> 二进制文件及所有在你机器上的依赖库。删除程序后，你可以通过标准的方法 
+<a href="javascript:$('#contentWrap').load('installation/index.html')" >重新安装</a> Vagrant。</p>
+
+<p><strong>Windows</strong>平台, 使用控制面板中 添加/删除程序 即可对 Vagrant 进行卸载。</p>
+
+<p><strong>Mac OS X</strong>平台, 删除 <code>/Applications/Vagrant</code> 目录和 <code>/usr/bin/vagrant</code> 文件。然后执行命令 
+<code>sudo pkgutil --forget com.vagrant.vagrant</code> 使得 OS X
+清除 Vagrant 安装过的痕迹。</p>
+
+<p><strong>Linux</strong>平台, 删除 <code>/opt/vagrant</code> 目录和 <code>/usr/bin/vagrant</code>
+文件。</p>
+
+<h2>删除用户数据</h2>
+
+<p>删除用户数据将删除所有 <a href="javascript:$('#contentWrap').load('boxes.html')" >boxes</a>,
+<a href="javascript:$('#contentWrap').load('plugins/index.html')" >plugins</a>, 以及 Vagrant 使用的状态存储数据。 删除用户数据就好比重新安装了一个干净的 Vagrant 。</p>
+
+<p>在所有的平台上， 删除 <code>~/.vagrant.d</code> 目录即可删除用户数据。</p>
+
+<p>运行 Vagrant 会自动重新生成运行所需要的数据，所以删除用户数据对程序运行来说是安全的。</p>

@@ -1,0 +1,145 @@
+<h1>Salt Provisioner</h1>
+
+<p><strong>Provisioner name: <code>salt</code></strong></p>
+
+<p>The salt Provisioner allows you to provision the guest using
+<a href="javascript:if(confirm(%27http://saltstack.com/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://saltstack.com/%27" tppabs="http://saltstack.com/">Salt</a> states.</p>
+
+<p>Salt states are  <a href="javascript:if(confirm(%27http://en.wikipedia.org/wiki/YAML  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://en.wikipedia.org/wiki/YAML%27" tppabs="http://en.wikipedia.org/wiki/YAML">YAML</a> documents
+that describes the current state a machine should be in, e.g. what
+packages should be installed, which services are running, and the
+contents of arbitrary files.</p>
+
+<h2>Masterless Quickstart</h2>
+
+<p>What follows is a basic Vagrantfile that will get salt working
+on a single minion, without a master:</p>
+
+<pre><code class="ruby">  Vagrant.configure(&quot;2&quot;) do |config|
+    ## Choose your base box
+    config.vm.box = &quot;precise64&quot;
+
+    ## For masterless, mount your salt file root
+    config.vm.synced_folder &quot;salt/roots/&quot;, &quot;/srv/salt/&quot;
+
+    ## Use all the defaults:
+    config.vm.provision :salt do |salt|
+
+      salt.minion_config = &quot;salt/minion&quot;
+      salt.run_highstate = true
+
+    end
+  end
+</code></pre>
+
+<p>This sets up a shared folder for the salt root, and copies
+the minion file over, then runs <code>state.highstate</code> on the
+machine. Your minion file must contain the line
+<code>file_client: local</code>  in order to work in a
+masterless setup.</p>
+
+<h2>Install Options</h2>
+
+<ul>
+<li><p><code>install_master</code>  (boolean) - Should vagrant install the salt-master
+on this machine. Not supported on Windows.</p></li>
+<li><p><code>no_minion</code>  (boolean) - Don&#39;t install the minion, default <code>false</code></p></li>
+<li><p><code>install_syndic</code>   (boolean) - Install the salt-syndic, default
+<code>false</code>. Not supported on Windows.</p></li>
+<li><p><code>install_type</code>  (stable | git | daily | testing) - Whether to install from a
+distribution&#39;s stable package manager, git tree-ish, daily ppa, or testing repository.
+Not supported on Windows.</p></li>
+<li><p><code>install_args</code> (develop) - When performing a git install,
+you can specify a branch, tag, or any treeish. Not supported on Windows.</p></li>
+<li><p><code>always_install</code>   (boolean) - Installs salt binaries even
+if they are already detected, default <code>false</code></p></li>
+</ul>
+
+<h2>Minion Options</h2>
+
+<p>These only make sense when <code>no_minion</code> is <code>false</code>.</p>
+
+<ul>
+<li><p><code>minion_config</code>    (string, default: &quot;salt/minion&quot;) - Path to
+a custom salt minion config file.</p></li>
+<li><p><code>minion_key</code>  (string) - Path to your minion key</p></li>
+<li><p><code>minion_pub</code>  (salt/key/minion.pub) - Path to your minion
+public key</p></li>
+<li><p><code>grains_config</code>  (string) - Path to a custom salt grains file.</p></li>
+</ul>
+
+<h2>Master Options</h2>
+
+<p>These only make sense when <code>install_master</code> is <code>true</code>.</p>
+
+<ul>
+<li><p><code>master_config</code> (string, default: &quot;salt/minion&quot;)
+Path to a custom salt master config file</p></li>
+<li><p><code>master_key</code> (salt/key/master.pem) - Path to your master key</p></li>
+<li><p><code>master_pub</code> (salt/key/master.pub) - Path to your master public key</p></li>
+<li><p><code>seed_master</code>  (dictionary) - Upload keys to master, thereby
+pre-seeding it before use. Example: <code>{minion_name:/path/to/key.pub}</code></p></li>
+</ul>
+
+<h2>Execute States</h2>
+
+<p>Either of the following may be used to actually execute states
+during provisioning.</p>
+
+<ul>
+<li><code>run_highstate</code> - (boolean) Executes <code>state.highstate</code> on
+vagrant up. Can be applied to any machine.</li>
+<li><code>run_overstate</code> - (boolean) Executes <code>state.over</code> on
+vagrant up. Can be applied to the master only.</li>
+</ul>
+
+<h2>Output Control</h2>
+
+<p>These may be used to control the output of state execution:</p>
+
+<ul>
+<li><p><code>colorize</code> (boolean) - If true, output is colorized. Defaults to false.</p></li>
+<li><p><code>log_level</code> (string) - The verbosity of the outputs. Defaults to &quot;debug&quot;.
+Can be one of &quot;all&quot;, &quot;garbage&quot;, &quot;trace&quot;, &quot;debug&quot;, &quot;info&quot;, or
+&quot;warning&quot;.</p></li>
+</ul>
+
+<h2>Pillar Data</h2>
+
+<p>You can export pillar data for use during provisioning by using the <code>pillar</code>
+command. Each call will merge the data so you can safely call it multiple
+times. The data passed in should only be hashes and lists. Here is an example::</p>
+
+<pre><code class="ruby">      config.vm.provision :salt do |salt|
+
+        # Export hostnames for webserver config
+        salt.pillar({
+          &quot;hostnames&quot; =&gt; {
+            &quot;www&quot; =&gt; &quot;www.example.com&quot;,
+            &quot;intranet&quot; =&gt; &quot;intranet.example.com&quot;
+          }
+        })
+
+        # Export database credentials
+        salt.pillar({
+          &quot;database&quot; =&gt; {
+            &quot;user&quot; =&gt; &quot;jdoe&quot;,
+            &quot;password&quot; =&gt; &quot;topsecret&quot;
+          }
+        })
+
+        salt.run_highstate = true
+
+      end
+</code></pre>
+
+<h2>Preseeding Keys</h2>
+
+<p>Preseeding keys is the recommended way to handle provisiong
+using a master.
+On a machine with salt installed, run
+<code>salt-key --gen-keys=[minion_id]</code> to generate the necessary
+.pub and .pem files</p>
+
+<p>For a an example of a more advanced setup, look at the original
+<a href="javascript:if(confirm(%27https://github.com/saltstack/salty-vagrant/tree/develop/example  \n\nThis file was not retrieved by Teleport Pro, because it is addressed using an unsupported protocol (e.g., gopher).  \n\nDo you want to open it from the server?%27))window.location=%27https://github.com/saltstack/salty-vagrant/tree/develop/example%27" tppabs="https://github.com/saltstack/salty-vagrant/tree/develop/example">plugin</a>.</p>

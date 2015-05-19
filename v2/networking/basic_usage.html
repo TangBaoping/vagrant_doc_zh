@@ -1,0 +1,37 @@
+<h1>Basic Usage of Networking</h1>
+
+<p>Vagrant offers multiple options for how you are able to connect your
+guest machines to the network, but there is a standard usage pattern as
+well as some points common to all network configurations that
+are important to know.</p>
+
+<h2>Configuration</h2>
+
+<p>All networks are configured within your <a href="../vagrantfile/index.html" tppabs="http://docs.vagrantup.com/v2/vagrantfile/">Vagrantfile</a>
+using the <code>config.vm.network</code> method call. For example, the Vagrantfile
+below defines some port forwarding:</p>
+
+<pre><code class="ruby">Vagrant.configure(&quot;2&quot;) do |config|
+  # other config here
+
+  config.vm.network &quot;forwarded_port&quot;, guest: 80, host: 8080
+end
+</code></pre>
+
+<p>Every network type has an identifier such as <code>:forwarded_port</code> in the above
+example. Following this is a set of configuration arguments that can differ
+for each network type. In the case of forwarded ports, two numeric arguments
+are expected: the port on the guest followed by the port on the host that
+the guest port can be accessed by.</p>
+
+<h2>Multiple Networks</h2>
+
+<p>Multiple networks can be defined by having multiple <code>config.vm.network</code>
+calls within the Vagrantfile. The exact meaning of this can differ for
+each <a href="../providers/index.html" tppabs="http://docs.vagrantup.com/v2/providers/">provider</a>, but in general the order specifies
+the order in which the networks are enabled.</p>
+
+<h2>Enabling Networks</h2>
+
+<p>Networks are automatically configured and enabled after they&#39;ve been defined
+in the Vagrantfile as part of the <code>vagrant up</code> or <code>vagrant reload</code> process.</p>

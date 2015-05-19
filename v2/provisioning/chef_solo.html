@@ -1,0 +1,179 @@
+<h1>Chef Solo Provisioner</h1>
+
+<p><strong>Provisioner name: <code>chef_solo</code></strong></p>
+
+<p>The Chef Solo provisioner allows you to provision the guest using
+<a href="javascript:if(confirm(%27http://www.opscode.com/chef/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://www.opscode.com/chef/%27" tppabs="http://www.opscode.com/chef/">Chef</a>, specifically with
+<a href="javascript:if(confirm(%27http://docs.opscode.com/chef_solo.html  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://docs.opscode.com/chef_solo.html%27" tppabs="http://docs.opscode.com/chef_solo.html">Chef Solo</a>.</p>
+
+<p>Chef Solo is ideal for people who are already experienced with Chef,
+already have Chef cookbooks, or are looking to learn Chef. Specifically,
+this documentation page will not go into how to use Chef or how to write
+Chef cookbooks, since Chef is a complete system that is beyond the scope
+of a single page of documentation.</p>
+
+<div class="alert alert-warn">
+    <p>
+        <strong>Warning:</strong> If you're not familiar with Chef and Vagrant already,
+        I recommend starting with the <a href="shell.html" tppabs="http://docs.vagrantup.com/v2/provisioning/shell.html">shell
+        provisioner</a>. However, if you're comfortable with Vagrant already, Vagrant
+        is the best way to learn Chef.
+    </p>
+</div>
+
+<h2>Options</h2>
+
+<p>This section lists the complete set of available options for the Chef Solo
+provisioner. More detailed examples of how to use the provisioner are
+available below this section.</p>
+
+<ul>
+<li><p><code>cookbooks_path</code> (string or array) - A list of paths to where cookbooks
+are stored. By default this is &quot;cookbooks&quot;, expecting a cookbooks folder
+relative to the Vagrantfile location.</p></li>
+<li><p><code>data_bags_path</code> (string) - A path where data bags are stored. By default, no
+data bag path is set.</p></li>
+<li><p><code>environments_path</code> (string) - A path where environment definitions are
+located. By default, no environments folder is set.</p></li>
+<li><p><code>environment</code> (string) - The environment you want the Chef run to be
+a part of. This requires Chef 11.6.0 or later, and that <code>environments_path</code>
+is set.</p></li>
+<li><p><code>recipe_url</code> (string) - URL to an archive of cookbooks that Chef will download
+and use.</p></li>
+<li><p><code>roles_path</code> (string or array) - A list of paths where roles are defined.
+By default this is empty. Multiple role directories are only supported by
+Chef 11.8.0 and later.</p></li>
+<li><p><code>synced_folder_type</code> (string) - The type of synced folders to use when
+sharing the data required for the provisioner to work properly. By default
+this will use the default synced folder type. For example, you can set this
+to &quot;nfs&quot; to use NFS synced folders.</p></li>
+</ul>
+
+<p>In addition to all the options listed above, the Chef Solo provisioner supports
+the <a href="chef_common.html" tppabs="http://docs.vagrantup.com/v2/provisioning/chef_common.html">common options for all Chef provisioners</a>.</p>
+
+<h2>Specifying a Run List</h2>
+
+<p>The easiest way to get started with the Chef Solo provisioner is to just
+specify a <a href="javascript:if(confirm(%27http://docs.opscode.com/essentials_node_object_run_lists.html  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://docs.opscode.com/essentials_node_object_run_lists.html%27" tppabs="http://docs.opscode.com/essentials_node_object_run_lists.html">run list</a>. This looks like:</p>
+
+<pre><code class="ruby">Vagrant.configure(&quot;2&quot;) do |config|
+  config.vm.provision &quot;chef_solo&quot; do |chef|
+    chef.add_recipe &quot;apache&quot;
+  end
+end
+</code></pre>
+
+<p>This causes Vagrant to run Chef Solo with the &quot;apache&quot; cookbook. The cookbooks
+by default are looked for in the &quot;cookbooks&quot; directory relative to your
+project root. The directory structure ends up looking like this:</p>
+
+<pre><code>$ tree
+.
+|-- Vagrantfile
+|-- cookbooks
+|   |-- apache
+|       |-- recipes
+|           |-- default.rb
+</code></pre>
+
+<p>The order of the calls to <code>add_recipe</code> will specify the order of the run list.
+Earlier recipes added with <code>add_recipe</code> are run before later recipes added.</p>
+
+<h2>Custom Cookbooks Path</h2>
+
+<p>Instead of using the default &quot;cookbooks&quot; directory, a custom cookbooks
+path can also be set via the <code>cookbooks_path</code> configuration directive:</p>
+
+<pre><code class="ruby">Vagrant.configure(&quot;2&quot;) do |config|
+  config.vm.provision &quot;chef_solo&quot; do |chef|
+    chef.cookbooks_path = &quot;my_cookbooks&quot;
+  end
+end
+</code></pre>
+
+<p>The path can be relative or absolute. If it is relative, it is relative
+to the project root.</p>
+
+<p>The configuration value can also be an array of paths:</p>
+
+<pre><code class="ruby">Vagrant.configure(&quot;2&quot;) do |config|
+  config.vm.provision &quot;chef_solo&quot; do |chef|
+    chef.cookbooks_path = [&quot;cookbooks&quot;, &quot;my_cookbooks&quot;]
+  end
+end
+</code></pre>
+
+<h2>Roles</h2>
+
+<p>Vagrant also supports provisioning with <a href="javascript:if(confirm(%27http://docs.opscode.com/essentials_roles.html  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://docs.opscode.com/essentials_roles.html%27" tppabs="http://docs.opscode.com/essentials_roles.html">Chef roles</a>.
+This is done by specifying a path to a roles folder where roles are defined
+and by adding roles to your run list:</p>
+
+<pre><code class="ruby">Vagrant.configure(&quot;2&quot;) do |config|
+  config.vm.provision &quot;chef_solo&quot; do |chef|
+    chef.roles_path = &quot;roles&quot;
+    chef.add_role(&quot;web&quot;)
+  end
+end
+</code></pre>
+
+<p>Just like the cookbooks path, the roles path is relative to the project
+root if a relative path is given.</p>
+
+<p>The configuration value can also be an array of paths on Chef 11.8.0 and newer.
+On older Chef versions only the first path is used.</p>
+
+<p><strong>Note:</strong> The name of the role file must be the same as the role name.
+For example the <code>web</code> role must be in the <code>roles_path</code> as web.json or web.rb.
+This is required by Chef itself, and isn&#39;t a limitation imposed by
+Vagrant.</p>
+
+<h2>Data Bags</h2>
+
+<p><a href="javascript:if(confirm(%27http://docs.opscode.com/essentials_data_bags.html  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://docs.opscode.com/essentials_data_bags.html%27" tppabs="http://docs.opscode.com/essentials_data_bags.html">Data bags</a> are also
+supported by the Chef Solo provisioner. This is done by specifying
+a path to your data bags directory:</p>
+
+<pre><code class="ruby">Vagrant.configure(&quot;2&quot;) do |config|
+  config.vm.provision &quot;chef_solo&quot; do |chef|
+    chef.data_bags_path = &quot;data_bags&quot;
+  end
+end
+</code></pre>
+
+<h2>Custom JSON Data</h2>
+
+<p>Additional configuration data for Chef attributes can be passed in
+to Chef Solo. This is done by setting the <code>json</code> property with a Ruby
+hash (dictionary-like object), which is converted to JSON and passed
+in to Chef:</p>
+
+<pre><code>Vagrant.configure(&quot;2&quot;) do |config|
+  config.vm.provision &quot;chef_solo&quot; do |chef|
+    # ...
+
+    chef.json = {
+      &quot;apache&quot; =&gt; {
+        &quot;listen_address&quot; =&gt; &quot;0.0.0.0&quot;
+      }
+    }
+  end
+end
+</code></pre>
+
+<p>Hashes, arrays, etc. can be used with the JSON configuration object. Basically,
+anything that can be turned cleanly into JSON works.</p>
+
+<h2>Custom Node Name</h2>
+
+<p>You can specify a custom node name by setting the <code>node_name</code> property. This
+is useful for cookbooks that may depend on this being set to some sort
+of value. Example:</p>
+
+<pre><code class="ruby">Vagrant.configure(&quot;2&quot;) do |config|
+  config.vm.provision &quot;chef_solo&quot; do |chef|
+    chef.node_name = &quot;foo&quot;
+  end
+end
+</code></pre>

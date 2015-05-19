@@ -1,0 +1,88 @@
+<h1>Shared Chef Options</h1>
+
+<h2>All Chef Provisioners</h2>
+
+<p>The following options are available to all Chef provisioners. Many of these
+options are for advanced users only and should not be used unless you understand
+their purpose.</p>
+
+<ul>
+<li><p><code>binary_path</code> (string) - The path to Chef&#39;s <code>bin/</code> directory on the guest
+machine.</p></li>
+<li><p><code>binary_env</code> (string) - Arbitrary environment variables to set before running
+the Chef provisioner command. This should be of the format <code>KEY=value</code> as a
+string.</p></li>
+<li><p><code>install</code> (boolean, string) - Install Chef on the system if it does not exist.
+The default value is &quot;true&quot;, which will use the official Omnibus installer
+from Chef. This is a trinary attribute (it can have three values):</p>
+
+<ul>
+<li><code>true</code> (boolean) - install Chef</li>
+<li><code>false</code> (boolean) - do not install Chef</li>
+<li><code>&quot;force&quot;</code> (string) - install Chef, even if it is already installed at the
+proper version on the guest</li>
+</ul></li>
+<li><p><code>installer_download_path</code> (string) - The path where the Chef installer will be
+downloaded to. This option is only honored if the <code>install</code> attribute is
+<code>true</code> or <code>&quot;force&quot;</code>. The default value is to use the path provided by Chef&#39;s
+Omnibus installer, which varies between releases.</p></li>
+<li><p><code>log_level</code> (string) - The Chef log level. See the Chef docs for acceptable
+values.</p></li>
+<li><p><code>prerelease</code> (boolean) - Install a prerelease version of Chef. The default
+value is false.</p></li>
+<li><p><code>version</code> (string) - The version of Chef to install on the guest. If Chef is
+already installed on the system, the installed version is compared with the
+requested version. If they match, no action is taken. If they do not match,
+the value specified in this attribute will be installed in favor of the
+existing version (a message will be displayed).</p>
+
+<p>You can also specify &quot;latest&quot; (default), which will install the latest
+version of Chef on the system. In this case, Chef will use whatever
+version is on the system. To force the newest version of Chef to be
+installed on every provision, set the {#install} option to &quot;force&quot;.</p></li>
+</ul>
+
+<h2>Runner Chef Provisioners</h2>
+
+<p>The following options are available to any of the Chef &quot;runner&quot; provisioners
+which include <a href="chef_solo.html" tppabs="http://docs.vagrantup.com/v2/provisioning/chef_solo.html">Chef Solo</a>, <a href="chef_zero.html" tppabs="http://docs.vagrantup.com/v2/provisioning/chef_zero.html">Chef Zero</a>, and <a href="chef_client.html" tppabs="http://docs.vagrantup.com/v2/provisioning/chef_client.html">Chef Client</a>.</p>
+
+<ul>
+<li><p><code>arguments</code> (string) - A list of additional arguments to pass on the
+command-line to Chef. Since these are passed in a shell-like environment,
+be sure to properly quote and escape characters if necessary. By default,
+no additional arguments are sent.</p></li>
+<li><p><code>attempts</code> (int) - The number of times Chef will be run if an error occurs.
+This defaults to 1. This can be increased to a higher number if your Chef
+runs take multiple runs to reach convergence.</p></li>
+<li><p><code>custom_config_path</code> (string) - A path to a custom Chef configuration local
+on your machine that will be used as the Chef configuration. This Chef
+configuration will be loaded <em>after</em> the Chef configuration that Vagrant
+generates, allowing you to override anything that Vagrant does. This is
+also a great way to use new Chef features that may not be supported fully
+by Vagrant&#39;s abstractions yet.</p></li>
+<li><p><code>encrypted_data_bag_secret_key_path</code> (string) - The path to the secret key
+file to decrypt encrypted data bags. By default, this is not set.</p></li>
+<li><p><code>environment</code> (string) - The environment you want the Chef run to be
+a part of.</p></li>
+<li><p><code>formatter</code> (string) - The formatter to use for output from Chef.</p></li>
+<li><p><code>http_proxy</code>, <code>http_proxy_user</code>, <code>http_proxy_pass</code>, <code>no_proxy</code> (string) - Settings
+to configure HTTP and HTTPS proxies to use from Chef. These settings are
+also available with <code>http</code> replaced with <code>https</code> to configure HTTPS proxies.</p></li>
+<li><p><code>json</code> (hash) - Custom node attributes to pass into the Chef run.</p></li>
+<li><p><code>log_level</code> (string) - The log level for Chef output. This defaults to
+&quot;info&quot;.</p></li>
+<li><p><code>node_name</code> (string) - The node name for the Chef Client. By default this
+will be your hostname.</p></li>
+<li><p><code>provisioning_path</code> (string) - The path on the remote machine where Vagrant
+will store all necessary files for provisioning such as cookbooks, configurations,
+etc. This path must be world writable. By default this is
+<code>/tmp/vagrant-chef-#</code> where &quot;#&quot; is replaced by a unique counter.</p></li>
+<li><p><code>run_list</code> (array) - The run list that will be executed on the node.</p></li>
+<li><p><code>file_cache_path</code> and <code>file_backup_path</code> (string) - Paths on the remote
+machine where files will be cached and backed up. It is useful sometimes
+to configure this to a synced folder address so that this can be shared
+across many Vagrant runs.</p></li>
+<li><p><code>verbose_logging</code> (boolean) - Whether or not to enable the Chef
+<code>verbose_logging</code> option. By default this is false.</p></li>
+</ul>

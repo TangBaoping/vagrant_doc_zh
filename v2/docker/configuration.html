@@ -1,0 +1,76 @@
+<h1>Docker Configuration</h1>
+
+<p>The Docker provider has some provider-specific configuration options
+you may set. A complete reference is shown below.</p>
+
+<h3>Required</h3>
+
+<ul>
+<li><p><code>build_dir</code> (string) - The path to a directory containing a Dockerfile.
+One of this or <code>image</code> is required.</p></li>
+<li><p><code>image</code> (string) - The image to launch, specified by the image ID or a name
+such as <code>ubuntu:12.04</code>. One of this or <code>build_dir</code> is required.</p></li>
+</ul>
+
+<h3>Optional</h3>
+
+<p>General settings:</p>
+
+<ul>
+<li><p><code>build_args</code> (array of strings) - Extra arguments to pass to
+  <code>docker build</code> when <code>build_dir</code> is in use.</p></li>
+<li><p><code>cmd</code> (array of strings) - Custom command to run on the container.
+Example: <code>[&quot;ls&quot;, &quot;/app&quot;]</code>.</p></li>
+<li><p><code>create_args</code> (array of strings) - Additional arguments to pass to
+<code>docker run</code> when the container is started. This can be used to set
+parameters that aren&#39;t exposed via the Vagrantfile.</p></li>
+<li><p><code>env</code> (hash) - Environmental variables to expose into the container.</p></li>
+<li><p><code>expose</code> (array of integers) - Ports to expose from the container
+but not to the host machine. Useful for links.</p></li>
+<li><p><code>link</code> (method, string argument) - Link this container to another
+by name. The argument should be in the format of <code>(name:alias)</code>.
+Example: <code>docker.link(&quot;db:db&quot;)</code>. Note, if you&#39;re linking to
+another container in the same Vagrantfile, make sure you call
+<code>vagrant up</code> with the <code>--no-parallel</code> flag.</p></li>
+<li><p><code>force_host_vm</code> (boolean) - If true, then a host VM will be spun up
+even if the computer running Vagrant supports Linux containers. This
+is useful to enforce a consistent environment to run Docker.</p></li>
+<li><p><code>has_ssh</code> (boolean) - If true, then Vagrant will support SSH with
+the container. This allows <code>vagrant ssh</code> to work, provisioners, etc.
+This defaults to false.</p></li>
+<li><p><code>host_vm_build_dir_options</code> (hash) - Synced folder options for the
+<code>build_dir</code>, since the build directory is synced using a synced folder
+if a host VM is in use.</p></li>
+<li><p><code>name</code> (string) - Name of the container. Note that this has to be unique
+across all containers on the host VM. By default Vagrant will generate
+some random name.</p></li>
+<li><p><code>ports</code> (array of strings) - Ports to expose from the container to the
+host. These should be in the format of <code>host:container</code>.</p></li>
+<li><p><code>remains_running</code> (boolean) - If true, Vagrant expects this container
+to remain running and will make sure that it does for a certain amount
+of time. If false, then Vagrant expects that this container will
+automatically stop at some point, and won&#39;t error if it sees it do that.</p></li>
+<li><p><code>stop_timeout</code> (integer) - The amount of time to wait when stopping
+a container before sending a SIGTERM to the process.</p></li>
+<li><p><code>vagrant_machine</code> (string) - The name of the Vagrant machine in the
+<code>vagrant_vagrantfile</code> to use as the host machine. This defaults to
+&quot;default&quot;.</p></li>
+<li><p><code>vagrant_vagrantfile</code> (string) - Path to a Vagrantfile that contains
+the <code>vagrant_machine</code> to use as the host VM if needed.</p></li>
+<li><p><code>volumes</code> (array of strings) - List of directories to mount as
+volumes into the container. These directories must exist in the
+host where Docker is running. If you want to sync folders from the
+host Vagrant is running, just use synced folders.</p></li>
+</ul>
+
+<p>Below, we have settings related to auth. If these are set, then Vagrant
+will <code>docker login</code> prior to starting containers, allowing you to pull
+images from private repositories.</p>
+
+<ul>
+<li><p><code>email</code> (string) - Email address for logging in.</p></li>
+<li><p><code>username</code> (string) - Username for logging in.</p></li>
+<li><p><code>password</code> (string) - Password for logging in.</p></li>
+<li><p><code>auth_server</code> (string) - The server to use for authentication. If not
+  set, the Docker Hub will be used.</p></li>
+</ul>

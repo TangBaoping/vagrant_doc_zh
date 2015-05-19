@@ -1,0 +1,16 @@
+<h1>Halt</h1>
+
+<p><strong>Command: <code>vagrant halt</code></strong></p>
+
+<p>This command shuts down the running machine Vagrant is managing.</p>
+
+<p>Vagrant will first attempt to gracefully shut down the machine by running
+the guest OS shutdown mechanism. If this fails, or if the <code>--force</code> flag is
+specified, Vagrant will effectively just shut off power to the machine.</p>
+
+<h2>Options</h2>
+
+<ul>
+<li><code>-f</code> or <code>--force</code> - Don&#39;t attempt to gracefully shut down the machine.
+This effectively pulls the power on the guest machine.</li>
+</ul>

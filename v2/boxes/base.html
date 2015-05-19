@@ -1,0 +1,262 @@
+<h1>Creating a Base Box</h1>
+
+<p>There are a special category of boxes known as &quot;base boxes.&quot; These boxes
+contain the bare minimum required for Vagrant to function, are generally
+not made by repackaging an existing Vagrant environment (hence the &quot;base&quot;
+in the &quot;base box&quot;).</p>
+
+<p>For example, the Ubuntu boxes provided by the Vagrant project (such as
+&quot;precise64&quot;) are base boxes. They were created from a minimal Ubuntu install
+from an ISO, rather than repackaging an existing environment.</p>
+
+<p>Base boxes are extremely useful for having a clean slate starting point from
+which to build future development environments. The Vagrant project hopes
+in the future to be able to provide base boxes for many more operating systems.
+Until then, this page documents how you can create your own base box.</p>
+
+<div class="alert alert-block alert-warn">
+<p>
+<strong>Advanced topic!</strong> Creating a base box can be a time consuming
+and tedious process, and is not recommended for new Vagrant users. If you're
+just getting started with Vagrant, we recommend trying to find existing
+base boxes to use first.
+</p>
+</div>
+
+<h2>What&#39;s in a Base Box?</h2>
+
+<p>A base box typically consists of only a bare minimum set of software
+for Vagrant to function. As an example, a Linux box may contain only the
+following:</p>
+
+<ul>
+<li>Package manager</li>
+<li>SSH</li>
+<li>SSH user so Vagrant can connect</li>
+<li>Perhaps Chef, Puppet, etc. but not strictly required.</li>
+</ul>
+
+<p>In addition to this, each <a href="javascript:$('#contentWrap').load('providers/index.html');" >provider</a> may require
+additional software. For example, if you&#39;re making a base box for VirtualBox,
+you&#39;ll want to include the VirtualBox guest additions so that shared folders
+work properly. But if you&#39;re making an AWS base box, this is not required.</p>
+
+<h2>Creating a Base Box</h2>
+
+<p>Creating a base box is actually provider-specific. This means that depending
+on if you&#39;re using VirtualBox, VMware, AWS, etc. the process for creating
+a base box is different. Because of this, this one document can&#39;t be a
+full guide to creating a base box.</p>
+
+<p>This page will document some general guidelines for creating base boxes,
+however, and will link to provider-specific guides for creating base
+boxes.</p>
+
+<p>Provider-specific guides are linked below:</p>
+
+<ul>
+<li><a  href="javascript:$('#contentWrap').load('virtualbox/boxes.html');" >VirtualBox Base Boxes</a></li>
+</ul>
+
+<h3>Disk Space</h3>
+
+<p>When creating a base box, make sure the user will have enough disk space
+to do interesting things, without being annoying. For example, in VirtualBox,
+you should create a dynamically resizing drive with a large maximum size.
+This causes the actual footprint of the drive to be small initially, but
+to dynamically grow towards the max size as disk space is needed, providing
+the most flexibility for the end user.</p>
+
+<p>If you&#39;re creating an AWS base box, don&#39;t force the AMI to allocate
+terabytes of EBS storage, for example, since the user can do that on their
+own. But you should default to mounting ephemeral drives, because they&#39;re
+free and provide a lot of disk space.</p>
+
+<h3>Memory</h3>
+
+<p>Like disk space, finding the right balance of the default amount of memory
+is important. For most providers, the user can modify the memory with
+the Vagrantfile, so don&#39;t use too much by default. It would be a poor
+user experience (and mildly shocking) if a <code>vagrant up</code> from a base box
+instantly required many gigabytes of RAM. Instead, choose a value such
+as 512MB, which is usually enough to play around and do interesting things
+with a Vagrant machine, but can easily be increased when needed.</p>
+
+<h3>Peripherals (Audio, USB, etc.)</h3>
+
+<p>Disable any non-necessary hardware in a base box such as audio and USB
+controllers. These are generally unnecessary for Vagrant usage and, again,
+can be easily added via the Vagrantfile in most cases.</p>
+
+<h2>Default User Settings</h2>
+
+<p>Just about every aspect of Vagrant can be modified. However, Vagrant does
+expect some defaults which will cause your base box to &quot;just work&quot; out
+of the box. You should create these as defaults if you intend to publicly
+distribute your box.</p>
+
+<p>If you&#39;re creating a base box for private use, you should try <em>not</em> to
+follow these, as they open up your base box to security risks (known
+users, passwords, private keys, etc.).</p>
+
+<h3>&quot;vagrant&quot; User</h3>
+
+<p>By default, Vagrant expects a &quot;vagrant&quot; user to SSH into the machine as.
+This user should be setup with the
+<a href="https://github.com/mitchellh/vagrant/tree/master/keys">insecure keypair</a>
+that Vagrant uses as a default to attempt to SSH. Also, even though
+Vagrant uses key-based authentication by default, it is a general convention
+to set the password for the &quot;vagrant&quot; user to &quot;vagrant&quot;. This lets people
+login as that user manually if they need to.</p>
+
+<p>To configure SSH access with the insecure keypair, place the public
+key into the <code>~/.ssh/authorized_keys</code> file for the &quot;vagrant&quot; user. Note
+that OpenSSH is very picky about file permissions. Therefore, make sure
+that <code>~/.ssh</code> has <code>0700</code> permissions and the authorized keys file has
+<code>0600</code> permissions.</p>
+
+<p>When Vagrant boots a box and detects the insecure keypair, it will
+automatically replace it with a randomly generated keypair for additional
+security while the box is running.</p>
+
+<h3>Root Password: &quot;vagrant&quot;</h3>
+
+<p>Vagrant doesn&#39;t actually use or expect any root password. However, having
+a generally well known root password makes it easier for the general public
+to modify the machine if needed.</p>
+
+<p>Publicly available base boxes usually use a root password of &quot;vagrant&quot; to
+keep things easy.</p>
+
+<h3>Password-less Sudo</h3>
+
+<p>This is <strong>important!</strong>. Many aspects of Vagrant expect the default SSH user
+to have passwordless sudo configured. This lets Vagrant configure networks,
+mount synced folders, install software, and more.</p>
+
+<p>To begin, some minimal installations of operating systems don&#39;t even include
+<code>sudo</code> by default. Verify that you install <code>sudo</code> in some way.</p>
+
+<p>After installing sudo, configure it (usually using <code>visudo</code>) to allow
+passwordless sudo for the &quot;vagrant&quot; user. This can be done with the
+following line at the end of the configuration file:</p>
+
+<pre><code>vagrant ALL=(ALL) NOPASSWD: ALL
+</code></pre>
+
+<p>Additionally, Vagrant doesn&#39;t use a pty or tty by default when connected
+via SSH. You&#39;ll need to make sure there is no line that has <code>requiretty</code> in
+it. Remove that if it exists. This allows sudo to work properly without a
+tty. Note that you <em>can</em> configure Vagrant to request a pty, which lets
+you keep this configuration. But Vagrant by default doesn&#39;t do this.</p>
+
+<h3>SSH Tweaks</h3>
+
+<p>In order to keep SSH speedy even when your machine or the Vagrant machine
+is not connected to the internet, set the <code>UseDNS</code> configuration to <code>no</code>
+in the SSH server configuration.</p>
+
+<p>This avoids a reverse DNS lookup on the connecting SSH client which
+can take many seconds.</p>
+
+<h2>Windows Boxes</h2>
+
+<p>Supported Windows guest operating systems:
+- Windows 7
+- Windows 8
+- Windows Server 2008
+- Windows Server 2008 R2
+- Windows Server 2012
+- Windows Server 2012 R2</p>
+
+<p>Windows Server 2003 and Windows XP are <em>not</em> supported, but if you&#39;re a die
+hard XP fan <a href="http://stackoverflow.com/a/18593425/18475">this</a> may help you.</p>
+
+<h3>Base Windows Configuration</h3>
+
+<ul>
+<li>Turn off UAC</li>
+<li>Disable complex passwords</li>
+<li>Disable &quot;Shutdown Tracker&quot;</li>
+<li>Disable &quot;Server Manager&quot; starting at login (for non-Core)</li>
+</ul>
+
+<h3>Base WinRM Configuration</h3>
+
+<p>To enable and configure WinRM you&#39;ll need to set the WinRM service to
+auto-start and allow unencrypted basic auth (obviously this is not secure).
+Run the following commands from a regular Windows command prompt:
+<code>
+winrm quickconfig -q
+winrm set winrm/config/winrs @{MaxMemoryPerShellMB=&quot;512&quot;}
+winrm set winrm/config @{MaxTimeoutms=&quot;1800000&quot;}
+winrm set winrm/config/service @{AllowUnencrypted=&quot;true&quot;}
+winrm set winrm/config/service/auth @{Basic=&quot;true&quot;}
+sc config WinRM start= auto
+</code></p>
+
+<h3>Additional WinRM 1.1 Configuration</h3>
+
+<p>These additional configuration steps are specific to Windows Server 2008
+(WinRM 1.1). For Windows Server 2008 R2, Windows 7 and later versions of
+Windows you can ignore this section.</p>
+
+<ol>
+<li>Ensure the Windows PowerShell feature is installed</li>
+<li>Change the WinRM port to 5985 or upgrade to WinRM 2.0</li>
+</ol>
+
+<p>The following commands will change the WinRM 1.1 port to what&#39;s expected by
+Vagrant:
+<code>
+netsh firewall add portopening TCP 5985 &quot;Port 5985&quot;
+winrm set winrm/config/listener?Address=*+Transport=HTTP @{Port=&quot;5985&quot;}
+</code></p>
+
+<h2>Other Software</h2>
+
+<p>At this point, you have all the common software you absolutely <em>need</em> for
+your base box to work with Vagrant. However, there is some additional software
+you can install if you wish.</p>
+
+<p>While we plan on it in the future, Vagrant still doesn&#39;t install Chef
+or Puppet automatically when using those provisioners. Users can use a shell
+provisioner to do this, but if you want Chef/Puppet to just work out of the
+box, you&#39;ll have to install them in the base box.</p>
+
+<p>Installing this is outside the scope of this page, but should be fairly
+straightforward.</p>
+
+<p>In addition to this, feel free to install and configure any other software
+you want available by default for this base box.</p>
+
+<h2>Packaging the Box</h2>
+
+<p>Packaging the box into a <code>box</code> file is provider-specific. Please refer to
+the provider-specific documentation for creating a base box. Some
+provider-specific guides are linked to towards the top of this page.</p>
+
+<h2>Distributing the Box</h2>
+
+<p>You can distribute the box file however you&#39;d like. However, if you want
+to support versioning, putting multiple providers at a single URL, pushing
+updates, analytics, and more, we recommend you add the box to
+<a href="https://atlas.hashicorp.com/">HashiCorp&#39;s Atlas</a>.</p>
+
+<p>You can upload both public and private boxes to this service.</p>
+
+<h2>Testing the Box</h2>
+
+<p>To test the box, pretend you&#39;re a new user of Vagrant and give it a shot:</p>
+
+<pre><code>$ vagrant box add my-box /path/to/the/new.box
+...
+$ vagrant init my-box
+...
+$ vagrant up
+...
+</code></pre>
+
+<p>If you made a box for some other provider, be sure to specify the
+<code>--provider</code> option to <code>vagrant up</code>. If the up succeeded, then your
+box worked!</p>

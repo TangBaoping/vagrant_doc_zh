@@ -1,0 +1,22 @@
+<h1>向下兼容</h1>
+
+<h2>1.0.x 版本</h2>
+
+<p>Vagrant 1.1+ 版提供了向后全兼容 Vagrant 1.0.x 版本（不带插件）。 升级到 Vagrant 1.1 后, 原 1.0.x 的环境无需进行修改便可继续使用，且现有运行的虚拟机也可进行正常的管理。</p>
+
+<p>兼容性将支持 Vagrant 升级，直至 Vagrant 2.0。 It may still exist after that, but Vagrant's compatibility promise is only for two versions. Seeing that major Vagrant releases take years to develop and release, it is safe to stick with your version 1.0.x Vagrantfile for the time being.</p>
+
+<p>如果您使用了 Vagrant 1.0.x 插件，您必须移除这些插件，才能进行升级。 Vagrant 1.1+ 采用了新的插件格式，以避免再次发生这种不兼容的情况发生。</p>
+
+<p>升级后如果你的 Vagrantfile 文件在 1.1 版本下无法运行，且没有使用任何插件，请点击 <a href="https://github.com/mitchellh/vagrant/issues" target="_blank">提交 bug</a>。</p>
+
+<h2>1.x 版本</h2>
+
+<p>在 2.0 最终版前，我们无法承诺 1.x 版本之间的向后兼容,及 Vagrantfile 配置文件的语法稳定性。任何的向后不兼容将会做出明确的文档说明。</p>
+
+<p>This is similar to how Vagrant 0.x was handled. In practice, Vagrant 0.x
+only introduced a handful of backwards incompatibilities during the entire
+development cycle, but the possibility of backwards incompatibilities
+is made clear so people aren&#39;t surprised.</p>
+
+<p>Vagrant 2.0 最终会提供一个标准固定的 VagrantFile 配置文件格式，将保留向后兼容，就如 1.0 那样经过斟酌后固定标准。</p>

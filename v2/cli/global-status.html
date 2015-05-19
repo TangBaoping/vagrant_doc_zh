@@ -1,0 +1,32 @@
+<h1>Global Status</h1>
+
+<p><strong>Command: <code>vagrant global-status</code></strong></p>
+
+<p>This command will tell you the state of all active Vagrant environments
+on the system for the currently logged in user.</p>
+
+<p>This command doesn&#39;t actively verify the state of the machines listed,
+and is instead based on a cache. Because of this, it is possible to see
+stale results (machines say they&#39;re running but they&#39;re not). For example,
+if you restart your computer, Vagrant wouldn&#39;t know. To prune the invalid
+entries, run global status with the <code>--prune</code> flag.</p>
+
+<p>The IDs in the output that look like <code>a1b2c3</code> can be used to control
+the Vagrant machine from anywhere on the system. Any Vagrant command
+that takes a target machine (such as <code>up</code>, <code>halt</code>, <code>destroy</code>) can be
+used with this ID to control it. For example: <code>vagrant destroy a1b2c3</code>.</p>
+
+<h2>Options</h2>
+
+<ul>
+<li><code>--prune</code> - Prunes invalid entries from the list. This is much more time
+consuming than simply listing the entries.</li>
+</ul>
+
+<h2>Environment Not Showing Up</h2>
+
+<p>If your environment is not showing up, you may have to do a <code>vagrant destroy</code>
+followed by a <code>vagrant up</code>.</p>
+
+<p>If you just upgraded from a previous version of Vagrant, existing environments
+won&#39;t show up in global-status until they are destroyed and recreated.</p>

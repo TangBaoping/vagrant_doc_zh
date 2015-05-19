@@ -1,0 +1,87 @@
+<h1>Plugin Development: Hosts</h1>
+
+<p>This page documents how to add new host OS detection to Vagrant, allowing
+Vagrant to properly execute host-specific operations on new operating systems.
+Prior to reading this, you should be familiar
+with the <a href="development-basics.html" tppabs="http://docs.vagrantup.com/v2/plugins/development-basics.html">plugin development basics</a>.</p>
+
+<div class="alert alert-warn">
+    <p>
+        <strong>Warning: Advanced Topic!</strong> Developing plugins is an
+        advanced topic that only experienced Vagrant users who are reasonably
+        comfortable with Ruby should approach.
+    </p>
+</div>
+
+<p>Vagrant has some features that require host OS-specific actions, such as
+exporting NFS folders. These tasks vary from operating system to operating
+system. Vagrant uses host detection as well as
+<a href="host-capabilities.html" tppabs="http://docs.vagrantup.com/v2/plugins/host-capabilities.html">host capabilities</a> to perform these
+host OS-specific operations.</p>
+
+<h2>Definition Component</h2>
+
+<p>Within the context of a plugin definition, new hosts can be defined
+like so:</p>
+
+<pre><code class="ruby">host &quot;ubuntu&quot; do
+  require_relative &quot;host&quot;
+  Host
+end
+</code></pre>
+
+<p>Hosts are defined with the <code>host</code> method. The first argument is the
+name of the host. This name isn&#39;t actually used anywhere, but may in the
+future, so choose something helpful. Then, the block argument returns a
+class that implements the <code>Vagrant.plugin(2, :host)</code> interface.</p>
+
+<h2>Implementation</h2>
+
+<p>Implementations of hosts subclass <code>Vagrant.plugin(&quot;2&quot;, &quot;host&quot;)</code>. Within
+this implementation, only the <code>detect?</code> method needs to be implemented.</p>
+
+<p>The <code>detect?</code> method is called by Vagrant very early on in its initialization
+process to determine if the OS that Vagrant is running on is this host.
+If you detect that it is your operating system, return <code>true</code> from <code>detect?</code>.
+Otherwise, return <code>false</code>.</p>
+
+<pre><code>class MyHost &lt; Vagrant.plugin(&quot;2&quot;, &quot;host&quot;)
+  def detect?(environment)
+    File.file?(&quot;/etc/arch-release&quot;)
+  end
+end
+</code></pre>
+
+<p>After detecting an OS, that OS is used for various
+<a href="host-capabilities.html" tppabs="http://docs.vagrantup.com/v2/plugins/host-capabilities.html">host capabilities</a> that may be
+required.</p>
+
+<h2>Host Inheritance</h2>
+
+<p>Vagrant also supports a form of inheritance for hosts, since sometimes
+operating systems stem from a common root. A good example of this is Linux
+is the root of Debian, which further is the root of Ubuntu in many cases.
+Inheritance allows hosts to share a lot of common behavior while allowing
+distro-specific overrides.</p>
+
+<p>Inheritance is not done via standard Ruby class inheritance because Vagrant
+uses a custom <a href="host-capabilities.html" tppabs="http://docs.vagrantup.com/v2/plugins/host-capabilities.html">capability-based</a> system.
+Vagrant handles inheritance dispatch for you.</p>
+
+<p>To subclass another host, specify that host&#39;s name as a second parameter
+in the host definition:</p>
+
+<pre><code class="ruby">host &quot;ubuntu&quot;, &quot;debian&quot; do
+  require_relative &quot;host&quot;
+  Host
+end
+</code></pre>
+
+<p>With the above component, the &quot;ubuntu&quot; host inherits from &quot;debian.&quot; When
+a capability is looked up for &quot;ubuntu&quot;, all capabilities from &quot;debian&quot; are
+also available, and any capabilities in &quot;ubuntu&quot; override parent capabilities.</p>
+
+<p>When detecting operating systems with <code>detect?</code>, Vagrant always does a
+depth-first search by searching the children operating systems before
+checking their parents. Therefore, it is guaranteed in the above example
+that the <code>detect?</code> method on &quot;ubuntu&quot; will be called before &quot;debian.&quot;</p>

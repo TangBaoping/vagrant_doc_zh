@@ -1,0 +1,45 @@
+<h1>Vagrant Connect</h1>
+
+<p>Vagrant can share any or <em>every</em> port to your Vagrant environment, not
+just SSH and HTTP. The <code>vagrant connect</code> command gives the connecting person
+a static IP they can use to communicate to the shared Vagrant environment.
+Any TCP traffic sent to this IP is sent to the shared Vagrant environment.</p>
+
+<h2>Usage</h2>
+
+<p>Just call <code>vagrant share</code>. This will automatically share as many ports as
+possible for remote connections. If the Vagrant environment has a static IP or DNS address, then every port
+will be available. Otherwise, Vagrant will only expose forwarded ports on
+the machine.</p>
+
+<p>Note the share name at the end of calling <code>vagrant share</code>, and give this to
+the person who wants to connect to your machine. They simply have to call
+<code>vagrant connect NAME</code>. This will give them a static IP they can use to access
+your Vagrant environment.</p>
+
+<h2>How does it work?</h2>
+
+<p><code>vagrant connect</code> works by doing what Vagrant does best: managing virtual
+machines. <code>vagrant connect</code> creates a tiny virtual machine that takes up
+only around 20 MB in RAM, using VirtualBox or VMware (more provider support
+is coming soon).</p>
+
+<p>Any traffic sent to this tiny virtual machine is then proxied through to
+the shared Vagrant environment as if it were directed at it.</p>
+
+<h2>Beware: Vagrant Insecure Key</h2>
+
+<p>If the Vagrant environment or box you&#39;re using is protected with the
+Vagrant insecure keypair (most public boxes are), then SSH will be easily
+available to anyone who connects.</p>
+
+<p>While hopefully you&#39;re sharing with someone you trust, in certain environments
+you might be sharing with a class, or a conference, and you don&#39;t want them
+to be able to SSH in.</p>
+
+<p>In this case, we recommend changing or removing the insecure key from
+the Vagrant machine.</p>
+
+<p>Finally, we want to note that we are working on making it so that when
+Vagrant share is used, the Vagrant private key is actively rejected unless
+explicitly allowed. This feature is not yet done, however.</p>

@@ -1,0 +1,12 @@
+<h1>从 Vagrant 1.0.x 升级</h1>
+
+<p>从 1.0.x 升级到 1.x 的过程是很简单的。Vagrant 对 1.0.x 版本具有良好的
+<a href="javascript:$('#contentWrap').load('installation/backwards-compatibility.html')" >向后兼容性</a>
+， 所以你可以很简单地通过下载最新的安装包按照你所在平台的标准安装程序进行安装，即可重新安装 Vagrant。</p>
+
+<p>就如 <a href="javascript:$('#contentWrap').load('installation/backwards-compatibility.html')" >向后兼容性</a>
+页面提到的, <strong>Vagrant 1.0.x 插件无法升级到 Vagrant 1.1+</strong>。许多插件已随着 Vagrant 升级更新到新版本，因此你可以查看所需插件是否已更新，在升级前，最好删除旧版本插件。</p>
+
+<p>强烈建议，在升级插件之前，最好删除<em>所有</em> 旧版插件, 然后逐步重新添加插件，这样，升级过程变得更加平滑顺利。</p>
+<p><strong>但是</strong>, 如果你的 Vagrant 版本是通过 RubyGems 安装的, 则必须在安装新版本之前，使用
+<code>gem uninstall</code> 卸载旧版本 Vagrant。 基于 RubyGems 的安装方式已经被放弃。</p>

@@ -1,0 +1,157 @@
+<h1>Machine Settings</h1>
+
+<p><strong>Config namespace: <code>config.vm</code></strong></p>
+
+<p>The settings within <code>config.vm</code> modify the configuration of the
+machine that Vagrant manages.</p>
+
+<h2>Available Settings</h2>
+
+<p><code>config.vm.boot_timeout</code> - The time in seconds that Vagrant will wait
+for the machine to boot and be accessible. By default this is 300 seconds.</p>
+
+<hr>
+
+<p><code>config.vm.box</code> - This configures what <a href="../boxes.html" tppabs="http://docs.vagrantup.com/v2/boxes.html">box</a> the
+machine will be brought up against. The value here should be the name
+of an installed box or a shorthand name of a box in
+<a href="javascript:if(confirm(%27https://atlas.hashicorp.com/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed using an unsupported protocol (e.g., gopher).  \n\nDo you want to open it from the server?%27))window.location=%27https://atlas.hashicorp.com/%27" tppabs="https://atlas.hashicorp.com/">HashiCorp&#39;s Atlas</a>.</p>
+
+<hr>
+
+<p><code>config.vm.box_check_update</code> - If true, Vagrant will check for updates to
+the configured box on every <code>vagrant up</code>. If an update is found, Vagrant
+will tell the user. By default this is true. Updates will only be checked
+for boxes that properly support updates (boxes from
+<a href="javascript:if(confirm(%27https://atlas.hashicorp.com/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed using an unsupported protocol (e.g., gopher).  \n\nDo you want to open it from the server?%27))window.location=%27https://atlas.hashicorp.com/%27" tppabs="https://atlas.hashicorp.com/">HashiCorp&#39;s Atlas</a>
+or some other versioned box).</p>
+
+<hr>
+
+<p><code>config.vm.box_download_checksum</code> - The checksum of the box specified by
+<code>config.vm.box_url</code>. If not specified, no checksum comparison will be done.
+If specified, Vagrant will compare the checksum of the downloaded box to
+this value and error if they do not match. Checksum checking is only done
+when Vagrant must download the box.</p>
+
+<p>If this is specified, then <code>config.vm.box_download_checksum_type</code> must
+also be specified.</p>
+
+<hr>
+
+<p><code>config.vm.box_download_checksum_type</code> - The type of checksum specified
+by <code>config.vm.box_download_checksum</code> (if any). Supported values are
+currently &quot;md5&quot;, &quot;sha1&quot;, and &quot;sha256&quot;.</p>
+
+<hr>
+
+<p><code>config.vm.box_download_client_cert</code> - Path to a client certificate to
+use when downloading the box, if it is necessary. By default, no client
+certificate is used to download the box.</p>
+
+<hr>
+
+<p><code>config.vm.box_download_ca_cert</code> - Path to a CA cert bundle to use when
+downloading a box directly. By default, Vagrant will use the Mozilla CA cert
+bundle.</p>
+
+<hr>
+
+<p><code>config.vm.box_download_ca_path</code> - Path to a directory containing
+CA certificates for downloading a box directly. By default, Vagrant will
+use the Mozilla CA cert bundle.</p>
+
+<hr>
+
+<p><code>config.vm.box_download_insecure</code> - If true, then SSL certificates
+from the server will not be verified. By default, if the URL is an HTTPS
+URL, then SSL certs will be verified.</p>
+
+<hr>
+
+<p><code>config.vm.box_url</code> - The URL that the configured box can be found at.
+If <code>config.vm.box</code> is a shorthand to a box in <a href="javascript:if(confirm(%27https://atlas.hashicorp.com/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed using an unsupported protocol (e.g., gopher).  \n\nDo you want to open it from the server?%27))window.location=%27https://atlas.hashicorp.com/%27" tppabs="https://atlas.hashicorp.com/">HashiCorp&#39;s Atlas</a>
+then this value doesn&#39;t need to be specified. Otherwise, it should
+point to the proper place where the box can be found if it isn&#39;t
+installed.</p>
+
+<p>This can also be an array of multiple URLs. The URLs will be tried in
+order. Note that any client certificates, insecure download settings, and
+so on will apply to all URLs in this list.</p>
+
+<p>The URLs can also be local files by using the <code>file://</code> scheme. For
+example: &quot;file:///tmp/test.box&quot;.</p>
+
+<hr>
+
+<p><code>config.vm.box_version</code> - The version of the box to use. This defaults to
+&quot;&gt;= 0&quot; (the latest version available). This can contain an arbitrary list
+of constraints, separated by commas, such as: <code>&gt;= 1.0, &lt; 1.5</code>. When constraints
+are given, Vagrant will use the latest available box satisfying these
+constraints.</p>
+
+<hr>
+
+<p><code>config.vm.communicator</code> - The communicator type to use to connect to the
+guest box. By default this is <code>:ssh</code>, but should be changed to <code>:winrm</code> for
+Windows guests.</p>
+
+<hr>
+
+<p><code>config.vm.graceful_halt_timeout</code> - The time in seconds that Vagrant will
+wait for the machine to gracefully halt when <code>vagrant halt</code> is called.
+Defaults to 60 seconds.</p>
+
+<hr>
+
+<p><code>config.vm.guest</code> - The guest OS that will be running within this
+machine. This defaults to <code>:linux</code>, and Vagrant will auto-detect the
+proper distro. Vagrant needs to know this information to perform some
+guest OS-specific things such as mounting folders and configuring
+networks.</p>
+
+<hr>
+
+<p><code>config.vm.hostname</code> - The hostname the machine should have. Defaults
+to nil. If nil, Vagrant won&#39;t manage the hostname. If set to a string,
+the hostname will be set on boot.</p>
+
+<hr>
+
+<p><code>config.vm.network</code> - Configures <a href="../networking/index.html" tppabs="http://docs.vagrantup.com/v2/networking/">networks</a> on
+the machine. Please see the networking page for more information.</p>
+
+<hr>
+
+<p><code>config.vm.post_up_message</code> - A message to show after <code>vagrant up</code>. This
+will be shown to the user and is useful for containing instructions
+such as how to access various components of the development environment.</p>
+
+<hr>
+
+<p><code>config.vm.provider</code> - Configures <a href="../providers/configuration.html" tppabs="http://docs.vagrantup.com/v2/providers/configuration.html">provider-specific configuration</a>,
+which is used to modify settings which are specific to a certain
+<a href="../providers/index.html" tppabs="http://docs.vagrantup.com/v2/providers/">provider</a>. If the provider you&#39;re configuring
+doesn&#39;t exist or is not setup on the system of the person who runs
+<code>vagrant up</code>, Vagrant will ignore this configuration block. This allows
+a Vagrantfile that is configured for many providers to be shared among
+a group of people who may not have all the same providers installed.</p>
+
+<hr>
+
+<p><code>config.vm.provision</code> - Configures <a href="../provisioning/index.html" tppabs="http://docs.vagrantup.com/v2/provisioning/">provisioners</a>
+on the machine, so that software can be automatically installed and configured
+when the machine is created. Please see the page on provisioners for more
+information on how this setting works.</p>
+
+<hr>
+
+<p><code>config.vm.synced_folder</code> - Configures <a href="../synced-folders/index.html" tppabs="http://docs.vagrantup.com/v2/synced-folders/">synced folders</a>
+on the machine, so that folders on your host machine can be synced to
+and from the guest machine. Please see the page on synced folders for
+more information on how this setting works.</p>
+
+<hr>
+
+<p><code>config.vm.usable_port_range</code> - A range of ports Vagrant can use for
+handling port collisions and such. Defaults to <code>2200..2250</code>.</p>

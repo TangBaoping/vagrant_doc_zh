@@ -1,0 +1,32 @@
+<h1>Vagrant Share</h1>
+
+<p>Vagrant Share allows you to  share your Vagrant environment with anyone in
+the world, enabling collaboration directly in your Vagrant environment
+in almost any network environment with just a single command:
+<code>vagrant share</code>.</p>
+
+<p>Vagrant share has three primary modes or features. These features aren&#39;t
+mutually exclusive, meaning that any combination of them can be active
+at any given time:</p>
+
+<ul>
+<li><p><strong>HTTP sharing</strong> will create a URL that you can give to anyone. This
+URL will route directly into your Vagrant environment. The person using
+this URL does not need Vagrant installed, so it can be shared with anyone.
+This is useful for testing webhooks or showing your work to clients,
+teammates, managers, etc.</p></li>
+<li><p><strong>SSH sharing</strong> will allow instant SSH access to your Vagrant environment
+by anyone by running <code>vagrant connect --ssh</code> on the remote side. This
+is useful for pair programming, debugging ops problems, etc.</p></li>
+<li><p><strong>General sharing</strong> allows anyone to access any exposed port of your
+Vagrant environment by running <code>vagrant connect</code> on the remote side.
+This is useful if the remote side wants to access your Vagrant
+environment as if it were a computer on the LAN.</p></li>
+</ul>
+
+<p>The details of each are covered in their specific section in the sidebar
+to the left. We also have a section where we go into detail about the
+security implications of this feature.</p>
+
+<p>Vagrant Share requires an account with
+<a href="javascript:if(confirm(%27https://atlas.hashicorp.com/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed using an unsupported protocol (e.g., gopher).  \n\nDo you want to open it from the server?%27))window.location=%27https://atlas.hashicorp.com/%27" tppabs="https://atlas.hashicorp.com/">HashiCorp&#39;s Atlas</a> to be used.</p>

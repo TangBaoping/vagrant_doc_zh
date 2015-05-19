@@ -1,0 +1,82 @@
+<h1>Basic Usage</h1>
+
+<h2>Configuration</h2>
+
+<p>Synced folders are configured within your Vagrantfile using the
+<code>config.vm.synced_folder</code> method. Usage of the configuration directive
+is very simple:</p>
+
+<pre><code class="ruby">Vagrant.configure(&quot;2&quot;) do |config|
+  # other config here
+
+  config.vm.synced_folder &quot;src/&quot;, &quot;/srv/website&quot;
+end
+</code></pre>
+
+<p>The first parameter is a path to a directory on the host machine. If
+the path is relative, it is relative to the project root. The second
+parameter must be an absolute path of where to share the folder within
+the guest machine. This folder will be created (recursively, if it must)
+if it doesn&#39;t exist.</p>
+
+<h2>Options</h2>
+
+<p>You may also specify additional optional parameters when configuring 
+synced folders. These options are listed below. More detailed examples of using
+some of these options are shown below this section, note the owner/group example
+supplies two additional options separated by commas.</p>
+
+<p>In addition to these options, the specific synced folder type might
+allow more options. See the documentation for your specific synced folder
+type for more details. The built-in synced folder types are documented
+in other pages available in the navigation for these docs.</p>
+
+<ul>
+<li><p><code>create</code> (boolean) - If true, the host path will be created if it
+does not exist. Defaults to false.</p></li>
+<li><p><code>disabled</code> (boolean) - If true, this synced folder will be disabled and
+won&#39;t be setup. This can be used to disable a previously defined synced
+folder or to conditionally disable a definition based on some external
+factor.</p></li>
+<li><p><code>group</code> (string) - The group that will own the synced folder. By default
+this will be the SSH user. Some synced folder types don&#39;t support
+modifying the group.</p></li>
+<li><p><code>mount_options</code> (array) - A list of additional mount options to pass
+to the <code>mount</code> command.</p></li>
+<li><p><code>owner</code> (string) - The user who should be the owner of this synced folder.
+By default this will be the SSH user. Some synced folder types don&#39;t
+support modifying the owner.</p></li>
+<li><p><code>type</code> (string) - The type of synced folder. If this is not specified,
+Vagrant will automatically choose the best synced folder option for your
+environment. Otherwise, you can specify a specific type such as &quot;nfs&quot;.</p></li>
+</ul>
+
+<h2>Enabling</h2>
+
+<p>Synced folders are automatically setup during <code>vagrant up</code> and
+<code>vagrant reload</code>.</p>
+
+<h2>Disabling</h2>
+
+<p>Synced folders can be disabled by adding the <code>disabled</code> option to
+any definition:</p>
+
+<pre><code class="ruby">Vagrant.configure(&quot;2&quot;) do |config|
+  config.vm.synced_folder &quot;src/&quot;, &quot;/srv/website&quot;, disabled: true
+end
+</code></pre>
+
+<p>Disabling the default <code>/vagrant</code> share can be done as follows:</p>
+
+<pre><code class="ruby">config.vm.synced_folder &quot;.&quot;, &quot;/vagrant&quot;, disabled: true
+</code></pre>
+
+<h2>Modifying the Owner/Group</h2>
+
+<p>By default, Vagrant mounts the synced folders with the owner/group set
+to the SSH user. Sometimes it is preferable to mount folders with a different
+owner and group. It is possible to set these options:</p>
+
+<pre><code class="ruby">config.vm.synced_folder &quot;src/&quot;, &quot;/srv/website&quot;,
+  owner: &quot;root&quot;, group: &quot;root&quot;
+</code></pre>

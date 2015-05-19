@@ -1,0 +1,41 @@
+<h1>Teardown</h1>
+
+<p>We now have a fully functional virtual machine we can use for basic
+web development. But now let&#39;s say it is time to switch gears, maybe work
+on another project, maybe go out to lunch, or maybe just time to go home.
+How do we clean up our development environment?</p>
+
+<p>With Vagrant, you <em>suspend</em>, <em>halt</em>, or <em>destroy</em> the guest machine.
+Each of these options have pros and cons. Choose the method that works
+best for you.</p>
+
+<p><strong>Suspending</strong> the virtual machine by calling <code>vagrant suspend</code> will
+save the current running state of the machine and stop it. When you&#39;re
+ready to begin working again, just run <code>vagrant up</code>, and it will be
+resumed from where you left off. The main benefit of this method is that it
+is super fast, usually taking only 5 to 10 seconds to stop and start your
+work. The downside is that the virtual machine still eats up your disk space,
+and requires even more disk space to store all the state of the virtual
+machine RAM on disk.</p>
+
+<p><strong>Halting</strong> the virtual machine by calling <code>vagrant halt</code> will gracefully
+shut down the guest operating system and power down the guest machine.
+You can use <code>vagrant up</code> when you&#39;re ready to boot it again. The benefit of
+this method is that it will cleanly shut down your machine, preserving the
+contents of disk, and allowing it to be cleanly started again. The downside is
+that it&#39;ll take some extra time to start from a cold boot, and the guest machine
+still consumes disk space.</p>
+
+<p><strong>Destroying</strong> the virtual machine by calling <code>vagrant destroy</code> will remove
+all traces of the guest machine from your system. It&#39;ll stop the guest machine,
+power it down, and remove all of the guest hard disks. Again, when you&#39;re ready to
+work again, just issue a <code>vagrant up</code>. The benefit of this is that <em>no cruft</em>
+is left on your machine. The disk space and RAM consumed by the guest machine
+is reclaimed and your host machine is left clean. The downside is that
+<code>vagrant up</code> to get working again will take some extra time since it
+has to reimport the machine and reprovision it.</p>
+
+<p><a href="share.html" tppabs="http://docs.vagrantup.com/v2/getting-started/share.html" class="button inline-button prev-button">Share</a>
+<a href="rebuild.html" tppabs="http://docs.vagrantup.com/v2/getting-started/rebuild.html" class="button inline-button next-button">Rebuild</a></p>
+
+	

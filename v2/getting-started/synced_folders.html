@@ -1,0 +1,32 @@
+<h1>同步目录</h1>
+
+<p>轻轻松松就能创建拥有一台虚拟是一件很酷的事情，但是并不是所有人都喜欢使用SSH登录上去，在终端界面下进行文件的编辑工作。
+幸运的是，Vagrant 可以让你不必这么做，使用 <em>同步目录</em>， Vagrant
+会自动在宿主机和虚拟机间同步该目录。</p>
+
+<p>默认情况下，Vagrant 共享你的项目跟路径（注意，这个可在 Vagrantfile 中配置）到你宿主机的 <code>/vagrant</code> 目录中。
+再次执行 <code>vagrant up</code> 命令，SSH 登录到你的虚拟机中查看：</p>
+
+<pre><code>$ vagrant up
+...
+$ vagrant ssh
+...
+vagrant@precise32:~$ ls /vagrant
+Vagrantfile
+</code></pre>
+
+<p>无论你是否相信， 通过以上命令，在虚拟机中显示的 Vagrantfile 实际与你宿主机 /vagrant/ 目录下的 Vagrantfile 文件是一样的。
+继续创建一个文件来证实：</p>
+
+<pre><code>vagrant@precise32:~$ touch /vagrant/foo
+vagrant@precise32:~$ exit
+$ ls
+foo Vagrantfile
+</code></pre>
+
+<p>哇! &quot;foo&quot; 这个文件已经在你宿主机的 /Vagrant 目录下出现了！因此，Vagrant 是保持了虚拟机与宿主机间这个目录的同步的。</p>
+
+<p>有了  /Vagrant 这个<a href="javascript:$('#contentWrap').load('synced-folders/index.html')" >同步目录</a>，你可以继续在宿主机上使用你惯用的编辑器进行开发，文件则会自动同步至虚拟机中。</p>
+
+<p><a href="javascript:$('#contentWrap').load('getting-started/up.html')"  class="button inline-button prev-button">启动并使用SSH登录</a>
+<a href="javascript:$('#contentWrap').load('getting-started/provisioning.html')"  class="button inline-button next-button">Provisioning</a></p>

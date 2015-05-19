@@ -1,0 +1,22 @@
+<h1>VirtualBox</h1>
+
+<p>If you&#39;re using the VirtualBox <a href="../providers/index.html" tppabs="http://docs.vagrantup.com/v2/providers/">provider</a>, then
+VirtualBox shared folders are the default synced folder type. These synced
+folders use the VirtualBox shared folder system to sync file changes from
+the guest to the host and vice versa.</p>
+
+<h2>Caveats</h2>
+
+<p>There is a <a href="javascript:if(confirm(%27https://github.com/mitchellh/vagrant/issues/351  \n\nThis file was not retrieved by Teleport Pro, because it is addressed using an unsupported protocol (e.g., gopher).  \n\nDo you want to open it from the server?%27))window.location=%27https://github.com/mitchellh/vagrant/issues/351#issuecomment-1339640%27" tppabs="https://github.com/mitchellh/vagrant/issues/351#issuecomment-1339640">VirtualBox bug</a> related to <code>sendfile</code> which can result
+in corrupted or non-updating files. You should deactivate <code>sendfile</code> in any
+web servers you may be running.</p>
+
+<p>In Nginx:</p>
+
+<pre><code>sendfile off;
+</code></pre>
+
+<p>In Apache:</p>
+
+<pre><code>EnableSendfile Off
+</code></pre>

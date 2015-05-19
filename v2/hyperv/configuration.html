@@ -1,0 +1,21 @@
+<h1>Configuration</h1>
+
+<p>The Hyper-V provider has some provider-specific configuration options
+you may set. A complete reference is shown below:</p>
+
+<ul>
+<li><code>vmname</code> (string) - Name of virtual mashine as shown in Hyper-V manager.
+Defaults is taken from box image XML.</li>
+<li><code>cpus</code> (integer) - Number of virtual CPU given to mashine.
+Defaults is taken from box image XML.</li>
+<li><code>memory</code> (integer) - Number of MegaBytes allocated to VM at startup.
+Defaults is taken from box image XML.</li>
+<li><code>maxmemory</code> (integer) - Number of MegaBytes maximal allowed to allocate for VM
+This parameter is switch on Dynamic Allocation of memory.
+Defaults is taken from box image XML.</li>
+<li><code>ip_address_timeout</code> (integer) - The time in seconds to wait for the
+virtual machine to report an IP address. This defaults to 120 seconds.
+This may have to be increased if your VM takes longer to boot.</li>
+</ul>
+
+						

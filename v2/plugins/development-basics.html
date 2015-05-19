@@ -1,0 +1,170 @@
+<h1>Plugin Development Basics</h1>
+
+<p>Plugins are a great way to augment or change the behavior and functionality
+of Vagrant. Since plugins introduce additional external dependencies for
+users, they should be used as a last resort when attempting to
+do something with Vagrant.</p>
+
+<p>But if you need to introduce custom behaviors
+into Vagrant, plugins are the best way, since they are safe against future
+upgrades and use a stable API.</p>
+
+<div class="alert alert-warn">
+    <p>
+        <strong>Warning: Advanced Topic!</strong> Developing plugins is an
+        advanced topic that only experienced Vagrant users who are reasonably
+        comfortable with Ruby should approach.
+    </p>
+</div>
+
+<p>Plugins are written using <a href="javascript:if(confirm(%27http://www.ruby-lang.org/en/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://www.ruby-lang.org/en/%27" tppabs="http://www.ruby-lang.org/en/">Ruby</a> and are packaged
+using <a href="javascript:if(confirm(%27http://rubygems.org/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://rubygems.org/%27" tppabs="http://rubygems.org/">RubyGems</a>. Familiarity with Ruby is required,
+but the <a href="packaging.html" tppabs="http://docs.vagrantup.com/v2/plugins/packaging.html">packaging and distribution</a> section should help
+guide you to packaging your plugin into a RubyGem.</p>
+
+<h2>Setup and Workflow</h2>
+
+<p>Because plugins are packaged as RubyGems, Vagrant plugins should be
+developed as if you were developing a regular RubyGem. The easiest
+way to do this is to use the <code>bundle gem</code> command.</p>
+
+<p>Once the directory structure for a RubyGem is setup, you&#39;ll want
+to modify your Gemfile. Here is the basic structure of a Gemfile for
+Vagrant plugin development:</p>
+
+<pre><code class="ruby">source &quot;https://rubygems.org&quot;
+
+group :development do
+  gem &quot;vagrant&quot;, git: &quot;https://github.com/mitchellh/vagrant.git&quot;
+end
+
+group :plugins do
+  gem &quot;my-vagrant-plugin&quot;, path: &quot;.&quot;
+end
+</code></pre>
+
+<p>This Gemfile gets &quot;vagrant&quot; for development. This allows you to
+<code>bundle exec vagrant</code> to run Vagrant with your plugin already loaded,
+so that you can test it manually that way.</p>
+
+<p>The only thing about this Gemfile that may stand out as odd is the
+&quot;plugins&quot; group and putting your plugin in that group. Because
+<code>vagrant plugin</code> commands don&#39;t work in development, this is how
+you &quot;install&quot; your plugin into Vagrant. Vagrant will automatically
+load any gems listed in the &quot;plugins&quot; group. Note that this also
+allows you to add multiple plugins to Vagrant for development, if
+your plugin works with another plugin.</p>
+
+<p>With this structure in place, your workflow should be like any other
+Ruby project. When you want to manually test your plugin, use
+<code>bundle exec vagrant</code> in order to run Vagrant with your plugin
+loaded (as we specified in the Gemfile).</p>
+
+<h2>Plugin Definition</h2>
+
+<p>All plugins are required to have a definition. A definition contains details
+about the plugin such as the name of it and what components it contains.</p>
+
+<p>A definition at the bare minimum looks like the following:</p>
+
+<pre><code class="ruby">class MyPlugin &lt; Vagrant.plugin(&quot;2&quot;)
+  name &quot;My Plugin&quot;
+end
+</code></pre>
+
+<p>A definition is a class that inherits from <code>Vagrant.plugin(&quot;2&quot;)</code>. The &quot;2&quot;
+there is the version that the plugin is valid for. API stability is only
+promised for each major version of Vagrant, so this is important. (The
+1.x series is working towards 2.0, so the API version is &quot;2&quot;)</p>
+
+<p><strong>The most critical feature of a plugin definition</strong> is that it must <em>always</em>
+load, no matter what version of Vagrant is running. Theoretically, Vagrant
+version 87 (doesn&#39;t actually exist) would be able to load a version 2 plugin
+definition. This is achieved through clever lazy loading of individual components
+of the plugin, and is covered shortly.</p>
+
+<h2>Plugin Components</h2>
+
+<p>Within the definition, a plugin advertises what components it adds to
+Vagrant. An example is shown below where a command and provisioner are
+added:</p>
+
+<pre><code>class MyPlugin &lt; Vagrant.plugin(&quot;2&quot;)
+  name &quot;My Plugin&quot;
+
+  command &quot;run-my-plugin&quot; do
+    require_relative &quot;command&quot;
+    Command
+  end
+
+  provisioner &quot;my-provisioner&quot; do
+    require_relative &quot;provisioner&quot;
+    Provisioner
+  end
+end
+</code></pre>
+
+<p>Let&#39;s go over the major pieces of what is going on here. Note from a general
+Ruby language perspective the above <em>should</em> be familiar. The syntax should
+not scare you. If it does, then please familiarize with Ruby further before
+attempting to write a plugin.</p>
+
+<p>The first thing to note is that individual components are defined by
+making a method call with the component name, such as <code>command</code> or
+<code>provisioner</code>. These in turn take some parameters. In the case of our
+example it is just the name of the command and the name of the provisioner.
+All component definitions then take a block argument (a callback) that
+must return the actual component implementation class.</p>
+
+<p>The block argument is where the &quot;clever lazy loading&quot; (mentioned above)
+comes into play. The component blocks should lazy load the actual file that
+contains the implementation of the component, and then return that component.</p>
+
+<p>This is done because the actual dependencies and APIs used when defining
+components are not stable across major Vagrant versions. A command implementation
+written for Vagrant 2.0 will not be compatible with Vagrant 3.0 and so on. But
+the <em>definition</em> is just plain Ruby that must always be forward compatible
+to future Vagrant versions.</p>
+
+<p>To repeat, <strong>the lazy loading aspect of plugin components is critical</strong>
+to the way Vagrant plugins work. All components must be lazily loaded
+and returned within their definition blocks.</p>
+
+<p>Now, each component has a different API. Please visit the relevant section
+using the navigation to the left under &quot;Plugins&quot; to learn more about developing
+each type of component.</p>
+
+<h2>Error Handling</h2>
+
+<p>One of Vagrant&#39;s biggest strength is gracefully handling errors and reporting
+them in human-readable ways. Vagrant has always strongly believed that if
+a user sees a stack trace, it is a bug. It is expected that plugins will behave
+the same way, and Vagrant provides strong error handling mechanisms to
+assist with this.</p>
+
+<p>Error handling in Vagrant is done entirely by raising Ruby exceptions.
+But Vagrant treats certain errors differently than others. If an error
+is raised that inherits from <code>Vagrant::Errors::VagrantError</code>, then the
+<code>vagrant</code> command will output the message of the error in nice red text
+to the console and exit with an exit status of 1.</p>
+
+<p>Otherwise, Vagrant reports an &quot;unexpected error&quot; that should be reported
+as a bug, and shows a full stack trace and other ugliness. Any stack traces
+should be considered bugs.</p>
+
+<p>Therefore, to fit into Vagrant&#39;s error handling mechanisms, subclass
+<code>VagrantError</code> and set a proper message on your exception. To see
+examples of this, look at Vagrant&#39;s <a href="javascript:if(confirm(%27https://github.com/mitchellh/vagrant/blob/master/lib/vagrant/errors.rb  \n\nThis file was not retrieved by Teleport Pro, because it is addressed using an unsupported protocol (e.g., gopher).  \n\nDo you want to open it from the server?%27))window.location=%27https://github.com/mitchellh/vagrant/blob/master/lib/vagrant/errors.rb%27" tppabs="https://github.com/mitchellh/vagrant/blob/master/lib/vagrant/errors.rb">built-in errors</a>.</p>
+
+<h2>Console Input and Output</h2>
+
+<p>Most plugins are likely going to want to do some sort of input/output.
+Plugins should <em>never</em> use Ruby&#39;s built-in <code>puts</code> or <code>gets</code> style methods.
+Instead, all input/output should go through some sort of Vagrant UI object.
+The Vagrant UI object properly handles cases where there is no TTY, output
+pipes are closed, there is no input pipe, etc.</p>
+
+<p>A UI object is available on every <code>Vagrant::Environment</code> via the <code>ui</code> property
+and is exposed within every middleware environment via the <code>:ui</code> key. UI
+objects have <a href="javascript:if(confirm(%27https://github.com/mitchellh/vagrant/blob/master/lib/vagrant/ui.rb  \n\nThis file was not retrieved by Teleport Pro, because it is addressed using an unsupported protocol (e.g., gopher).  \n\nDo you want to open it from the server?%27))window.location=%27https://github.com/mitchellh/vagrant/blob/master/lib/vagrant/ui.rb%27" tppabs="https://github.com/mitchellh/vagrant/blob/master/lib/vagrant/ui.rb">decent documentation</a>
+within the comments of their source.</p>

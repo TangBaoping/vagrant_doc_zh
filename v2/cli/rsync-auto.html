@@ -1,0 +1,44 @@
+<h1>rsync-auto</h1>
+
+<p><strong>Command: <code>vagrant rsync-auto</code></strong></p>
+
+<p>This command watches all local directories of any
+<a href="javascript:$('#contentWrap').load('synced-folders/rsync.html')" >rsync synced folders</a> and automatically
+initiates an rsync transfer when changes are detected. This command does
+not exit until an interrupt is received.</p>
+
+<p>The change detection is optimized to use platform-specific APIs to listen
+for filesystem changes, and does not simply poll the directory.</p>
+
+<h2>Options</h2>
+
+<ul>
+<li><code>--[no-]poll</code> - Force Vagrant to watch for changes using filesystem
+polling instead of filesystem events. This is required for some filesystems
+that don&#39;t support events. Warning: enabling this will make <code>rsync-auto</code>
+<em>much</em> slower. By default, polling is disabled.</li>
+</ul>
+
+<h2>Machine State Changes</h2>
+
+<p>The <code>rsync-auto</code> command does not currently handle machine state changes
+gracefully. For example, if you start the <code>rsync-auto</code> command, then
+halt the guest machine, then make changes to some files, then boot it
+back up, <code>rsync-auto</code> will not attempt to resync.</p>
+
+<p>To ensure that the command works properly, you should start <code>rsync-auto</code>
+only when the machine is running, and shut it down before any machine
+state changes.</p>
+
+<p>You can always force a resync with the <a href="javascript:$('#contentWrap').load('cli/rsync.html')" >rsync</a> command.</p>
+
+<h2>Vagrantfile Changes</h2>
+
+<p>If you change or move your Vagrantfile, the <code>rsync-auto</code> command will have
+to be restarted. For example, if you add synced folders to the Vagrantfile,
+or move the directory that contains the Vagrantfile, the <code>rsync-auto</code>
+command will either not pick up the changes or may begin experiencing
+strange behavior.</p>
+
+<p>Before making any such changes, it is recommended that you turn off
+<code>rsync-auto</code>, then restart it afterwards.</p>

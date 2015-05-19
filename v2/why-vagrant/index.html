@@ -1,0 +1,37 @@
+<h1>为何选择 Vagrant?</h1>
+
+<p>
+	Vagrant 提供了易于配置、便于重现、且便携的工作环境，它基于行业技术标准，通过一个统一的流程控制来最大限度地提高
+团队的灵活性及生产力。
+</p>
+
+<p>
+	为了实现其功能，Vagrant 站在了巨人的肩膀上，基于VirtualBox, VMware, AWS, 或
+	<a href="javascript:$('#contentWrap').load('providers/index.html');" >其他 虚拟机管理软件(provider)</a>
+	的接口来创建虚拟机。
+	因此，标准的 <a href="javascript:$('#contentWrap').load('provisioning/index.html')">配置管理工具（provisioning tools</a>
+	 （例如 shell 脚本, Chef, 或 Puppet）都可以在 Vagrant 创建的虚拟机上使用，用来进行自动安装及配置管理。
+</p>
+
+<h2>Vagrant 带来的好处</h2>
+
+<p>
+	如果你是一位 <strong> 开发者 </strong>	, Vagrant 可以为你创建一个将所有依赖及配置隔离、便携统一的虚拟开发环境，因此你可以继续使用已经习惯了的开发工具（比如 编辑器、浏览器、调试器等）进行工作，编写的代码则运行在 Vagrant 创建的统一虚拟开发环境下。 当你或其他人创建了一个 <a href="javascript:$('#contentWrap').load('vagrantfile/index.html')" >Vagrantfile</a> 配置文件 后, 只需要输入
+	<code>vagrant up</code>
+	命令便可自动安装及配置，你便可以进行开发工作了。团队其他成员使用相同的 Vagrantfile 配置文件创建自己的开发环境后，则所有成员都具有相同的代码运行环境，所以无论你工作在 Linux、Mac OS X 还是 Windows 下，你团队所有成员的代码都运行在拥有相同依赖及配置的统一虚拟环境里。跟 “在我的机器上运行没事” 说再见吧，再也不会出现因环境不同而出现 bug 的情况了。
+</p>
+
+<p>
+	如果你是一位 <strong>运维工程师</strong>
+	, Vagrant 为你提供了一个便携环境和统一的流程，来对运维脚本进行开发及测试。 你可以快速地测试 shell 脚本、 Chef cookbooks、 
+Puppet 模块, 以及使用本地虚拟化，例如  VirtualBox 或 VMware。此外,  你还可以在远程的云端，例如 AWS 或 RackSpace 上使用 <em>相同的配置</em>和<em>相同的流程</em>。例如，使用你的自定义脚本来回收 EC2 实例, stop juggling SSH prompts to various machines,  使用 Vagrant 将使你的人生更加智能。 
+</p>
+
+<p>
+	如果你是
+	<strong>设计师</strong>
+	, Vagrant 将自动设置好一切 Web App 开发所需环境，可以使你只专注于你擅长的设计工作。 当开发者配置好了 Vagrant, 你无需担心如何使你的 App 能够在新的环境中运行起来，也不用再麻烦开发人员为你配置开发环境， 你只需要输入命令
+,
+	<code>vagrant up</code>
+	, 便可开始设计工作.
+</p>

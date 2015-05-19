@@ -1,0 +1,87 @@
+<h1>Plugin</h1>
+
+<p><strong>Command: <code>vagrant plugin</code></strong></p>
+
+<p>This is the command used to manage <a href="javascript:$('#contentWrap').load('plugins/index.html')" >plugins</a>.</p>
+
+<p>The main functionality of this command is exposed via another level
+of subcommands:</p>
+
+<ul>
+<li><code>install</code></li>
+<li><code>license</code></li>
+<li><code>list</code></li>
+<li><code>uninstall</code></li>
+<li><code>update</code></li>
+</ul>
+
+<h1>Plugin Install</h1>
+
+<p><strong>Command: <code>vagrant plugin install &lt;name&gt;...</code></strong></p>
+
+<p>This installs a plugin with the given name or file path. If the name
+is not a path to a file, then the plugin is installed from remote
+repositories, usually <a href="http://rubygems.org/">RubyGems</a>. This command will
+also update a plugin if it is already installed, but you can also use
+<code>vagrant plugin update</code> for that.</p>
+
+<p>If multiple names are specified, multiple plugins will be installed. If
+flags are given below, the flags will apply to <em>all</em> plugins being installed
+by the current command invocation.</p>
+
+<p>This command accepts optional command-line flags:</p>
+
+<ul>
+<li><p><code>--entry-point ENTRYPOINT</code> - By default, installed plugins are loaded
+internally by loading an initialization file of the same name as the plugin.
+Most of the time, this is correct. If the plugin you&#39;re installing has
+another entrypoint, this flag can be used to specify it.</p></li>
+<li><p><code>--plugin-source SOURCE</code> - Adds a source from which to fetch a plugin. Note
+that this doesn&#39;t only affect the single plugin being installed, by all future
+plugin as well. This is a limitation of the underlying plugin installer
+Vagrant uses.</p></li>
+<li><p><code>--plugin-version VERSION</code> - The version of the plugin to install. By default,
+this command will install the latest version. You can constrain the version
+using this flag. You can set it to a specific version, such as &quot;1.2.3&quot; or
+you can set it to a version contraint, such as &quot;&gt; 1.0.2&quot;. You can set it
+to a more complex constraint by comma-separating multiple constraints:
+&quot;&gt; 1.0.2, &lt; 1.1.0&quot; (don&#39;t forget to quote these on the command-line).</p></li>
+</ul>
+
+<h1>Plugin License</h1>
+
+<p><strong>Command: <code>vagrant plugin license &lt;name&gt; &lt;license-file&gt;</code></strong></p>
+
+<p>This command installs a license for a proprietary Vagrant plugin,
+such as the <a href="javascript:$('#contentWrap').load('vmware/index.html')" >VMware Fusion provider</a>.</p>
+
+<h1>Plugin List</h1>
+
+<p><strong>Command: <code>vagrant plugin list</code></strong></p>
+
+<p>This lists all installed plugins and their respective installed versions.
+If a version constraint was specified for a plugin when installing it, the
+constraint will be listed as well. Other plugin-specific information may
+be shown, too.</p>
+
+<h1>Plugin Uninstall</h1>
+
+<p><strong>Command: <code>vagrant plugin uninstall &lt;name&gt; [&lt;name2&gt; &lt;name3&gt; ...]</code></strong></p>
+
+<p>This uninstalls the plugin with the given name. Any dependencies of the
+plugin will also be uninstalled assuming no other plugin needs them.</p>
+
+<p>If multiple plugins are given, multiple plugins will be uninstalled.</p>
+
+<h1>Plugin Update</h1>
+
+<p><strong>Command: <code>vagrant plugin update [&lt;name&gt;]</code></strong></p>
+
+<p>This updates the plugins that are installed within Vagrant. If you specified
+version constraints when installing the plugin, this command will respect
+those constraints. If you want to change a version constraint, re-install
+the plugin using <code>vagrant plugin install</code>.</p>
+
+<p>If a name is specified, only that single plugin will be updated. If a
+name is specified of a plugin that is not installed, this command will not
+install it.</p>

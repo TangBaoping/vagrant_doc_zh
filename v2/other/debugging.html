@@ -1,0 +1,42 @@
+<h1>Debugging</h1>
+
+<p>As much as we try to keep Vagrant stable and bug free, it is inevitable
+that issues will arise and Vagrant will behave in unexpected ways. In
+these cases, Vagrant has amazing <a href="javascript:if(confirm(%27http://www.vagrantup.com/support.html  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://www.vagrantup.com/support.html%27" tppabs="http://www.vagrantup.com/support.html">support</a>
+channels available to assist you.</p>
+
+<p>When using these support channels, it is generally helpful to include
+debugging logs along with any error reports. These logs can often help you
+troubleshoot any problems you may be having.</p>
+
+<p>To enable detailed logging, set the <code>VAGRANT_LOG</code> environmental variable
+to the desired log level name, which is one of <code>debug</code> (loud), <code>info</code> (normal),
+<code>warn</code> (quiet), and <code>error</code> (very quiet). When asking for support, please
+set this to <code>debug</code>. When troubleshooting your own issues, you should start
+with <code>info</code>, which is much quieter, but contains important information
+about the behavior of Vagrant.</p>
+
+<p>On Linux and Mac systems, this can be done by prepending the <code>vagrant</code>
+command with an environmental variable declaration:</p>
+
+<pre><code>$ VAGRANT_LOG=info vagrant up
+...
+</code></pre>
+
+<p>On Windows, multiple steps are required:</p>
+
+<pre><code>$ set VAGRANT_LOG=info
+$ vagrant up
+...
+</code></pre>
+
+<p>You can also get the debug level output using the <code>--debug</code> command line
+option. For example:</p>
+
+<pre><code>$ vagrant up --debug
+...
+</code></pre>
+
+<p>If you plan on submitting a bug report, please submit debug-level logs
+along with the report using <a href="javascript:if(confirm(%27https://gist.github.com/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed using an unsupported protocol (e.g., gopher).  \n\nDo you want to open it from the server?%27))window.location=%27https://gist.github.com/%27" tppabs="https://gist.github.com/">gist</a> or
+some other paste service.</p>

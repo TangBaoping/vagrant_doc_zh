@@ -1,0 +1,45 @@
+<h1>Vagrant Push</h1>
+
+<p>As of version 1.7, Vagrant is capable of deploying or &quot;pushing&quot; application code
+in the same directory as your Vagrantfile to a remote such as an FTP server or
+<a title="HashiCorp's Atlas Service" href="javascript:if(confirm(%27https://atlas.hashicorp.com/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed using an unsupported protocol (e.g., gopher).  \n\nDo you want to open it from the server?%27))window.location=%27https://atlas.hashicorp.com/%27" tppabs="https://atlas.hashicorp.com/">HashiCorp&#39;s Atlas</a>.</p>
+
+<p>Pushes are defined in an application&#39;s <code>Vagrantfile</code> and are invoked using the
+<code>vagrant push</code> subcommand. Much like other components of Vagrant, each Vagrant
+Push plugin has its own configuration options. Please consult the documentation
+for your Vagrant Push plugin for more information. Here is an example Vagrant
+Push configuration section in a <code>Vagrantfile</code>:</p>
+
+<pre><code class="ruby">config.push.define &quot;ftp&quot; do |push|
+  push.host = &quot;ftp.company.com&quot;
+  push.username = &quot;...&quot;
+  # ...
+end
+</code></pre>
+
+<p>When the application is ready to be deployed to the FTP server, just run a
+single command:</p>
+
+<pre><code class="shell">$ vagrant push
+</code></pre>
+
+<p>Much like <a title="Vagrant Providers" href="../providers/index.html" tppabs="http://docs.vagrantup.com/v2/providers/">Vagrant Providers</a>, Vagrant Push also supports multiple backend
+declarations. Consider the common scenario of a staging and QA environment:</p>
+
+<pre><code class="ruby">config.push.define &quot;staging&quot;, strategy: &quot;ftp&quot; do |push|
+  # ...
+end
+
+config.push.define &quot;qa&quot;, strategy: &quot;ftp&quot; do |push|
+  # ...
+end
+</code></pre>
+
+<p>In this scenario, the user must pass the name of the Vagrant Push to the
+subcommand:</p>
+
+<pre><code class="shell">$ vagrant push staging
+</code></pre>
+
+<p>Vagrant Push is the easiest way to deploy your application. You can read more
+in the documentation links on the sidebar.</p>

@@ -1,0 +1,182 @@
+<h1>Docker Provisioner</h1>
+
+<p><strong>Provisioner name: <code>&quot;docker&quot;</code></strong></p>
+
+<p>The docker provisioner can automatically install <a href="javascript:if(confirm(%27http://www.docker.io/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://www.docker.io/%27" tppabs="http://www.docker.io/">Docker</a>,
+pull Docker containers, and configure certain containers to run on boot.</p>
+
+<p>The docker provisioner is ideal for organizations that are using
+Docker as a means to distribute things like their application or services.
+Or, if you&#39;re just getting started with Docker, the Docker provisioner
+provides the easiest possible way to begin using Docker since the provisioner
+automates installing Docker for you.</p>
+
+<p>As with all provisioners, the Docker provisioner can be used along with
+all the other provisioners Vagrant has in order to setup your working
+environment the best way possible. For example, perhaps you use Puppet to
+install services like databases or web servers but use Docker to house
+your application runtime. You can use the Puppet provisioner along
+with the Docker provisioner.</p>
+
+<div class="alert alert-info">
+    <p>
+        <strong>Note:</strong> This documentation is for the Docker
+        <em>provisioner</em>. If you're looking for the Docker
+        <em>provider</em>, visit the
+        <a href="../docker/index.html" tppabs="http://docs.vagrantup.com/v2/docker/index.html">Docker provider documentation</a>.
+    </p>
+</div>
+
+<h2>Options</h2>
+
+<p>The docker provisioner takes various options. None are required. If
+no options are required, the Docker provisioner will only install Docker
+for you (if it isn&#39;t already installed).</p>
+
+<ul>
+<li><p><code>images</code> (array) - A list of images to pull using <code>docker pull</code>. You
+can also use the <code>pull_images</code> function. See the example below this
+section for more information.</p></li>
+<li><p><code>version</code> (string) - The version of Docker to install. This defaults to
+&quot;latest&quot; and will install the latest version of Docker.</p></li>
+</ul>
+
+<p>In addition to the options that can be set, various functions are available
+and can be called to configure other aspects of the Docker provisioner. Most
+of these functions have examples in more detailed sections below.</p>
+
+<ul>
+<li><p><code>build_image</code> - Build an image from a Dockerfile.</p></li>
+<li><p><code>pull_images</code> - Pull the given images. This does not start these images.</p></li>
+<li><p><code>run</code> - Run a container and configure it to start on boot.</p></li>
+</ul>
+
+<h2>Building Images</h2>
+
+<p>The provisioner can automatically build images. Images are built prior to
+any configured containers to run, so you can build an image before running it.
+Building an image is easy:</p>
+
+<pre><code class="ruby">Vagrant.configure(&quot;2&quot;) do |config|
+  config.vm.provision &quot;docker&quot; do |d|
+    d.build_image &quot;/vagrant/app&quot;
+  end
+end
+</code></pre>
+
+<p>The argument to build an image is the path to give to <code>docker build</code>. This
+must be a path that exists within the guest machine. If you need to get data
+to the guest machine, use a synced folder.</p>
+
+<p>The <code>build_image</code> function accepts options as a second parameter. Here
+are the available options:</p>
+
+<ul>
+<li><code>args</code> (string) - Additional arguments to pass to <code>docker build</code>. Use this
+to pass in things like <code>-t &quot;foo&quot;</code> to tag the image.</li>
+</ul>
+
+<h2>Pulling Images</h2>
+
+<p>The docker provisioner can automatically pull images from the
+Docker registry for you. There are two ways to specify images to
+pull. The first is as an array using <code>images</code>:</p>
+
+<pre><code class="ruby">Vagrant.configure(&quot;2&quot;) do |config|
+  config.vm.provision &quot;docker&quot;,
+    images: [&quot;ubuntu&quot;]
+end
+</code></pre>
+
+<p>This will cause Vagrant to pull the &quot;ubuntu&quot; image from the registry
+for you automatically.</p>
+
+<p>The second way to pull images is to use the <code>pull_images</code> function.
+Each call to <code>pull_images</code> will <em>append</em> the images to be pulled. The
+<code>images</code> variable, on the other hand, can only be used once.</p>
+
+<p>Additionally, the <code>pull_images</code> function cannot be used with the
+simple configuration method for provisioners (specifying it all in one line).</p>
+
+<pre><code class="ruby">Vagrant.configure(&quot;2&quot;) do |config|
+  config.vm.provision &quot;docker&quot; do |d|
+    d.pull_images &quot;ubuntu&quot;
+    d.pull_images &quot;vagrant&quot;
+  end
+end
+</code></pre>
+
+<h2>Running Containers</h2>
+
+<p>In addition to pulling images, the Docker provisioner can run and start
+containers for you. This lets you automatically start services as part of
+<code>vagrant up</code>.</p>
+
+<p>Running containers can only be configured using the Ruby block syntax with
+the <code>do...end</code> blocks. An example of running a container is shown below:</p>
+
+<pre><code class="ruby">Vagrant.configure(&quot;2&quot;) do |config|
+  config.vm.provision &quot;docker&quot; do |d|
+    d.run &quot;rabbitmq&quot;
+  end
+end
+</code></pre>
+
+<p>This will <code>docker run</code> a container with the &quot;rabbitmq&quot; image. Note that
+Vagrant uses the first parameter (the image name by default) to override any
+settings used in a previous <code>run</code> definition. Therefore, if you need to run
+multiple containers from the same image then you must specify the <code>image</code>
+option (documented below) with a unique name.</p>
+
+<p>In addition to the name, the <code>run</code> method accepts a set of options, all optional:</p>
+
+<ul>
+<li><p><code>image</code> (string) - The image to run. This defaults to the first argument
+but can also be given here as an option.</p></li>
+<li><p><code>cmd</code> (string) - The command to start within the container. If not specified,
+then the container&#39;s default command will be used, such as the
+&quot;CMD&quot; command <a href="javascript:if(confirm(%27http://docs.docker.io/en/latest/use/builder/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://docs.docker.io/en/latest/use/builder/#cmd%27" tppabs="http://docs.docker.io/en/latest/use/builder/#cmd">specified in the <code>Dockerfile</code></a>.</p></li>
+<li><p><code>args</code> (string) - Extra arguments for <a href="javascript:if(confirm(%27http://docs.docker.io/en/latest/commandline/cli/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://docs.docker.io/en/latest/commandline/cli/#run%27" tppabs="http://docs.docker.io/en/latest/commandline/cli/#run"><code>docker run</code></a>
+on the command line. These are raw arguments that are passed directly to Docker.</p></li>
+<li><p><code>auto_assign_name</code> (boolean) - If true, the <code>--name</code> of the container will
+be set to the first argument of the run. By default this is true. If the
+name set contains a &quot;/&quot; (because of the image name), it will be replaced
+with &quot;-&quot;. Therefore, if you do <code>d.run &quot;foo/bar&quot;</code>, then the name of the
+container will be &quot;foo-bar&quot;.</p></li>
+<li><p><code>daemonize</code> (boolean) - If true, the &quot;-d&quot; flag is given to <code>docker run</code> to
+daemonize the containers. By default this is true.</p></li>
+</ul>
+
+<p>For example, here is how you would configure Docker to run a container
+with the Vagrant shared directory mounted inside of it:</p>
+
+<pre><code class="ruby">Vagrant.configure(&quot;2&quot;) do |config|
+  config.vm.provision &quot;docker&quot; do |d|
+    d.run &quot;ubuntu&quot;,
+      cmd: &quot;bash -l&quot;,
+      args: &quot;-v &#39;/vagrant:/var/www&#39;&quot;
+  end
+end
+</code></pre>
+
+<p>In case you need to run multiple containers based off the same image, you can do
+so by providing different names and specifying the <code>image</code> parameter to it:</p>
+
+<pre><code class="ruby">Vagrant.configure(&quot;2&quot;) do |config|
+  config.vm.provision &quot;docker&quot; do |d|
+    d.run &quot;db-1&quot;, image: &quot;user/mysql&quot;
+    d.run &quot;db-2&quot;, image: &quot;user/mysql&quot;
+  end
+end
+</code></pre>
+
+<h2>Other</h2>
+
+<p>This section documents some other things related to the Docker provisioner
+that are generally useful to know if you&#39;re using this provisioner.</p>
+
+<h3>Customize <code>/etc/default/docker</code></h3>
+
+<p>To customize this file, use a shell provisioner before the Docker provisioner
+that sets this file up. The Docker provisioner will not modify this file
+in a destructive way.</p>

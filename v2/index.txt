@@ -1,0 +1,7 @@
+<h1>Vagrant 中文文档</h1>
+
+<p>
+	欢迎访问 Vagrant 中文文档！本文档对 Vagrant 的每一个功能及特性进行了详尽的说明。如果您刚接触 Vagrant，建议您首先阅读
+	<a  href="javascript:$('#contentWrap').load('getting-started/index.html');" >入门指南</a>
+	.
+</p>

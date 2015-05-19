@@ -1,0 +1,59 @@
+<h1>Chef Zero Provisioner</h1>
+
+<p><strong>Provisioner name: <code>chef_zero</code></strong></p>
+
+<p>The Chef Zero provisioner allows you to provision the guest using
+<a href="javascript:if(confirm(%27https://www.getchef.com/chef/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed using an unsupported protocol (e.g., gopher).  \n\nDo you want to open it from the server?%27))window.location=%27https://www.getchef.com/chef/%27" tppabs="https://www.getchef.com/chef/">Chef</a>, specifically with
+<a href="javascript:if(confirm(%27https://docs.getchef.com/ctl_chef_client.html  \n\nThis file was not retrieved by Teleport Pro, because it is addressed using an unsupported protocol (e.g., gopher).  \n\nDo you want to open it from the server?%27))window.location=%27https://docs.getchef.com/ctl_chef_client.html#run-in-local-mode%27" tppabs="https://docs.getchef.com/ctl_chef_client.html#run-in-local-mode">Chef Zero/local mode</a>.</p>
+
+<p>This new provisioner is a middle ground between running a full blown
+Chef Server and using the limited <a href="chef_solo.html" tppabs="http://docs.vagrantup.com/v2/provisioning/chef_solo.html">Chef Solo</a>
+provisioner. It runs a local in-memory Chef Server and fakes the validation
+and client key registration.</p>
+
+<div class="alert alert-warn">
+  <p>
+    <strong>Warning:</strong> If you're not familiar with Chef and Vagrant already,
+    I recommend starting with the <a href="shell.html" tppabs="http://docs.vagrantup.com/v2/provisioning/shell.html">shell
+    provisioner</a>. However, if you're comfortable with Vagrant already, Vagrant
+    is the best way to learn Chef.
+  </p>
+</div>
+
+<h2>Options</h2>
+
+<p>This section lists the complete set of available options for the Chef Zero
+provisioner. More detailed examples of how to use the provisioner are
+available below this section.</p>
+
+<ul>
+<li><code>nodes_path</code> (string) - A path where the Chef nodes are stored. Be default,
+no node path is set.</li>
+</ul>
+
+<p>In addition to all the options listed above, the Chef Zero provisioner supports
+the <a href="chef_common.html" tppabs="http://docs.vagrantup.com/v2/provisioning/chef_common.html">common options for all Chef provisioners</a>.</p>
+
+<h2>Usage</h2>
+
+<p>The Chef Zero provisioner is configured basically the same way as the Chef Solo
+provisioner. See the <a href="chef_solo.html" tppabs="http://docs.vagrantup.com/v2/provisioning/chef_solo.html">Chef Solo documentations</a>
+for more information.</p>
+
+<p>A basic example could look like this:</p>
+
+<pre><code class="ruby">Vagrant.configure(&quot;2&quot;) do |config|
+  config.vm.provision &quot;chef_zero&quot; do |chef|
+    # Specify the local paths where Chef data is stored
+    chef.cookbooks_path = &quot;cookbooks&quot;
+    chef.roles_path = &quot;roles&quot;
+    chef.nodes_path = &quot;nodes&quot;
+
+    # Add a recipe
+    chef.add_recipe &quot;apache&quot;
+
+    # Or maybe a role
+    chef.add_role &quot;web&quot;
+  end
+end
+</code></pre>
