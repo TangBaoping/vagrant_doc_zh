@@ -1,7 +1,7 @@
 #Vagrant Doc 中文文档
 本项目对 Vagrant 官方文档进行了翻译，如有翻译不当，还请指出修正。
 
-查看地址：[http://tangbaoping.github.io/vagrant_doc_zh/v2/](http://tangbaoping.github.io/vagrant_doc_zh/v2/)。 
+查看地址：[https://tangbaoping.github.io/vagrant_doc_zh/v2/](http://tangbaoping.github.io/vagrant_doc_zh/v2/)。 
 
 #目录
 
